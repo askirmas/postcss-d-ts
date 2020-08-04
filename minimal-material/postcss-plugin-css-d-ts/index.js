@@ -1,5 +1,5 @@
 const postcss = require('postcss')
-, {writeFileSync} = require('fs')
+, {writeFile} = require('fs')
 , {from: $from} = Array
 , defaultOptions = {
   filePrefix: [
@@ -25,20 +25,21 @@ module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
   ? new RegExp(regex, "g")
   : reg
 
-  return (root, /*result*/) => {
+  return async (root, /*result*/) => {
     const {file} = root.source.input
     if (!file)
       return
 
+    //TODO 1 file per all
     const declPath = `${file}.d.ts`
     , names = new Set()
 
     root.walkRules(({selectors}) => {
+      //TODO consider postcss-selector-parser
       const {length} = selectors
       for (let i = length; i--; ) {
         const selector = selectors[i]
         
-
         while (match = regex.exec(selector))
           names.add(match[1])  
       }
@@ -52,16 +53,21 @@ module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
       content[i] = `  "${className}": ${propertyType}`
     }
     
-    writeFileSync(
-      declPath,
-      `${
-        pre
-      }\n${
-        content.join("\n")
-      }\n${
-        post
-      }`,
-      // err => err ? rej(err) : res()
+    await new Promise((res, rej) =>
+      //TODO any stream
+      writeFile(
+        declPath,
+        `${
+          pre
+        }\n${
+          content.join("\n")
+        }\n${
+          post
+        }`,
+        {},
+        err => err ? rej(err) : res()
+      )
     )
   }
 })
+
