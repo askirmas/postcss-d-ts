@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "properties": {
+    "destination": {
+      "default": "${file}.d.ts",
+      "$ref": "#/definitions/withFile"
+    },  
+    "type": {
+      "type": "string",
+      "default": "string|undefined"
+    }, 
+    "declarationPrefix": {
+      "default": [
+        "type IdentifiersMap = Partial<{"
+      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/withFile"  
+      }
+    },
+    "internalSchema": {
+      "default": "  \"${identifier}\"?: ${type}",
+      "$ref": "#/definitions/withIdTy"
+    },
+    "declarationPostfix": {
+      "default": [
+        "}>",
+        "",
+        "declare const identifiersMap: IdentifiersMap;",
+        "",
+        "export default identifiersMap;",
+        ""
+      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/withFile"  
+      }
+    },
+    "membersSchema": {
+      "default": "export const ${identifier}: ${type}",
+      "$ref": "#/definitions/withIdTy"
+    },
+    "identifierParser": {
+      "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
+      "default": "[#\\.]([\\w\\d-]+)",
+      "type": "string",
+      "format": "regex"
+    }, 
+    "identifierMatchIndex": {
+      "type": "integer",
+      "default": 1
+    },
+    "memberMatcher": {
+      "default": "^[\\w][\\w\\d]+$",
+      "type": "string",
+      "format": "regex"
+    }
+  },
+  "definitions": {
+    "withFile": {
+      "type": "string",
+      "description": "Available: `${file}`",
+      "anyOf": [
+        {"pattern": "\\${file}"},
+        true
+      ]
+    },
+    "withIdTy": {
+      "type": "string",
+      "description": "Available: `${identifier}`, `${type}`",
+      "anyOf": [
+        { "pattern": "\\${identifier}" },
+        { "pattern": "\\${type}" },
+        true
+      ]
+    }
+  }
+}

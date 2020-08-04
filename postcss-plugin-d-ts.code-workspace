@@ -4,5 +4,8 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"deno.enable": false,
+		"typescript.tsdk": "node_modules/typescript/lib"
+	}
 }

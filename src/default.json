@@ -1,0 +1,22 @@
+{
+  "destination": "${file}.d.ts",
+  "TypeName": "IdentifiersMap",
+  "varName": "identifiersMap",  
+  "type": "string|undefined", 
+  "declarationPrefix": [
+    "type IdentifiersMap = Partial<{"
+  ],
+  "internalSchema": "  \"${identifier}\": ${type}",
+  "declarationPostfix": [
+    "}>",
+    "",
+    "declare const identifiersMap: IdentifiersMap;",
+    "",
+    "export default identifiersMap;",
+    ""
+  ],
+  "membersSchema": "export const ${identifier}: ${type}",
+  "identifierParser": "[#\\.]([\\w\\d-]+)",
+  "identifierMatchIndex": 1,
+  "memberMatcher": "^[\\w][\\w\\d]+$"
+}
