@@ -5,10 +5,10 @@ const postcss = require('postcss')
 , varName = "styleIds"
 , defaultOptions = {
   filePrefix: [
-    `type ${TypeName} = {`
+    `type ${TypeName} = Partial<{`
   ],
   filePostfix: [
-    "}",
+    "}>",
     "",
     `declare const ${varName}: ${TypeName};`,
     "",
