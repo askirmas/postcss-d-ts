@@ -13,9 +13,14 @@
     "sass"
   ],
   "scripts": {
-    "test": "jest && eslint ."
+    "-test": "jest && eslint .",
+    "test": "exit 0"
   },
-  "author": "askirmas <kirmas@phystech.edu>",
+  "author": {
+    "email": "kirmas@phystech.edu",
+    "name": "Andrii Kirmas",
+    "url": "https://about.me/kirmas"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -55,5 +60,11 @@
     "url": "https://github.com/askirmas/css/labels/bug"
   },
   "homepage": "https://github.com/askirmas/css#readme",
-  "main": "index.js"
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "np": {
+    "yarn": false
+  }
 }
