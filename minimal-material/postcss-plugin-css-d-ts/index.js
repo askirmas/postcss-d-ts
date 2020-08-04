@@ -1,22 +1,29 @@
 const postcss = require('postcss')
 , {writeFile} = require('fs')
 , {from: $from} = Array
+, TypeName = "StyleIds"
+, varName = "styleIds"
 , defaultOptions = {
   filePrefix: [
-    "type StyleIds = {"
+    `type ${TypeName} = {`
   ],
   filePostfix: [
     "}",
-    "declare const styleIds: StyleIds",
-    "export default styleIds"
+    "",
+    `declare const ${varName}: ${TypeName};`,
+    "",
+    `export default ${varName};`,
+    ""
   ],
   // TODO https://www.w3.org/TR/CSS21/syndata.html
   regex: /[\.#]([\w\d-]+)/g, 
+  regexMatchIndex: 1,
+  validVar: /^[\w][\w\d]+$/,
   propertyType: "string|undefined", 
 }
 
 module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
-  filePrefix, filePostfix, regex: reg,
+  filePrefix, filePostfix, regex: reg, validVar, regexMatchIndex,
   propertyType
 } = defaultOptions) => {
   const pre = filePrefix.join("\n")
@@ -33,6 +40,7 @@ module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
     //TODO 1 file per all
     const declPath = `${file}.d.ts`
     , names = new Set()
+    , jsVars = []
 
     root.walkRules(({selectors}) => {
       //TODO consider postcss-selector-parser
@@ -40,18 +48,24 @@ module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
       for (let i = length; i--; ) {
         const selector = selectors[i]
         
-        while (match = regex.exec(selector))
-          names.add(match[1])  
+        while (match = regex.exec(selector)) {
+          match = match[regexMatchIndex]
+          if (names.has(match))
+            continue
+          names.add(match)  
+          if (validVar.test(match))
+            jsVars.push(match)
+        }
       }
     })
 
-    const content = $from(names)
-    , {length} = content
+    const classNames = $from(names)
+    , vars = $from(jsVars)
 
-    for (let i = length; i--; ) {
-      const className = content[i]
-      content[i] = `  "${className}": ${propertyType}`
-    }
+    for (let i = classNames.length; i--; )
+      classNames[i] = `  "${classNames[i]}": ${propertyType}`
+    for (let i = vars.length; i--; )
+      vars[i] = `export const ${vars[i]}: ${propertyType}`
     
     await new Promise((res, rej) =>
       //TODO any stream
@@ -60,9 +74,11 @@ module.exports = postcss.plugin('postcss-plugin-css-d-ts', ({
         `${
           pre
         }\n${
-          content.join("\n")
+          classNames.join("\n")
         }\n${
           post
+        }\n${
+          vars.join("\n")
         }`,
         {},
         err => err ? rej(err) : res()
