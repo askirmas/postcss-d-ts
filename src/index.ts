@@ -1,5 +1,7 @@
 import postcss from 'postcss'
-import {createWriteStream} from 'fs'
+import {promisify} from "util"
+import {createReadStream, createWriteStream, exists} from 'fs'
+import {createInterface} from 'readline'
 import { regexpize, templating } from './utils'
 import schema from "../schema.json"
 
@@ -15,6 +17,7 @@ type jsOptions = {
 }
 
 const {entries: $entries, fromEntries: $fromEntries} = Object
+, $exists = promisify(exists)
 , defaultOptions = $fromEntries(
   $entries(schema.properties)
   .map(([key, {"default": $def}]) => [key, $def])
@@ -87,11 +90,26 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
     ].reduce((x, y) => x.concat(y) )
     , {length} = lines
 
-    if (!destination) {
+    writing: if (!destination) {
       result.warn("Destination is falsy")
     } else if (typeof destination === "string") {
 
-      const stream = createWriteStream(templating(destination, oFile))
+      const filename = templating(destination, oFile)
+      if (await $exists(filename)) {
+        const lineReader = createInterface(createReadStream(filename))
+
+        let i = 0
+        , isSame = true
+
+        for await (const line of lineReader) 
+          if (!(isSame = line === lines[i++]))
+            break
+        
+        if (isSame && i === length)
+          break writing
+      }
+
+      const stream = createWriteStream(filename)
       
       await new Promise((res, rej) => {
 
