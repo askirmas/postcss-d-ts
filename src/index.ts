@@ -46,8 +46,10 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
   return async (root, result) => {
     if (!destination)
       return result.warn("Destination is falsy")
-
+    
+    /* istanbul ignore next //TODO read postcss documentation */
     const {file} = root.source?.input ?? {}
+    
     if (!file)
     // TODO To common place?
       return //result.warn("Destination is falsy")
@@ -118,6 +120,7 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
         for (let i = 0; i < length; i++)
           stream.write(
             `${lines[i]}${crlf}`,
+            /* istanbul ignore next */
             err => err && rej(err)
           )
 

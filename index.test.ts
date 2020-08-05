@@ -63,11 +63,13 @@ describe('features', () => {
     ))
   })
 
+  describe("file falls", () => {
+    it('falsy file', async() => await Promise.all(
+      //@ts-expect-error
+      FALSY.map(from => run({from, input: ".class{}"}))
+    ))
 
-  it('falsy file', async() => await Promise.all(
-    //@ts-expect-error
-    FALSY.map(from => run({from, input: ".class{}"}))
-  ))
+  })
 })
 
 type RunOpts = Partial<{
