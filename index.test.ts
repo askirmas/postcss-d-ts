@@ -1,5 +1,5 @@
 import {resolve} from "path"
-import {readFileSync, statSync} from 'fs'
+import {readFileSync, statSync, writeFileSync, appendFileSync} from 'fs'
 import postcss from 'postcss'
 import globby from 'globby'
 import plugin, {PostCssPluginDTsOptions} from "./src"
@@ -15,36 +15,54 @@ describe("default options", () =>
 
 describe('features', () => {
   const from = resolve(cwd, sources[0])
+  , dtsPath = `${from}.d.ts`
   
-  let content: string[]
+  let dtsContent: string[]
 
   beforeAll(() => {
-    content = rfs(`${from}.d.ts`).split("\n")
-    let {length} = content
-    if (content[--length] === "")
-      content.pop()
+    dtsContent = rfs(dtsPath).split("\n")
+    let {length} = dtsContent
+    if (dtsContent[--length] === "")
+      dtsContent.pop()
   })
 
-  it('no overwrite on same content', async () => {
-    const stats = statSync(from)
-    await run({from})
-    expect(stats).toStrictEqual(statSync(from))
-  })
-
-  it('destionation here', async () => {
-    const destination = {}
-    await run({from}, {destination})
-    expect(
-      destination
-    ).toStrictEqual({
-      [from]: content
+  describe('content overwrite', () => {
+    it('no overwrite on same content', async () => {
+      const stats = statSync(from)
+      await run({from})
+      expect(stats).toStrictEqual(statSync(from))
     })
+  
+    it('overwrite on different content - appended', async () => {
+      appendFileSync(dtsPath, "/**/")
+      await(run({from}))
+    })
+  
+    it('overwrite on different content - deleted several lines in the end', async () => {
+      let {length} = dtsContent
+      length -= 4
+      writeFileSync(dtsPath, dtsContent.filter((_, i) => i < length).join('\n'))
+      await(run({from}))
+    })  
   })
 
-  it('falsy destination', async () => await Promise.all(
-    //@ts-expect-error
-    FALSY.map(destination => run({from, errorsCount: 1}, {destination}))
-  ))
+  describe("destination", () => {
+    it('destionation here', async () => {
+      const destination = {}
+      await run({from}, {destination})
+      expect(
+        destination
+      ).toStrictEqual({
+        [from]: dtsContent
+      })
+    })
+  
+    it('falsy destination', async () => await Promise.all(
+      //@ts-expect-error
+      FALSY.map(destination => run({from, errorsCount: 1}, {destination}))
+    ))
+  })
+
 
   it('falsy file', async() => await Promise.all(
     //@ts-expect-error
