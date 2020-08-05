@@ -1,7 +1,7 @@
 type IdentifiersMap = Partial<{
   "classname": string|undefined
   "id": string|undefined
-  "class-name": string|undefined
+  "class": string|undefined
   "my-id": string|undefined
 }>
 

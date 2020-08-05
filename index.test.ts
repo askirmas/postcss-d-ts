@@ -1,9 +1,9 @@
 import postcss from 'postcss'
 import globby from 'globby'
 import {readFileSync} from 'fs'
-import plugin, {Options} from "./src"
+import plugin, {PostCssPluginDTsOptions} from "./src"
 
-async function run (from: string, opts?: Options) {
+async function run (from: string, opts?: PostCssPluginDTsOptions) {
   const input = rfs(from)
   , result = await postcss([plugin(opts)])
   .process(input, { from })

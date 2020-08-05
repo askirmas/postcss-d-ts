@@ -1,0 +1,12 @@
+/* Class */
+.classname {}
+/* Id */
+#id {}
+/* Reserved JS keyword */
+.class {}
+/* Not permitted JS variable */
+#my-id {}
+/* Attribute */
+[disabled] {}
+/* Dataset attribute */
+[data-my_attribute] {}

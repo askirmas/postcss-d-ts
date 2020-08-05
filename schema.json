@@ -5,7 +5,11 @@
   "properties": {
     "destination": {
       "default": "${file}.d.ts",
-      "$ref": "#/definitions/withFile"
+      "$ref": "#/definitions/withFile",
+      "examples": [
+        "styles.d.ts",
+        {}        
+      ]
     },  
     "type": {
       "type": "string",
@@ -53,10 +57,13 @@
       "default": 1
     },
     "memberMatcher": {
-      "title": "Permitted JS variables pattern",
+      "title": "Permitted JS variables pattern or `null` to not emit",
       "default": "^[\\$\\w][\\$\\w\\d]+$",
-      "type": "string",
-      "format": "regex"
+      "type": ["string", "null"],
+      "format": "regex",
+      "examples": [
+        null
+      ]
     },
     "memberInvalid": {
       "title": "List to ignore - JS keywords and others",

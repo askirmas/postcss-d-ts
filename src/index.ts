@@ -1,15 +1,17 @@
 import postcss from 'postcss'
 import {createWriteStream} from 'fs'
-import {Writable} from "stream"
 import { regexpize, templating } from './utils'
 import schema from "../schema.json"
 
 type SchemaOptions = typeof schema
-type DefOptions = {[K in keyof SchemaOptions["properties"]]: SchemaOptions["properties"][K]["default"]}
+type DefOptions = {
+  [K in keyof SchemaOptions["properties"]]
+  : SchemaDeclaredValues<SchemaOptions["properties"][K]>
+}
 type jsOptions = {
   identifierParser: RegExp
   memberMatcher: RegExp
-  destination: Writable
+  destination: Record<string, string[]>
 }
 
 const {entries: $entries, fromEntries: $fromEntries} = Object
@@ -18,9 +20,9 @@ const {entries: $entries, fromEntries: $fromEntries} = Object
   .map(([key, {"default": $def}]) => [key, $def])
 ) as DefOptions
 
-export type Options = Part<Extend<DefOptions, jsOptions>>
+export type PostCssPluginDTsOptions = Part<Extend<DefOptions, jsOptions>>
 
-export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
+export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts', (opts?: PostCssPluginDTsOptions) => {  
   const {
     declarationPrefix,
     declarationPostfix,
@@ -30,11 +32,12 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
     destination,
     internalSchema,
     memberSchema,
-    type
+    type,
+    memberInvalid
   } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
   , identifierParser = regexpize(ip, "g")
-  , memberMatcher = regexpize(mm)
-  , isWriteable = destination instanceof Writable
+  , memberMatcher = mm && regexpize(mm)
+  , notAllowedMember = new Set(memberInvalid)
 
   return async (root, result) => {
     const {file} = root.source?.input ?? {}
@@ -65,7 +68,11 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
           
           names.add(identifier)
           properties.push(templating(internalSchema, voc))
-          if (memberMatcher.test(identifier))
+          if (
+            memberMatcher
+            && !notAllowedMember.has(identifier)
+            && memberMatcher.test(identifier)
+          )
             members.push(templating(memberSchema, voc))
         }
       }
@@ -80,12 +87,10 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
     , {length} = blocks
 
     if (!destination) {
-      result.warn("Empty destination")
-    } else if (typeof destination === "string" || isWriteable) {
+      result.warn("Destination is falsy")
+    } else if (typeof destination === "string") {
 
-      const stream = isWriteable
-      ? destination as Writable
-      : createWriteStream(templating(destination as string, oFile))
+      const stream = createWriteStream(templating(destination, oFile))
       
       await new Promise((res, rej) => {
 
@@ -97,17 +102,16 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
           for (let l = 0; l < blockLength; l++)
             stream.write(
               `${block[l]}\n`,
-              err => err
-              ? rej(err)
-              : i === length - 1 && l === blockLength - 1 && res()
+              err => err && rej(err)
             )
         }
 
-        isWriteable || stream.end()
+        stream.end()
       }) 
-    } else {
-      //@ts-ignore
-      destination[templating(destination as string, oFile)] = blocks.flat()
-    }
+    } else
+      // TODO Somehow get rid of `{}`
+      (destination as jsOptions["destination"])[
+        templating(destination as string, oFile)
+      ] = blocks.flat()
   }
 })

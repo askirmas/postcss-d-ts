@@ -9,3 +9,6 @@ type Extend<T, N> = {
 }
 
 type Part<T> =  { [P in keyof T]?: T[P] }
+
+type SchemaDeclaredValues<T extends {"default": any, "examples"?: any[]}> = T["default"]
+| (T["examples"] extends any[] ? Exclude<T["examples"], undefined>[number] : T["default"] )
