@@ -46,7 +46,9 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
   return async (root, result) => {
     if (!destination)
       return result.warn("Destination is falsy")
-    
+    //TODO check sticky
+    if (!identifierParser.flags.includes('g'))
+      return result.warn('identifierParser should have global flag')
     /* istanbul ignore next //TODO read postcss documentation */
     const {file} = root.source?.input ?? {}
     
@@ -68,6 +70,7 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
         
         let identifier
 
+        // TODO check that parser is moving
         while (identifier = identifierParser.exec(selector)) {
           identifier = identifier[identifierMatchIndex]
           if (names.has(identifier))

@@ -1,31 +1,30 @@
-import {resolve} from "path"
 import {readFileSync, statSync, writeFileSync, appendFileSync} from 'fs'
+import {dirname, resolve} from 'path'
 import postcss from 'postcss'
 import globby from 'globby'
 import plugin, {PostCssPluginDTsOptions} from "./src"
 
 const FALSY = ["", undefined, null, false, 0,]
-, cwd = process.cwd()
-, sources = globby.sync("**/*.css", {gitignore: true})
+, sources = globby.sync("**/*.css", {gitignore: true, absolute: true})
+, from = sources[0]
+, dtsPath = `${from}.d.ts`
 
-describe("default options", () =>
+let dtsContent: string[]
+
+
+describe("default options", () => {
   sources
   .forEach(from => it(from, async () => await run({from})))
-)
 
-describe('features', () => {
-  const from = resolve(cwd, sources[0])
-  , dtsPath = `${from}.d.ts`
-  
-  let dtsContent: string[]
-
-  beforeAll(() => {
+  afterAll(() => {
     dtsContent = rfs(dtsPath).split("\n")
     let {length} = dtsContent
     if (dtsContent[--length] === "")
       dtsContent.pop()
   })
+})
 
+describe('features', () => {
   describe('content overwrite', () => {
     it('no overwrite on same content', async () => {
       const stats = statSync(from)
@@ -46,6 +45,13 @@ describe('features', () => {
     })  
   })
 
+  it('falsy file', async () => await Promise.all(
+    //@ts-expect-error
+    FALSY.map(from => run({from, input: ".class{}"}))
+  ))
+})
+
+describe('options', () => {
   describe("destination", () => {
     it('destionation here', async () => {
       const destination = {}
@@ -62,13 +68,22 @@ describe('features', () => {
       FALSY.map(destination => run({from, errorsCount: 1}, {destination}))
     ))
   })
+ 
+  describe('identifierParser', () => {
+    const runOpts =       {
+      from: resolve(dirname(from), "onlyClasses.css"),
+      input: rfs(from)
+    }
 
-  describe("file falls", () => {
-    it('falsy file', async() => await Promise.all(
-      //@ts-expect-error
-      FALSY.map(from => run({from, input: ".class{}"}))
+    it('only classes', async () => await run(
+      runOpts,
+      {identifierParser: /\.([\w-]+)/g}
     ))
 
+    it('not global pattern', async () => await run(
+      {...runOpts, errorsCount: 1},
+      {identifierParser: /\.([\w-]+)/}
+    ))
   })
 })
 
@@ -99,10 +114,10 @@ async function run (runOpts: RunOpts, opts?: PostCssPluginDTsOptions
   
   if (output)
     expect(
-      output
+      rfs(`${from}.d.ts`)
       .split("\n")
     ).toStrictEqual(
-      rfs(`${from}.d.ts`)
+      output
       .split("\n")
     )
   
