@@ -74,11 +74,17 @@
   "bugs": {
     "url": "https://github.com/askirmas/postcss-plugin-d-ts/labels/bug"
   },
-  "main": "dist/index.js",
+  "main": "docs/index.js",
   "publishConfig": {
     "access": "public"
   },
   "np": {
     "yarn": false
-  }
+  },
+  "files": [
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ]
 }
