@@ -15,7 +15,6 @@
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
-    "noEmit": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -34,7 +33,7 @@
   ],
   "include": [
     "**/*.ts",
-    "**/*.js",
+    "**/*.json",
     "**/*.d.ts"
   ]
 }

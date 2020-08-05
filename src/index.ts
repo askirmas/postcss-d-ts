@@ -3,7 +3,7 @@ import {promisify} from "util"
 import {createReadStream, createWriteStream, exists} from 'fs'
 import {createInterface} from 'readline'
 import { regexpize, templating } from './utils'
-import schema from "../schema.json"
+import schema from "./schema.json"
 
 type SchemaOptions = typeof schema
 type DefOptions = {

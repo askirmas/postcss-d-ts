@@ -14,6 +14,7 @@ function templating(template: string | string[], map: Record<string, string>) : 
   for (let i = length; i--; ) {
     let result = templates[i]
     for (const word in map)
+      // TODO check each and throw 'no option'
       result = result.replace(`\${${word}}`, map[word])  
     output[i] = result
   }

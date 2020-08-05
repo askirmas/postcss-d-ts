@@ -1,0 +1,138 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
+    "additionalProperties": false,
+    "properties": {
+        "crlf": {
+            "default": "\n",
+            "type": "string"
+        },
+        "destination": {
+            "default": "${file}.d.ts",
+            "$ref": "#/definitions/withFile",
+            "examples": [
+                "styles.d.ts",
+                {}
+            ]
+        },
+        "type": {
+            "type": "string",
+            "default": "string|undefined"
+        },
+        "declarationPrefix": {
+            "default": [
+                "type IdentifiersMap = Partial<{"
+            ],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/withFile"
+            }
+        },
+        "internalSchema": {
+            "default": "  \"${identifier}\": ${type}",
+            "$ref": "#/definitions/withIdTy"
+        },
+        "declarationPostfix": {
+            "default": [
+                "}>",
+                "",
+                "declare const identifiersMap: IdentifiersMap;",
+                "",
+                "export default identifiersMap;",
+                ""
+            ],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/withFile"
+            }
+        },
+        "memberSchema": {
+            "default": "export const ${identifier}: ${type}",
+            "$ref": "#/definitions/withIdTy"
+        },
+        "identifierParser": {
+            "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
+            "default": "[#\\.]([\\w\\d-]+)",
+            "type": "string",
+            "format": "regex"
+        },
+        "identifierMatchIndex": {
+            "type": "integer",
+            "default": 1
+        },
+        "memberMatcher": {
+            "title": "Permitted JS variables pattern or `null` to not emit",
+            "default": "^[\\$\\w][\\$\\w\\d]+$",
+            "type": ["string", "null"],
+            "format": "regex",
+            "examples": [
+                null
+            ]
+        },
+        "memberInvalid": {
+            "title": "List to ignore - JS keywords and others",
+            "default": [
+                "break",
+                "case",
+                "catch",
+                "class",
+                "const",
+                "continue",
+                "debugger",
+                "default",
+                "delete",
+                "do",
+                "else",
+                "export",
+                "extends",
+                "finally",
+                "for",
+                "function",
+                "if",
+                "import",
+                "in",
+                "instanceof",
+                "new",
+                "return",
+                "super",
+                "switch",
+                "this",
+                "throw",
+                "try",
+                "typeof",
+                "var",
+                "void",
+                "while",
+                "with",
+                "yield",
+                "Array",
+                "Object",
+                "JSON",
+                "Function",
+                "Map",
+                "Set",
+                "Symbol",
+                "Proxy"
+            ]
+        }
+    },
+    "definitions": {
+        "withFile": {
+            "type": "string",
+            "description": "Available: `${file}`",
+            "anyOf": [
+                { "pattern": "\\${file}" },
+                true
+            ]
+        },
+        "withIdTy": {
+            "type": "string",
+            "description": "Available: `${identifier}`, `${type}`",
+            "anyOf": [
+                { "pattern": "\\${identifier}" },
+                { "pattern": "\\${type}" },
+                true
+            ]
+        }
+    }
+}

@@ -2,9 +2,10 @@
   "name": "postcss-plugin-d-ts",
   "version": "0.2.0",
   "description": "PostCSS plugin generates `.d.ts` for all processed style sheets",
+  "homepage": "https://github.com/askirmas/postcss-plugin-d-ts#readme",
   "keywords": [
     "postcss",
-    "css",
+    "css modules",
     "postcss-plugin",
     "d.ts",
     "typescript",
@@ -12,13 +13,6 @@
     "declaration",
     "sass"
   ],
-  "scripts": {
-    "test": "npm run jest && npm run spec/tsc",
-    "jest": "jest --config jest.config.json",
-    "prejest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
-    "spec/tsc": "cd __spec__ && tsc",
-    "eslint": "eslint --fix ."
-  },
   "author": {
     "email": "kirmas@phystech.edu",
     "name": "Andrii Kirmas",
@@ -27,7 +21,16 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/askirmas/css.git"
+    "url": "git+https://github.com/askirmas/postcss-plugin-d-ts.git"
+  },
+  "scripts": {
+    "test": "npm run jest && npm run spec/tsc",
+    "compile": "tsc --project tsconfig.compile.json",
+    "precompile": "rm -rf dist",
+    "jest": "jest --config jest.config.json",
+    "prejest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
+    "spec/tsc": "cd __spec__ && tsc",
+    "-eslint": "eslint --fix ."
   },
   "dependencies": {
     "@types/jest": "^26.0.8",
@@ -69,10 +72,9 @@
     "testEnvironment": "node"
   },
   "bugs": {
-    "url": "https://github.com/askirmas/css/labels/bug"
+    "url": "https://github.com/askirmas/postcss-plugin-d-ts/labels/bug"
   },
-  "homepage": "https://github.com/askirmas/css#readme",
-  "main": "index.js",
+  "main": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },

@@ -4,3 +4,4 @@ yarn-error.log
 
 coverage
 *css.d.ts
+**/*.map
