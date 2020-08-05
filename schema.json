@@ -3,6 +3,10 @@
   "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
   "additionalProperties": false,
   "properties": {
+    "crlf": {
+      "default": "\n",
+      "type": "string"
+    },
     "destination": {
       "default": "${file}.d.ts",
       "$ref": "#/definitions/withFile",

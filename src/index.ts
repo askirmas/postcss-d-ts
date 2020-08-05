@@ -24,6 +24,7 @@ export type PostCssPluginDTsOptions = Part<Extend<DefOptions, jsOptions>>
 
 export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts', (opts?: PostCssPluginDTsOptions) => {  
   const {
+    crlf,
     declarationPrefix,
     declarationPostfix,
     identifierParser: ip,
@@ -78,13 +79,13 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
       }
     })
    
-    const blocks = [
+    const lines = [
       templating(declarationPrefix, oFile),
       properties,
       templating(declarationPostfix, oFile),
       members
-    ]
-    , {length} = blocks
+    ].reduce((x, y) => x.concat(y) )
+    , {length} = lines
 
     if (!destination) {
       result.warn("Destination is falsy")
@@ -96,15 +97,11 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
 
         stream.on('error', rej).on('finish', res)
 
-        for (let i = 0; i < length; i++) {
-          const block = blocks[i]
-          , {length: blockLength} = block
-          for (let l = 0; l < blockLength; l++)
-            stream.write(
-              `${block[l]}\n`,
-              err => err && rej(err)
-            )
-        }
+        for (let i = 0; i < length; i++)
+          stream.write(
+            `${lines[i]}${crlf}`,
+            err => err && rej(err)
+          )
 
         stream.end()
       }) 
@@ -112,6 +109,6 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
       // TODO Somehow get rid of `{}`
       (destination as jsOptions["destination"])[
         templating(destination as string, oFile)
-      ] = blocks.flat()
+      ] = lines
   }
 })
