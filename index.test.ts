@@ -4,57 +4,89 @@ import postcss from 'postcss'
 import globby from 'globby'
 import plugin, {PostCssPluginDTsOptions} from "./src"
 
-const cwd = process.cwd()
+const FALSY = ["", undefined, null, false, 0,]
+, cwd = process.cwd()
 , sources = globby.sync("**/*.css", {gitignore: true})
 
-describe("content", () =>
+describe("default options", () =>
   sources
-  .forEach(sourcePath => it(sourcePath, async () => await run(sourcePath)))
+  .forEach(from => it(from, async () => await run({from})))
 )
 
 describe('features', () => {
-  const sourcePath = resolve(cwd, sources[0])
+  const from = resolve(cwd, sources[0])
   
   let content: string[]
 
   beforeAll(() => {
-    content = rfs(`${sourcePath}.d.ts`).split("\n")
+    content = rfs(`${from}.d.ts`).split("\n")
     let {length} = content
     if (content[--length] === "")
       content.pop()
   })
 
   it('no overwrite on same content', async () => {
-    const stats = statSync(sourcePath)
-    await run(sourcePath)
-    expect(stats).toStrictEqual(statSync(sourcePath))
+    const stats = statSync(from)
+    await run({from})
+    expect(stats).toStrictEqual(statSync(from))
   })
 
   it('destionation here', async () => {
     const destination = {}
-    await run(sourcePath, {destination})
+    await run({from}, {destination})
     expect(
       destination
     ).toStrictEqual({
-      [sourcePath]: content
+      [from]: content
     })
   })
+
+  it('falsy destination', async () => await Promise.all(
+    //@ts-expect-error
+    FALSY.map(destination => run({from, errorsCount: 1}, {destination}))
+  ))
+
+  it('falsy file', async() => await Promise.all(
+    //@ts-expect-error
+    FALSY.map(from => run({from, input: ".class{}"}))
+  ))
 })
 
+type RunOpts = Partial<{
+  from: string
+  input: string
+  output: string
+  errorsCount: number
+}>
 
-async function run (from: string, opts?: PostCssPluginDTsOptions, errorsCount: number = 0) {
-  const input = rfs(from)
-  , result = await postcss([plugin(opts)])
+async function run (runOpts: RunOpts, opts?: PostCssPluginDTsOptions
+  ) {
+  const {
+    errorsCount = 0,
+    from,
+    input = from && rfs(from)
+  } = runOpts
+  if (!input)
+    throw Error("no test input")
+
+  const result = await postcss([plugin(opts)])
   .process(input, { from })
+  , {
+    output = from && rfs(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
+  } = runOpts
 
   expect(result.warnings()).toHaveLength(errorsCount)
-  expect(
-    rfs(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
-    .split("\n")
-  ).toStrictEqual(
-    rfs(`${from}.d.ts`)
-    .split("\n")
-  )
+  
+  if (output)
+    expect(
+      output
+      .split("\n")
+    ).toStrictEqual(
+      rfs(`${from}.d.ts`)
+      .split("\n")
+    )
+  
+  return result
 }
 
 function rfs(path: string) {

@@ -1,0 +1,20 @@
+[core]
+	symlinks = true
+	filemode = true
+	editor = code --wait
+[push]
+	recurseSubmodules = on-demand
+[rebase]
+	autoStash = true
+[pull]
+	rebase = true
+[fetch]
+	recurseSubmodules = true
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
