@@ -7,3 +7,5 @@ type Extend<T, N> = {
 } & {
   [K in keyof N & keyof T]: T[K] | N[K]
 }
+
+type Part<T> =  { [P in keyof T]?: T[P] }

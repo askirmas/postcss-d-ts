@@ -1,5 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
+  "additionalProperties": false,
   "properties": {
     "destination": {
       "default": "${file}.d.ts",
@@ -19,7 +21,7 @@
       }
     },
     "internalSchema": {
-      "default": "  \"${identifier}\"?: ${type}",
+      "default": "  \"${identifier}\": ${type}",
       "$ref": "#/definitions/withIdTy"
     },
     "declarationPostfix": {
@@ -36,7 +38,7 @@
         "$ref": "#/definitions/withFile"  
       }
     },
-    "membersSchema": {
+    "memberSchema": {
       "default": "export const ${identifier}: ${type}",
       "$ref": "#/definitions/withIdTy"
     },
@@ -51,9 +53,56 @@
       "default": 1
     },
     "memberMatcher": {
-      "default": "^[\\w][\\w\\d]+$",
+      "title": "Permitted JS variables pattern",
+      "default": "^[\\$\\w][\\$\\w\\d]+$",
       "type": "string",
       "format": "regex"
+    },
+    "memberInvalid": {
+      "title": "List to ignore - JS keywords and others",
+      "default": [
+        "break",
+        "case",
+        "catch",
+        "class",
+        "const",
+        "continue",
+        "debugger",
+        "default",
+        "delete",
+        "do",
+        "else",
+        "export",
+        "extends",
+        "finally",
+        "for",
+        "function",
+        "if",
+        "import",
+        "in",
+        "instanceof",
+        "new",
+        "return",
+        "super",
+        "switch",
+        "this",
+        "throw",
+        "try",
+        "typeof",
+        "var",
+        "void",
+        "while",
+        "with",
+        "yield",
+        "Array",
+        "Object",
+        "JSON",
+        "Function",
+        "Map",
+        "Set",
+        "Symbol",
+        "Proxy"
+      ]
     }
   },
   "definitions": {

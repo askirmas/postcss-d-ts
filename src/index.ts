@@ -2,15 +2,23 @@ import postcss from 'postcss'
 import {createWriteStream} from 'fs'
 import {Writable} from "stream"
 import { regexpize, templating } from './utils'
-import defaultOptions from "./default.json"
+import schema from "../schema.json"
 
-type DefOptions = typeof defaultOptions
+type SchemaOptions = typeof schema
+type DefOptions = {[K in keyof SchemaOptions["properties"]]: SchemaOptions["properties"][K]["default"]}
 type jsOptions = {
   identifierParser: RegExp
   memberMatcher: RegExp
   destination: Writable
 }
-export type Options = Partial<Extend<DefOptions, jsOptions>>
+
+const {entries: $entries, fromEntries: $fromEntries} = Object
+, defaultOptions = $fromEntries(
+  $entries(schema.properties)
+  .map(([key, {"default": $def}]) => [key, $def])
+) as DefOptions
+
+export type Options = Part<Extend<DefOptions, jsOptions>>
 
 export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
@@ -21,7 +29,7 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
     identifierMatchIndex,
     destination,
     internalSchema,
-    membersSchema,
+    memberSchema,
     type
   } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
   , identifierParser = regexpize(ip, "g")
@@ -58,7 +66,7 @@ export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Option
           names.add(identifier)
           properties.push(templating(internalSchema, voc))
           if (memberMatcher.test(identifier))
-            members.push(templating(membersSchema, voc))
+            members.push(templating(memberSchema, voc))
         }
       }
     })

@@ -5,6 +5,12 @@
         "jest.config.json"
       ],
       "url": "https://askirmas.github.io/jest.schema.json"
+    },
+    {
+      "fileMatch": [
+        "postcss-plugin-d-ts.config.json"
+      ],
+      "url": "./schema.json"
     }
   ]
 }
