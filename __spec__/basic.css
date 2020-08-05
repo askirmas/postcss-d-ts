@@ -10,3 +10,7 @@
 [disabled] {}
 /* Dataset attribute */
 [data-my_attribute] {}
+
+/* Multiple mentions */ 
+#id.class2{}
+#my-id.class2{}

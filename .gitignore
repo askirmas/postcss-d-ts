@@ -3,5 +3,4 @@ npm-debug.log
 yarn-error.log
 
 coverage
-*.d.ts
-!*.expected.d.ts
+*css.d.ts
