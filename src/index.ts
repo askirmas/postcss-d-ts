@@ -1,5 +1,6 @@
 import postcss from 'postcss'
-import {writeFile} from 'fs'
+import {createWriteStream} from 'fs'
+import {Writable} from "stream"
 import { regexpize, templating } from './utils'
 import defaultOptions from "./default.json"
 
@@ -7,32 +8,33 @@ type DefOptions = typeof defaultOptions
 type jsOptions = {
   identifierParser: RegExp
   memberMatcher: RegExp
+  destination: Writable
 }
-type Options = Extend<DefOptions, jsOptions>
+export type Options = Partial<Extend<DefOptions, jsOptions>>
 
-
-module.exports = postcss.plugin<Options>('postcss-plugin-css-d-ts', ({
-  declarationPrefix,
-  declarationPostfix,
-  identifierParser: ip,
-  memberMatcher: mm,
-  identifierMatchIndex,
-  destination,
-  internalSchema,
-  membersSchema,
-  type
-}: WithDefault<Options, DefOptions> = defaultOptions) => {
-  const identifierParser = regexpize(ip, "g")
+export default postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
+  const {
+    declarationPrefix,
+    declarationPostfix,
+    identifierParser: ip,
+    memberMatcher: mm,
+    identifierMatchIndex,
+    destination,
+    internalSchema,
+    membersSchema,
+    type
+  } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
+  , identifierParser = regexpize(ip, "g")
   , memberMatcher = regexpize(mm)
+  , isWriteable = destination instanceof Writable
 
-  return async (root, /*result*/) => {
+  return async (root, result) => {
     const {file} = root.source?.input ?? {}
     if (!file)
     // TODO To common place
       return
 
     const oFile = {file}
-    , declPath = templating(destination, oFile)
     , names = new Set<string>()
     , properties: string[] = []
     , members: string[] = []
@@ -60,23 +62,44 @@ module.exports = postcss.plugin<Options>('postcss-plugin-css-d-ts', ({
         }
       }
     })
-    
-    await new Promise((res, rej) =>
-      //TODO any stream
-      writeFile(
-        declPath,
-        `${
-          templating(declarationPrefix, oFile)
-        }\n${
-          properties.join("\n")
-        }\n${
-          templating(declarationPostfix, oFile)
-        }\n${
-          members.join("\n")
-        }`,
-        {},
-        err => err ? rej(err) : res()
-      )
-    )
+   
+    const blocks = [
+      templating(declarationPrefix, oFile),
+      properties,
+      templating(declarationPostfix, oFile),
+      members
+    ]
+    , {length} = blocks
+
+    if (!destination) {
+      result.warn("Empty destination")
+    } else if (typeof destination === "string" || isWriteable) {
+
+      const stream = isWriteable
+      ? destination as Writable
+      : createWriteStream(templating(destination as string, oFile))
+      
+      await new Promise((res, rej) => {
+
+        stream.on('error', rej).on('finish', res)
+
+        for (let i = 0; i < length; i++) {
+          const block = blocks[i]
+          , {length: blockLength} = block
+          for (let l = 0; l < blockLength; l++)
+            stream.write(
+              `${block[l]}\n`,
+              err => err
+              ? rej(err)
+              : i === length - 1 && l === blockLength - 1 && res()
+            )
+        }
+
+        isWriteable || stream.end()
+      }) 
+    } else {
+      //@ts-ignore
+      destination[templating(destination as string, oFile)] = blocks.flat()
+    }
   }
 })

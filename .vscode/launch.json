@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "name": "Jest current",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      "runtimeArgs": [
+        "--expose-gc"
+      ],
+      "args": [
+        "${fileBasenameNoExtension}",
+        "--config", "jest.config.json",
+        "--testTimeout", "9999999", 
+        "--watch",
+        "--onlyFailures",
+        "--runInBand",
+        "--detectOpenHandles",
+        "--logHeapUsage"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    }
+  ]
+}

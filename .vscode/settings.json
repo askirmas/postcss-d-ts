@@ -1,0 +1,10 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "jest.config.json"
+      ],
+      "url": "https://askirmas.github.io/jest.schema.json"
+    }
+  ]
+}

@@ -5,9 +5,9 @@
     "alwaysStrict": true,
     "checkJs": false,
     "downlevelIteration": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "keyofStringsOnly": false,
     "lib": [
       "dom.iterable",
@@ -25,7 +25,8 @@
     "strict": true,
     "target": "es5",
     "types": [
-      "node"
+      "node",
+      "jest"
     ]
   },
   "exclude": [
@@ -33,6 +34,7 @@
   ],
   "include": [
     "**/*.ts",
-    "**/*.js"
+    "**/*.js",
+    "**/*.d.ts"
   ]
 }
