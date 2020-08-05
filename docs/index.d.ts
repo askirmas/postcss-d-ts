@@ -1,4 +1,4 @@
-/// <reference path="../src/ts-swiss.d.ts" />
+/// <reference types="./ts-swiss" />
 import postcss from 'postcss';
 import schema from "./schema.json";
 declare type SchemaOptions = typeof schema;

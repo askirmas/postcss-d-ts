@@ -26,7 +26,7 @@
   "scripts": {
     "test": "npm run jest && npm run spec/tsc",
     "compile": "tsc --project tsconfig.compile.json",
-    "precompile": "rm -rf dist",
+    "precompile": "rm -rf docs",
     "jest": "jest --config jest.config.json",
     "prejest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
     "spec/tsc": "cd __spec__ && tsc",
