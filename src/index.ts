@@ -44,10 +44,13 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
   , notAllowedMember = new Set(memberInvalid)
 
   return async (root, result) => {
+    if (!destination)
+      return result.warn("Destination is falsy")
+
     const {file} = root.source?.input ?? {}
     if (!file)
-    // TODO To common place
-      return
+    // TODO To common place?
+      return //result.warn("Destination is falsy")
 
     const oFile = {file}
     , names = new Set<string>()
@@ -87,13 +90,10 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
       properties,
       templating(declarationPostfix, oFile),
       members
-    ].reduce((x, y) => x.concat(y) )
+    ].reduce((x, y) => x.concat(y))
     , {length} = lines
 
-    writing: if (!destination) {
-      result.warn("Destination is falsy")
-    } else if (typeof destination === "string") {
-
+    writing: if (typeof destination === "string") {
       const filename = templating(destination, oFile)
       if (await $exists(filename)) {
         const lineReader = createInterface(createReadStream(filename))
@@ -126,7 +126,7 @@ export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts'
     } else
       // TODO Somehow get rid of `{}`
       (destination as jsOptions["destination"])[
-        templating(destination as string, oFile)
+        templating(file, oFile)
       ] = lines
   }
 })
