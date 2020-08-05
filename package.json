@@ -13,9 +13,10 @@
     "sass"
   ],
   "scripts": {
-    "-test": "npm run jest && eslint .",
-    "test": "exit 0",
-    "jest": "jest --config jest.config.json"
+    "test": "npm run jest && npm run spec/tsc",
+    "jest": "jest --config jest.config.json",
+    "spec/tsc": "cd __spec__ && tsc",
+    "eslint": "eslint --fix ."
   },
   "author": {
     "email": "kirmas@phystech.edu",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@logux/eslint-config": "^33.0.0",
+    "@types/globby": "^9.1.0",
     "eslint": "^6.5.1",
     "eslint-config-postcss": "^3.0.7",
     "eslint-config-standard": "^14.1.0",
@@ -45,6 +47,7 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^12.1.0",
+    "globby": "^11.0.1",
     "jest": "^24.9.0",
     "np": "^6.3.2",
     "postcss": "^7.0.18",
