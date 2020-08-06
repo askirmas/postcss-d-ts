@@ -1,21 +1,33 @@
 # PostCSS TypeScript declarations
 
+```bash
+npm install postcss-plugin-d-ts
+```
+
 [PostCSS] plugin generates [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html) for all processed style sheets
 
 [[_TOC_]]
 
 ## Example
 
-TBD
+*TBD Clone from specs*
 
 ## Options
+
+*TBD Clone here*
+
+### Resources
 - JsonSchema
-https://askirmas.github.io/postcss-plugin-d-ts/schema.json
+
+See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next3/postcss.config.json
 - TypeScript
 ```typescript
-import {PostCssPluginDTsOptions} from postcss-plugin-d-ts
+import { Options as DTsOptions} from "postcss-plugin-d-ts/dist/options"
+const dtsOpts: DTsOptions = {}
 ```
-- JavaScript
+- JSDoc
+
+See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next5/postcss.config.js
 
 ## PostCss Usage
 
