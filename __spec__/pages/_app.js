@@ -1,13 +1,13 @@
-//@ts-ignore
-import scss1 from "../styles/just-scss.scss"
-//@ts-ignore
-import css1 from "../styles/just-css.css"
-
-// import App from 'next/app'
-console.log(scss1, css1)
+import root_scss from "../styles/just-scss.scss"
+import root_css from "../styles/just-css.css"
+import module_scss from "../styles/scss.module.scss"
+import module_css from "../styles/css.module.css"
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <div className="check">
+    <div className="json">{JSON.stringify({root_scss, root_css, module_scss, module_css})}</div>
+    <Component {...pageProps} />
+  </div>
 }
 
 // Only uncomment this method if you have blocking data requirements for

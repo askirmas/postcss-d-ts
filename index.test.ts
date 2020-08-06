@@ -2,7 +2,9 @@ import {readFileSync, statSync, writeFileSync, appendFileSync} from 'fs'
 import {dirname, resolve} from 'path'
 import postcss from 'postcss'
 import globby from 'globby'
-import plugin, {PostCssPluginDTsOptions} from "./src"
+import plugin from "./src"
+import { Options } from './src/options'
+
 
 const FALSY = ["", undefined, null, false, 0,]
 , sources = globby.sync("__func__/**/*.css", {gitignore: true, absolute: true})
@@ -94,7 +96,7 @@ type RunOpts = Partial<{
   errorsCount: number
 }>
 
-async function run (runOpts: RunOpts, opts?: PostCssPluginDTsOptions
+async function run (runOpts: RunOpts, opts?: Options
   ) {
   const {
     errorsCount = 0,

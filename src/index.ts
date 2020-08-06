@@ -2,26 +2,14 @@ import postcss from 'postcss'
 import {promisify} from "util"
 import {createReadStream, createWriteStream, exists} from 'fs'
 import {createInterface} from 'readline'
-import { regexpize, templating, SchemaDeclaredValues, Part, Extend, extractDefaults } from './utils'
+import { regexpize, templating, extractDefaults } from './utils'
 import schema from "./schema.json"
-
-type SchemaOptions = typeof schema
-type DefOptions = {
-  [K in keyof SchemaOptions["properties"]]
-  : SchemaDeclaredValues<SchemaOptions["properties"][K]>
-}
-type jsOptions = {
-  identifierParser: RegExp
-  memberMatcher: RegExp
-  destination: Record<string, string[]>
-}
+import { Options, jsOptions } from './options'
 
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
 
-export type PostCssPluginDTsOptions = Part<Extend<DefOptions, jsOptions>>
-
-export default postcss.plugin<PostCssPluginDTsOptions>('postcss-plugin-css-d-ts', (opts?: PostCssPluginDTsOptions) => {  
+export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
     crlf,
     declarationPrefix,

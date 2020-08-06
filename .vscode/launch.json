@@ -22,6 +22,13 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Next5",
+      "skipFiles": ["<node_internals>/**"],
+      "port": 9229
     }
   ]
 }

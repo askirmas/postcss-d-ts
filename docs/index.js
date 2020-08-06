@@ -18,7 +18,6 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const postcss_1 = __importDefault(require("postcss"));
 const util_1 = require("util");
 const fs_1 = require("fs");
@@ -26,7 +25,7 @@ const readline_1 = require("readline");
 const utils_1 = require("./utils");
 const schema_json_1 = __importDefault(require("./schema.json"));
 const $exists = util_1.promisify(fs_1.exists), defaultOptions = utils_1.extractDefaults(schema_json_1.default);
-exports.default = postcss_1.default.plugin('postcss-plugin-css-d-ts', (opts) => {
+module.exports = postcss_1.default.plugin('postcss-plugin-css-d-ts', (opts) => {
     const { crlf, declarationPrefix, declarationPostfix, identifierParser: ip, memberMatcher: mm, identifierMatchIndex, destination, internalSchema, memberSchema, type, memberInvalid } = Object.assign(Object.assign({}, defaultOptions), opts) // WithDefault<Options, DefOptions>
     , identifierParser = utils_1.regexpize(ip, "g"), memberMatcher = mm && utils_1.regexpize(mm), notAllowedMember = new Set(memberInvalid);
     return (root, result) => __awaiter(void 0, void 0, void 0, function* () {

@@ -1,0 +1,12 @@
+{
+  "name": "next5",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "build": "next build && next export"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "next": "^9.5.1"
+  }
+}

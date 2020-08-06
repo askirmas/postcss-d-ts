@@ -27,15 +27,23 @@
     "test": "npm run build",
     "build": "npm run compile",
     "prebuild": "npm run func",
+    "postbuild": "npm run spec",
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs",
+    "spec": "cd __spec__ && npm run build",
     "func": "npm run func/jest && npm run func/tsc",
     "func/tsc": "cd __func__ && tsc",
     "func/jest": "jest --config jest.config.json",
     "prefunc/jest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
+    "dev:n3": "cd __spec__ && npm run dev:n3",
+    "dev:n5": "cd __spec__ && npm run dev:n5",
     "-eslint": "eslint --fix ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/react": "^16.9.44",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "devDependencies": {
     "@logux/eslint-config": "^33.0.0",
     "@types/globby": "^9.1.0",

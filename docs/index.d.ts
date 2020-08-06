@@ -1,15 +1,26 @@
 import postcss from 'postcss';
-import { SchemaDeclaredValues, Part, Extend } from './utils';
-import schema from "./schema.json";
-declare type SchemaOptions = typeof schema;
-declare type DefOptions = {
-    [K in keyof SchemaOptions["properties"]]: SchemaDeclaredValues<SchemaOptions["properties"][K]>;
-};
-declare type jsOptions = {
-    identifierParser: RegExp;
-    memberMatcher: RegExp;
-    destination: Record<string, string[]>;
-};
-export declare type PostCssPluginDTsOptions = Part<Extend<DefOptions, jsOptions>>;
-declare const _default: postcss.Plugin<Part<Extend<DefOptions, jsOptions>>>;
-export default _default;
+import { jsOptions } from './options';
+declare const _default: postcss.Plugin<import("./utils").Part<import("./utils").Extend<{
+    crlf: string;
+    destination: import("./utils").SchemaDeclaredValues<{
+        default: string;
+        $ref: string;
+        examples: {}[];
+    }>;
+    type: string;
+    declarationPrefix: string[];
+    internalSchema: string;
+    declarationPostfix: string[];
+    memberSchema: string;
+    identifierParser: string;
+    identifierMatchIndex: number;
+    memberMatcher: import("./utils").SchemaDeclaredValues<{
+        title: string;
+        default: string;
+        type: string[];
+        format: string;
+        examples: null[];
+    }>;
+    memberInvalid: string[];
+}, jsOptions>>>;
+export = _default;
