@@ -24,6 +24,7 @@
     "url": "git+https://github.com/askirmas/postcss-plugin-d-ts.git"
   },
   "scripts": {
+    "build": "npm run test && npm run compile",
     "test": "npm run jest && npm run spec/tsc",
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs",
@@ -32,13 +33,11 @@
     "spec/tsc": "cd __spec__ && tsc",
     "-eslint": "eslint --fix ."
   },
-  "dependencies": {
-    "@types/jest": "^26.0.8",
-    "git-hooks-wrapper": "^0.7.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@logux/eslint-config": "^33.0.0",
     "@types/globby": "^9.1.0",
+    "@types/jest": "^26.0.9",
     "eslint": "^6.5.1",
     "eslint-config-postcss": "^3.0.7",
     "eslint-config-standard": "^14.1.0",
@@ -51,6 +50,7 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^12.1.0",
+    "git-hooks-wrapper": "^0.7.1",
     "globby": "^11.0.1",
     "jest": "^24.9.0",
     "np": "^6.3.2",
