@@ -25,8 +25,7 @@ const fs_1 = require("fs");
 const readline_1 = require("readline");
 const utils_1 = require("./utils");
 const schema_json_1 = __importDefault(require("./schema.json"));
-const { entries: $entries, fromEntries: $fromEntries } = Object, $exists = util_1.promisify(fs_1.exists), defaultOptions = $fromEntries($entries(schema_json_1.default.properties)
-    .map(([key, { "default": $def }]) => [key, $def]));
+const $exists = util_1.promisify(fs_1.exists), defaultOptions = utils_1.extractDefaults(schema_json_1.default);
 exports.default = postcss_1.default.plugin('postcss-plugin-css-d-ts', (opts) => {
     const { crlf, declarationPrefix, declarationPostfix, identifierParser: ip, memberMatcher: mm, identifierMatchIndex, destination, internalSchema, memberSchema, type, memberInvalid } = Object.assign(Object.assign({}, defaultOptions), opts) // WithDefault<Options, DefOptions>
     , identifierParser = utils_1.regexpize(ip, "g"), memberMatcher = mm && utils_1.regexpize(mm), notAllowedMember = new Set(memberInvalid);
