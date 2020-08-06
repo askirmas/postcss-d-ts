@@ -5,7 +5,7 @@ import globby from 'globby'
 import plugin, {PostCssPluginDTsOptions} from "./src"
 
 const FALSY = ["", undefined, null, false, 0,]
-, sources = globby.sync("__spec__/**/*.css", {gitignore: true, absolute: true})
+, sources = globby.sync("__func__/**/*.css", {gitignore: true, absolute: true})
 , from = sources[0]
 , dtsPath = `${from}.d.ts`
 

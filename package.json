@@ -24,13 +24,15 @@
     "url": "git+https://github.com/askirmas/postcss-plugin-d-ts.git"
   },
   "scripts": {
-    "build": "npm run test && npm run compile",
-    "test": "npm run jest && npm run spec/tsc",
+    "test": "npm run build",
+    "build": "npm run compile",
+    "prebuild": "npm run func",
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs",
-    "jest": "jest --config jest.config.json",
-    "prejest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
-    "spec/tsc": "cd __spec__ && tsc",
+    "func": "npm run func/jest && npm run func/tsc",
+    "func/tsc": "cd __func__ && tsc",
+    "func/jest": "jest --config jest.config.json",
+    "prefunc/jest": "jest --clearCache && find . -type f -iname '*.css.d.ts' -exec rm {} \\;",
     "-eslint": "eslint --fix ."
   },
   "dependencies": {},
