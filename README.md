@@ -12,9 +12,39 @@ npm install postcss-plugin-d-ts
 
 *TBD Clone from specs*
 
+- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next5/pages/index.tsx* 
+- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
+
+Your component 
+
+```tsx
+import class1, {class2} from "./css.module.css"
+export default function Component() {
+    return <div className={`${class1} ${class2}`}/>
+}
+```
+
+Generated declaration *./css.module.css.d.ts*
+
+```typescript
+type IdentifiersMap = Partial<{
+  "class1": string|undefined
+  "class2": string|undefined
+}>
+
+declare const identifiersMap: IdentifiersMap;
+
+export default identifiersMap;
+
+export const class1: string|undefined
+export const class2: string|undefined
+```
+
+
+
 ## Options
 
-*TBD Clone here*
+*TBD Clone here https://github.com/askirmas/postcss-plugin-d-ts/tree/master/docs* 
 
 ### Resources
 - JsonSchema
