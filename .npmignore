@@ -4,3 +4,7 @@ yarn.lock
 *.test.js
 .travis.yml
 .editorconfig
+src
+__spec__
+__test__
+__func__
