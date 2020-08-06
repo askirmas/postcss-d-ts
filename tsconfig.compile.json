@@ -8,8 +8,7 @@
     "sourceMap": false,
     "declaration": true,
     "types": [
-      "node",
-      "./ts-swiss"
+      "node"
     ]
   },
   "include": [

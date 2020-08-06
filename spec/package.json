@@ -1,0 +1,24 @@
+{
+  "name": "spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev3": "next --hed=3",
+    "dev5": "next --ve=5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^16.9.44",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "cypress": "^4.12.1",
+    "next3": "npm:next@9.3.6",
+    "next5": "npm:next@^9.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sass": "^1.26.10"
+  }
+}

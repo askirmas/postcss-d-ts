@@ -8,6 +8,15 @@
 
 TBD
 
+## Options
+- JsonSchema
+https://askirmas.github.io/postcss-plugin-d-ts/schema.json
+- TypeScript
+```typescript
+import {PostCssPluginDTsOptions} from postcss-plugin-d-ts
+```
+- JavaScript
+
 ## PostCss Usage
 
 [PostCSS]: https://github.com/postcss/postcss
@@ -21,8 +30,8 @@ If you already use PostCSS, add the plugin to plugins list:
 ```diff
 module.exports = {
   plugins: [
-+   require('postcss-pseudo-classes-control'),
-    require('autoprefixer')
+    require('autoprefixer'),
++   require('postcss-plugin-d-ts'),
   ]
 }
 ```
