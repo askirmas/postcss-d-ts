@@ -2,24 +2,8 @@ import postcss from 'postcss'
 import {promisify} from "util"
 import {createReadStream, createWriteStream, exists} from 'fs'
 import {createInterface} from 'readline'
-import { regexpize, templating } from './utils'
+import { regexpize, templating, SchemaDeclaredValues, Part, Extend, extractDefaults } from './utils'
 import schema from "./schema.json"
-
-// TODO move to https://github.com/askirmas/ts-swiss
-// <ts-swiss>
-// type WithDefault<T, D> = {[K in keyof T]: K extends keyof D ? Exclude<T[K] | D[K], undefined> : T[K]}
-type Extend<T, N> = {
-  [K in Exclude<keyof T, keyof N>]: T[K]
-} & {
-  [K in Exclude<keyof N, keyof T>]: N[K]
-} & {
-  [K in keyof N & keyof T]: T[K] | N[K]
-}
-type Part<T> =  { [P in keyof T]?: T[P] }
-type SchemaDeclaredValues<T extends {"default": any, "examples"?: any[]}> = T["default"]
-| (T["examples"] extends any[] ? Exclude<T["examples"], undefined>[number] : T["default"] )
-// type EmptyObject = Record<never, never>
-// </ts-swiss>
 
 type SchemaOptions = typeof schema
 type DefOptions = {
@@ -32,12 +16,8 @@ type jsOptions = {
   destination: Record<string, string[]>
 }
 
-const {entries: $entries, fromEntries: $fromEntries} = Object
-, $exists = promisify(exists)
-, defaultOptions = $fromEntries(
-  $entries(schema.properties)
-  .map(([key, {"default": $def}]) => [key, $def])
-) as DefOptions
+const $exists = promisify(exists)
+, defaultOptions = extractDefaults(schema)
 
 export type PostCssPluginDTsOptions = Part<Extend<DefOptions, jsOptions>>
 
