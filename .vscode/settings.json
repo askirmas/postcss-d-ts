@@ -8,7 +8,7 @@
     },
     {
       "fileMatch": [
-        "*.config.json"
+        "postcss-plugin-d-ts.config.json"
       ],
       "url": "./src/schema.json"
     }

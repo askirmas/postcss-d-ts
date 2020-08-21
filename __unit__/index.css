@@ -1,15 +1,26 @@
 /* Class */
 .classname {}
+
 /* Id */
 #id {}
+
 /* Reserved JS keyword */
 .class {}
+
 /* Not permitted JS variable */
 #my-id {}
+
 /* Attribute */
 [disabled] {}
+
 /* Dataset attribute */
 [data-my_attribute] {}
+
+/* Dataset attribute with value */
+[data-my_attribute-with-value="abc"] {}
+[data-my_attribute-with-value^="ab"] {}
+[data-my_attribute-with-value='def'] {}
+[data-my_attribute-with-value=ghi] {}
 
 /* Multiple mentions */ 
 #id.class2{}

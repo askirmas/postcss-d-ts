@@ -106,7 +106,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
 
         for (let i = 0; i < length; i++)
           stream.write(
-            `${lines[i]}${crlf}`,
+            `${i ? crlf : ''}${lines[i]}`,
             /* istanbul ignore next */
             err => err && rej(err)
           )
