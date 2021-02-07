@@ -23,6 +23,7 @@ type DefaultsAndExamplesFromSchema<S extends SchemaWithDefaultsAndExamples> = {
 
 const {isArray: $isArray} = Array
 , {keys: $keys} = Object
+, defaultTemplateLiteral: [string, string] = ["${", "}"]
 
 export {
   templating, 
@@ -30,18 +31,20 @@ export {
   extractDefaults
 }
 
-function templating(template: string, map: Record<string, string>) : string
-function templating(template: string[], map: Record<string, string>) : string[]
-function templating(template: string | string[], map: Record<string, string>) : string | string[] {
+function templating<T extends string | string[]>(
+  template: T,
+  map: Record<string, string>,
+  {"templateLiteral": [prefix, postfix] = defaultTemplateLiteral} = {}
+): T extends string ? string : string[] {
   const templates = $isArray(template) ? template : [template]
   , {length} = templates
   , output = new Array(length)
 
-  for (let i = length; i--; ) {
+  for (let i = length; i--;) {
     let result = templates[i]
     for (const word in map)
       // TODO check each and throw 'no option'
-      result = result.replace(`\${${word}}`, map[word])  
+      result = result.replace(`${prefix}${word}${postfix}`, map[word])  
     output[i] = result
   }
   return $isArray(template) ? output : output[0]
