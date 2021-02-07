@@ -10,29 +10,29 @@ import replaceMultiplicated from './replaceMultiplicated'
 
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
-, {crlf} = defaultOptions
+, {eol} = defaultOptions
 //TODO several keywords
 , identifierKeyword = "__identifier__"
 //TODO replace with common
-, readlineSync = (path: string, splitter = crlf) => readFileSync(path).toString().split(splitter)
+, readlineSync = (path: string, splitter = eol) => readFileSync(path).toString().split(splitter)
 , defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"))
 
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
-    crlf,
-    identifierParser: ip,
-    memberMatcher: mm,
+    eol,
+    identifierPattern: ip,
+    jsIdentifierPattern: mm,
     identifierMatchIndex,
     destination,
-    memberInvalid,
+    jsIdentifierInvalidList,
     "template": templatePath
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(ip, "g")
   , memberMatcher = mm && regexpize(mm)
-  , notAllowedMember = new Set(memberInvalid)
+  , notAllowedMember = new Set(jsIdentifierInvalidList)
   //TODO check `templatePath === ""`
   , templateContent = typeof templatePath === "string"
-  ? readlineSync(templatePath, crlf)
+  ? readlineSync(templatePath, eol)
   : defaultTemplate
 
   return async (root, result) => {
@@ -65,6 +65,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
           const name = identifier[identifierMatchIndex]
           
           if (
+            //TODO notAllowedMember = null
             !notAllowedMember.has(name)
             && (
               !memberMatcher
@@ -111,7 +112,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
 
         for (let i = 0; i < length; i++)
           stream.write(
-            `${i ? crlf : ''}${lines[i]}`,
+            `${i ? eol : ''}${lines[i]}`,
             /* istanbul ignore next */
             err => err && rej(err)
           )

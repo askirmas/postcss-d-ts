@@ -3,8 +3,27 @@
     "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
     "additionalProperties": false,
     "properties": {
-        "crlf": {
-            "$comment": "//TODO rename to EOL",
+        "template": {
+            "title": "Path to template file",
+            "type": "string",
+            "format": "uri-reference",
+            "default": false,
+            "examples": [
+                "./_css-template.d.ts"
+            ]
+        },
+        "identifierPattern": {
+            "title": "Regex to take CSS identifiers",
+            "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
+            "default": "[#\\.]([\\w\\d-]+)",
+            "type": "string",
+            "format": "regex"
+        },
+        "identifierMatchIndex": {
+            "type": "integer",
+            "default": 1
+        },
+        "eol": {
             "default": "\n",
             "type": "string"
         },
@@ -26,27 +45,8 @@
                 {}
             ]
         },
-        "template": {
-            "title": "Path to template file",
-            "type": "string",
-            "format": "uri-reference",
-            "default": false,
-            "examples": [
-                "./_css-template.d.ts"
-            ]
-        },
-        "identifierParser": {
-            "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
-            "default": "[#\\.]([\\w\\d-]+)",
-            "type": "string",
-            "format": "regex"
-        },
-        "identifierMatchIndex": {
-            "type": "integer",
-            "default": 1
-        },
-        "memberMatcher": {
-            "title": "Permitted JS variables pattern or `null` to not emit",
+        "jsIdentifierPattern": {
+            "title": "Pattern of allowed JS variables or `null` to not check",
             "default": "^[\\$\\w][\\$\\w\\d]+$",
             "type": ["string", "null"],
             "format": "regex",
@@ -54,7 +54,7 @@
                 null
             ]
         },
-        "memberInvalid": {
+        "jsIdentifierInvalidList": {
             "title": "List to ignore - JS keywords and others",
             "default": [
                 "break",

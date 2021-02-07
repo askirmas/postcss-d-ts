@@ -7,8 +7,8 @@ type DefOptions = {
   : SchemaDeclaredValues<SchemaOptions["properties"][K]>
 }
 export type jsOptions = {
-  identifierParser: RegExp
-  memberMatcher: RegExp
+  identifierPattern: RegExp
+  jsIdentifierPattern: RegExp
   destination: Record<string, string[]>
 }
 

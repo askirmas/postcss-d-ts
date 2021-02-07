@@ -71,7 +71,7 @@ describe('features', () => {
 
 describe('options', () => {
 
-  describe('identifierParser', () => {
+  describe('identifierPattern', () => {
     const runOpts = {
       from,
       input: fromContent
@@ -79,7 +79,7 @@ describe('options', () => {
 
     it('not global pattern', async () => await run(
       {...runOpts, errorsCount: 1},
-      {identifierParser: /\.([\w-]+)/}
+      {identifierPattern: /\.([\w-]+)/}
     ))
   })
     
