@@ -2,7 +2,8 @@ import {dirname, resolve} from 'path'
 import {sync} from 'globby'
 import { readOpts, rfs, suiteName, launcher, rfsl } from './test-runner'
 
-const unitsDir = "__unit__"
+const $cwd = process.cwd()
+, unitsDir = "__unit__"
 , sourcePattern = `${unitsDir}/*.css`
 , configPattern = `${unitsDir}/*/postcss-plugin-d-ts.config.json`
 , expectMask = "*{MUST,SHOULD,MAY}.d.ts"
@@ -21,29 +22,33 @@ globbing(configPattern)
 .forEach(configPath => {
   const suiteDir = dirname(configPath)
   , opts = readOpts(configPath)
-  , destination: Record<string, string[]> = {} 
-  , launch = launcher({
-    ...opts,
-    destination
-  })
   , expects = globbing(`${suiteDir}/${expectMask}`)
 
-  describe(suiteName(suiteDir), () =>
+  describe(suiteName(suiteDir), () => {
+    beforeAll(() => process.chdir(suiteDir))
+    afterAll(() => process.chdir($cwd))
+
     expects.forEach(exp => {
       const name = suiteName(exp) 
       , from = resolve(exp)
+      , expectation = rfsl(exp)
 
       it(name, async () => {
-        await launch.process(
+        const destination: Record<string, string[]> = {} 
+        
+        await launcher({
+          ...opts,
+          destination
+        }).process(
           sources[name],
           {from}
         )
         expect(
           destination[from]
         ).toStrictEqual(
-          rfsl(exp)
+          expectation
         )
       })
     })
-  )
+  })
 })

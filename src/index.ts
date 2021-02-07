@@ -1,7 +1,8 @@
 import postcss from 'postcss'
 import {promisify} from "util"
-import {createReadStream, createWriteStream, exists} from 'fs'
+import {createReadStream, createWriteStream, exists, readFileSync} from 'fs'
 import {createInterface} from 'readline'
+import {resolve} from "path"
 import { regexpize, templating, extractDefaults } from './utils'
 import schema from "./schema.json"
 import { Options, jsOptions } from './options'
@@ -9,8 +10,12 @@ import replaceMultiplicated from './replaceMultiplicated'
 
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
+, {crlf} = defaultOptions
 //TODO several keywords
 , identifierKeyword = "__identifier__"
+//TODO replace with common
+, readlineSync = (path: string, splitter = crlf) => readFileSync(path).toString().split(splitter)
+, defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"))
 
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
@@ -20,11 +25,15 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     identifierMatchIndex,
     destination,
     memberInvalid,
-    template
+    "template": templatePath
   } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
   , identifierParser = regexpize(ip, "g")
   , memberMatcher = mm && regexpize(mm)
   , notAllowedMember = new Set(memberInvalid)
+  //TODO check `templatePath === ""`
+  , templateContent = typeof templatePath === "string"
+  ? readlineSync(templatePath, crlf)
+  : defaultTemplate
 
   return async (root, result) => {
     if (!destination)
@@ -54,6 +63,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
         // TODO check that parser is moving
         while (identifier = identifierParser.exec(selector)) {
           const name = identifier[identifierMatchIndex]
+          
           if (
             !notAllowedMember.has(name)
             && (
@@ -65,9 +75,9 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
         }
       }
     })
-   
+
     const lines = replaceMultiplicated(
-      template,
+      templateContent,
       identifierKeyword,
       [...names]
     )
@@ -85,9 +95,14 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
         for await (const line of lineReader) 
           if (!(isSame = line === lines[i++]))
             break
-        
-        if (isSame && i === length)
-          break writing
+
+          
+        if (isSame) {
+          if (lines[length - 1] === "")
+            i++
+          if (length === i)
+            break writing
+        }
       }
 
       const stream = createWriteStream(filename)

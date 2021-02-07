@@ -12,5 +12,8 @@
       "functions": 100,
       "lines": 100
     }
-  }
+  },
+  "modulePathIgnorePatterns": [
+    "__unit__/index.*\\.d\\.ts"
+  ]
 }

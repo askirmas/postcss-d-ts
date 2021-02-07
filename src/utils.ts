@@ -12,7 +12,11 @@ export type Part<T> =  { [P in keyof T]?: T[P] }
 type DefaultsAndExamples = {"default"?: any, "examples"?: any[]}
 type SchemaWithDefaultsAndExamples = {"properties": Record<string, DefaultsAndExamples>}
 export type SchemaDeclaredValues<T extends DefaultsAndExamples> = T["default"]
-| (T["examples"] extends any[] ? Exclude<T["examples"], undefined>[number] : T["default"] )
+| (
+  T["examples"] extends any[]
+  ? Exclude<T["examples"], undefined>[number]
+  : never
+)
 // type EmptyObject = Record<never, never>
 
 type DefaultsAndExamplesFromSchema<S extends SchemaWithDefaultsAndExamples> = {

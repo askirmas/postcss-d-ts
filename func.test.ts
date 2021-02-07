@@ -3,40 +3,64 @@ import {resolve} from 'path'
 import run, { rfsl, rfs } from './test-runner'
 
 const FALSY = ["", undefined, null, false, 0,]
-, from = "__unit__/index.css"
+, suitFolder = "__unit__"
+, from = `${suitFolder}/index.css`
+, fromContent = rfs(from)
 , dtsPath = `${from}.d.ts`
+, modifiedTime = () => statSync(dtsPath).mtimeMs
 
-let dtsContent: string[]
+let dtsContent: Readonly<string[]>
 
 describe('features', () => {
   describe('content overwrite', () => {
-    beforeAll(() => existsSync(dtsPath) && unlinkSync(dtsPath))
-
-    it(from, async () => {
+    beforeAll(async () => {
+      existsSync(dtsPath) && unlinkSync(dtsPath)
       await run({from})
       dtsContent = rfsl(dtsPath)
-      let {length} = dtsContent
-      if (dtsContent[--length] === "")
-        dtsContent.pop()
     })
 
     it('no overwrite on same content', async () => {
-      const stats = statSync(from)
+      const modified = modifiedTime()
       await run({from})
-      expect(stats).toStrictEqual(statSync(from))
+      expect(modifiedTime()).toBe(modified)
     })
   
-    it('overwrite on different content - appended', async () => {
+    it('overwrite after append new line', async () => {
+      appendFileSync(dtsPath, "\n")
+      const modified = modifiedTime()
+      await run({from})
+      expect(modifiedTime()).toBeGreaterThan(modified)
+    })
+
+    it('overwrite after append new content', async () => {
       appendFileSync(dtsPath, "/**/")
-      await(run({from}))
+      const modified = modifiedTime()
+      await run({from})
+      expect(modifiedTime()).toBeGreaterThan(modified)
     })
-  
-    it('overwrite on different content - deleted several lines in the end', async () => {
-      let {length} = dtsContent
-      length -= 4
-      writeFileSync(dtsPath, dtsContent.filter((_, i) => i < length).join('\n'))
-      await(run({from}))
-    })  
+
+    it('TBD overwrite after delete last empty line', async () => {
+      writeFileSync(dtsPath, dtsContent.slice(0, -1).join('\n'))
+      const modified = modifiedTime()
+      //@ts-expect-error
+      await run({from, output: false})
+      expect(modifiedTime()).not.toBeGreaterThan(modified)
+      writeFileSync(dtsPath, dtsContent.join("\n"))
+    })
+
+    it('no overwrite on template without last newline', async () => {
+      const modified = modifiedTime()
+      await run({from}, {"template": `${suitFolder}/template_without_last_newline.d.ts`})
+      expect(modifiedTime()).toBe(modified)
+    })
+
+
+    it('overwrite after delete last 2 line', async () => {
+      writeFileSync(dtsPath, dtsContent.slice(0, -2).join('\n'))
+      const modified = modifiedTime()
+      await run({from})
+      expect(modifiedTime()).toBeGreaterThan(modified)
+    })      
   })
 
   it('falsy file', async () => await Promise.all(
@@ -48,11 +72,11 @@ describe('features', () => {
 describe('options', () => {
 
   describe('identifierParser', () => {
-    const runOpts =       {
+    const runOpts = {
       from,
-      input: rfs(from)
+      input: fromContent
     }
-  
+
     it('not global pattern', async () => await run(
       {...runOpts, errorsCount: 1},
       {identifierParser: /\.([\w-]+)/}

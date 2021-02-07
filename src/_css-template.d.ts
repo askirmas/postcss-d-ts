@@ -1,6 +1,6 @@
-interface IdentifiersMap {
-  "__identifier__"?: string|undefined
-}
+type IdentifiersMap = Partial<{
+  "__identifier__": string|undefined
+}>
 
 declare const identifiersMap: IdentifiersMap;
 

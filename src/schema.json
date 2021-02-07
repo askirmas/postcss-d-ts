@@ -19,18 +19,11 @@
       ]
     }, 
     "template": {
-      "type": "array",
-      "items": {"type": "string"},
-      "default": [
-        "type IdentifiersMap = Partial<{",
-        "  \"__identifier__\": string|undefined",
-        "}>",
-        "",
-        "declare const identifiersMap: IdentifiersMap;",
-        "",
-        "export default identifiersMap;",
-        "",
-        "export const __identifier__: string|undefined"
+      "type": "string",
+      "format": "uri-reference",
+      "default": false,
+      "examples": [
+        "./_css-template.d.ts"
       ]
     },
     "identifierParser": {

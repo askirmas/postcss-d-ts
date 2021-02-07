@@ -1,8 +1,8 @@
-type IdentifiersMap = Partial<{
+interface IdentifiersMap {
   "classname": string
   "id": string
   "class2": string
-}>
+}
 
 declare const identifiersMap: IdentifiersMap;
 

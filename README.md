@@ -18,9 +18,10 @@ npm install postcss-plugin-d-ts
 Your component 
 
 ```tsx
-import class1, {class2} from "./css.module.css"
+import classNames, {class2} from "./css.module.css"
+
 export default function Component() {
-    return <div className={`${class1} ${class2}`}/>
+    return <div className={`${classNames.class1} ${class2}`}/>
 }
 ```
 
