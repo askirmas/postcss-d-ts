@@ -2,7 +2,7 @@
   "name": "spec",
   "version": "1.0.0",
   "scripts": {
-    "setup": "cd next3 && npm ci && cd ../next5 && npm ci && cd ..",
+    "setup": "cd next3 && npm ci --prefer-offline --progress=false --no-audit && cd ../next5 && npm ci --prefer-offline --progress=false --no-audit && cd ..",
     "build": "npm run compile/3 && npm run compile/5",
     "compile/3": "cd next3 && npm run build",
     "compile/5": "cd next5 && npm run build",

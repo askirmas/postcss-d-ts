@@ -8,7 +8,6 @@ function replaceMultiplicated(
 ) {
   const $return: (string|string[])[] = sources.concat()
   , {length} = replacements 
-  , searcher = new RegExp(searchValue, "g")
 
   for (let i = $return.length; i--;) {
     const line = sources[i]
@@ -17,11 +16,19 @@ function replaceMultiplicated(
     
     const replaced: string[] = new Array(length)
 
-    for (let j = length; j--;)
-      //TODO Change to `.replaceAll` with polyfill
-      replaced[j] = line.replace(searcher, replacements[j])
-      
+    for (let j = length; j--;) {
+      let next = line
+      , pre: string
 
+      //TODO Change to `.replaceAll` with common polyfill
+      do {
+        pre = next
+        next = pre.replace(searchValue, replacements[j])
+      } while(next !== pre)
+
+      replaced[j] = next
+    }
+    
     $return[i] = replaced
   }
 
