@@ -35,7 +35,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       return result.warn('identifierParser should have global flag')
     /* istanbul ignore next //TODO read postcss documentation */
     const {file} = root.source?.input ?? {}
-    
+
     if (!file)
     // TODO To common place?
       return //result.warn("Destination is falsy")

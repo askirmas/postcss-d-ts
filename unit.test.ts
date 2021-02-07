@@ -5,7 +5,7 @@ import { readOpts, rfs, suiteName, launcher, rfsl } from './test-runner'
 const cwd = "__unit__"
 , sourcePattern = `${cwd}/*.css`
 , configPattern = `${cwd}/*/postcss-plugin-d-ts.config.json`
-, expectMask = "*.d.ts"
+, expectMask = "*{MUST,SHOULD,MAY}.d.ts"
 , globbing = (pattern: string) => sync(pattern, {
   "gitignore": true,
   "absolute": false
