@@ -2,14 +2,14 @@
   "name": "spec",
   "version": "1.0.0",
   "scripts": {
-    "setup": "cd next3 && npm install && cd next5 && npm install",
+    "setup": "cd next3 && npm ci && cd ../next5 && npm ci && cd ..",
     "build": "npm run compile/3 && npm run compile/5",
     "compile/3": "cd next3 && npm run build",
     "compile/5": "cd next5 && npm run build",
     "dev:n3": "cd next3 && npm run dev",
     "dev:n5": "cd next5 && npm run dev",
     "reinstall": "npm uninstall postcss-plugin-d-ts && npm install ..",
-    "prebuild": "npm run reinstall"
+    "prebuild": "npm run setup && npm run reinstall"
   },
   "license": "MIT",
   "dependencies": {
