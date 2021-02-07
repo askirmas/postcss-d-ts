@@ -20,16 +20,16 @@ const $exists = promisify(exists)
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
     eol,
-    identifierPattern: ip,
-    jsIdentifierPattern: mm,
+    "identifierPattern": cssP,
+    "jsIdentifierPattern": jsP,
     identifierMatchIndex,
     destination,
     jsIdentifierInvalidList,
     "template": templatePath
   } = {...defaultOptions, ...opts}
-  , identifierParser = regexpize(ip, "g")
-  , memberMatcher = mm && regexpize(mm)
-  , notAllowedMember = new Set(jsIdentifierInvalidList)
+  , identifierParser = regexpize(cssP, "g")
+  , jsMatcher = jsP && regexpize(jsP)
+  , jsNotAllowed = new Set(jsIdentifierInvalidList)
   //TODO check `templatePath === ""`
   , templateContent = typeof templatePath === "string"
   ? readlineSync(templatePath, eol)
@@ -49,7 +49,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       return //result.warn("Source is falsy")
 
     const filename = `${file}.d.ts`
-    , names = new Set<string>()
+    , identifiers = new Set<string>()
 
     root.walkRules(({selectors}) => {
       //TODO consider postcss-selector-parser
@@ -58,21 +58,21 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       for (let i = length; i--; ) {
         const selector = selectors[i]
         
-        let identifier
+        let parsed: RegExpExecArray | null
 
         // TODO check that parser is moving
-        while (identifier = identifierParser.exec(selector)) {
-          const name = identifier[identifierMatchIndex]
+        while (parsed = identifierParser.exec(selector)) {
+          const identifier = parsed[identifierMatchIndex]
           
           if (
             //TODO notAllowedMember = null
-            !notAllowedMember.has(name)
+            !jsNotAllowed.has(identifier)
             && (
-              !memberMatcher
-              || memberMatcher.test(name)
+              !jsMatcher
+              || jsMatcher.test(identifier)
             )
           )
-            names.add(name)
+            identifiers.add(identifier)
         }
       }
     })
@@ -80,7 +80,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     const lines = replaceMultiplicated(
       templateContent,
       identifierKeyword,
-      [...names]
+      [...identifiers]
     )
     , {length} = lines
 
