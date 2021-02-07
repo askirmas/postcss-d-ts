@@ -96,7 +96,7 @@ describe('options', () => {
   
     it('falsy destination', async () => await Promise.all(
       //@ts-expect-error
-      FALSY.map(destination => run({from, errorsCount: 1}, {destination}))
+      FALSY.map(destination => destination !== false && run({from, errorsCount: 1}, {destination}))
     ))
   }) 
 })

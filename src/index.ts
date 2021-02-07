@@ -3,7 +3,7 @@ import {promisify} from "util"
 import {createReadStream, createWriteStream, exists, readFileSync} from 'fs'
 import {createInterface} from 'readline'
 import {resolve} from "path"
-import { regexpize, templating, extractDefaults } from './utils'
+import { regexpize, extractDefaults } from './utils'
 import schema from "./schema.json"
 import { Options, jsOptions } from './options'
 import replaceMultiplicated from './replaceMultiplicated'
@@ -26,7 +26,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     destination,
     memberInvalid,
     "template": templatePath
-  } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
+  } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(ip, "g")
   , memberMatcher = mm && regexpize(mm)
   , notAllowedMember = new Set(memberInvalid)
@@ -36,7 +36,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
   : defaultTemplate
 
   return async (root, result) => {
-    if (!destination)
+    if (!destination && destination !== false)
       return result.warn("Destination is falsy")
     //TODO check sticky
     if (!identifierParser.flags.includes('g'))
@@ -45,10 +45,10 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     const {file} = root.source?.input ?? {}
 
     if (!file)
-    // TODO To common place?
+    // TODO To common file?
       return //result.warn("Source is falsy")
 
-    const oFile = {file}
+    const filename = `${file}.d.ts`
     , names = new Set<string>()
 
     root.walkRules(({selectors}) => {
@@ -83,9 +83,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     )
     , {length} = lines
 
-    writing: if (typeof destination === "string") {
-      //TODO Remove to hardcode due to typescript
-      const filename = templating(destination, oFile)
+    writing: if (destination === false) {
       if (await $exists(filename)) {
         const lineReader = createInterface(createReadStream(filename))
 
@@ -123,7 +121,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     } else
       // TODO Somehow get rid of `{}`
       (destination as jsOptions["destination"])[
-        templating(file, oFile)
+        file
       ] = lines
   }
 })

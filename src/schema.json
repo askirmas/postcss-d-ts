@@ -9,16 +9,25 @@
       "type": "string"
     },
     "destination": {
-      "deprecated": true,
+      "title": "Used for debugging",
       "$comment": "//TODO `string` means to collect all to that file, `FALSY` - nearby each file",
-      "default": "${file}.d.ts",
-      "$ref": "#/definitions/withFile",
+      "oneOf": [
+        {
+          "description": "Declaration next to source file",
+          "const": false
+        },
+        {
+          "description": "Write to this object rather than filesystem",
+          "const": {}
+        }
+      ],
+      "default": false,
       "examples": [
-        "styles.d.ts",
         {}        
       ]
     }, 
     "template": {
+      "title": "Path to template file",
       "type": "string",
       "format": "uri-reference",
       "default": false,
@@ -89,16 +98,6 @@
         "Set",
         "Symbol",
         "Proxy"
-      ]
-    }
-  },
-  "definitions": {
-    "withFile": {
-      "type": "string",
-      "description": "Available: `${file}`",
-      "anyOf": [
-        {"pattern": "\\${file}"},
-        true
       ]
     }
   }

@@ -9,7 +9,7 @@ export type Extend<T, N> = {
   [K in keyof N & keyof T]: T[K] | N[K]
 }
 export type Part<T> =  { [P in keyof T]?: T[P] }
-type DefaultsAndExamples = {"default"?: any, "examples"?: any[]}
+type DefaultsAndExamples = {"default"?: unknown, "examples"?: unknown[]}
 type SchemaWithDefaultsAndExamples = {"properties": Record<string, DefaultsAndExamples>}
 export type SchemaDeclaredValues<T extends DefaultsAndExamples> = T["default"]
 | (
@@ -25,33 +25,11 @@ type DefaultsAndExamplesFromSchema<S extends SchemaWithDefaultsAndExamples> = {
 }
 // </ts-swiss>
 
-const {isArray: $isArray} = Array
-, {keys: $keys} = Object
-, defaultTemplateLiteral: [string, string] = ["${", "}"]
+const {keys: $keys} = Object
 
 export {
-  templating, 
   regexpize,
   extractDefaults
-}
-
-function templating<T extends string | string[]>(
-  template: T,
-  map: Record<string, string>,
-  {"templateLiteral": [prefix, postfix] = defaultTemplateLiteral} = {}
-): T extends string ? string : string[] {
-  const templates = $isArray(template) ? template : [template]
-  , {length} = templates
-  , output = new Array(length)
-
-  for (let i = length; i--;) {
-    let result = templates[i]
-    for (const word in map)
-      // TODO check each and throw 'no option'
-      result = result.replace(`${prefix}${word}${postfix}`, map[word])  
-    output[i] = result
-  }
-  return $isArray(template) ? output : output[0]
 }
 
 function regexpize(source: string|RegExp, flags = "") {
