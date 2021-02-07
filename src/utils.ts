@@ -25,7 +25,9 @@ const {isArray: $isArray} = Array
 , {keys: $keys} = Object
 
 export {
-  templating, regexpize, extractDefaults
+  templating, 
+  regexpize,
+  extractDefaults
 }
 
 function templating(template: string, map: Record<string, string>) : string

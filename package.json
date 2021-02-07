@@ -77,9 +77,6 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "bugs": {
     "url": "https://github.com/askirmas/postcss-plugin-d-ts/labels/bug"
   },
