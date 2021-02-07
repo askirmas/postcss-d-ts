@@ -3,14 +3,25 @@
   "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
   "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "default": "./node_modules/postcss-plugin-d-ts/dist/schema.json",
+      "examples": [
+        "https://askirmas.github.io/postcss-plugin-d-ts/schema.json"
+      ]
+    },
     "template": {
-      "title": "Path to template file",
+      "title": "Path to template `d.ts` file",
       "type": "string",
       "format": "uri-reference",
       "default": false,
       "examples": [
         "./_css-template.d.ts"
       ]
+    },
+    "identifierKeyword": {
+      "title": "Word in `d.ts` template to replace with CSS classes, ids, etc",
+      "type": "string",
+      "default": "__identifier__"
     },
     "identifierPattern": {
       "title": "Regex to take CSS identifiers",

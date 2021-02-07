@@ -11,8 +11,6 @@ import replaceMultiplicated from './replaceMultiplicated'
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
 , {eol} = defaultOptions
-//TODO several keywords
-, identifierKeyword = "__identifier__"
 //TODO replace with common
 , readlineSync = (path: string, splitter = eol) => readFileSync(path).toString().split(splitter)
 , defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"))
@@ -20,12 +18,14 @@ const $exists = promisify(exists)
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
     eol,
+    //TODO several keywords?
+    identifierKeyword,
     "identifierPattern": cssP,
-    "jsIdentifierPattern": jsP,
     identifierMatchIndex,
-    destination,
+    "jsIdentifierPattern": jsP,
     jsIdentifierInvalidList,
-    "template": templatePath
+    destination,
+    "template": templatePath,
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(cssP, "g")
   , jsMatcher = jsP && regexpize(jsP)

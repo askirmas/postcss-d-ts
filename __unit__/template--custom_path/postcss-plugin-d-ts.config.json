@@ -1,3 +1,4 @@
 {
-  "template": "./template.d.ts"
+  "template": "./template.d.ts",
+  "identifierKeyword": "__css__"
 }
