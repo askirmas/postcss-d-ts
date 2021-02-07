@@ -2,15 +2,14 @@ import {dirname, resolve} from 'path'
 import {sync} from 'globby'
 import { readOpts, rfs, suiteName, launcher, rfsl } from './test-runner'
 
-const cwd = "__unit__"
-, sourcePattern = `${cwd}/*.css`
-, configPattern = `${cwd}/*/postcss-plugin-d-ts.config.json`
+const unitsDir = "__unit__"
+, sourcePattern = `${unitsDir}/*.css`
+, configPattern = `${unitsDir}/*/postcss-plugin-d-ts.config.json`
 , expectMask = "*{MUST,SHOULD,MAY}.d.ts"
 , globbing = (pattern: string) => sync(pattern, {
   "gitignore": true,
   "absolute": false
 })
-
 , sources = globbing(sourcePattern)
 .reduce((acc, path) => (
   acc[suiteName(path)] = rfs(path),
@@ -21,9 +20,10 @@ const cwd = "__unit__"
 globbing(configPattern)
 .forEach(configPath => {
   const suiteDir = dirname(configPath)
+  , opts = readOpts(configPath)
   , destination: Record<string, string[]> = {} 
   , launch = launcher({
-    ...readOpts(configPath),
+    ...opts,
     destination
   })
   , expects = globbing(`${suiteDir}/${expectMask}`)
@@ -38,7 +38,6 @@ globbing(configPattern)
           sources[name],
           {from}
         )
-
         expect(
           destination[from]
         ).toStrictEqual(

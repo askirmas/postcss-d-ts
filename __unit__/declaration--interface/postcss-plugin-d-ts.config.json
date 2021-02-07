@@ -1,14 +1,13 @@
 {
-  "declarationPrefix": [
-    "interface IdentifiersMap {"
-  ],
-  "internalSchema": "  \"${identifier}\"?: ${type}",
-  "declarationPostfix": [
+  "template": [
+    "interface IdentifiersMap {",
+    "  \"${identifier}\"?: string|undefined",
     "}",
     "",
     "declare const identifiersMap: IdentifiersMap;",
     "",
     "export default identifiersMap;",
-    ""
+    "",
+    "export const ${identifier}: string|undefined"
   ]
 }

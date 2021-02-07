@@ -4,51 +4,34 @@
   "additionalProperties": false,
   "properties": {
     "crlf": {
+      "$comment": "//TODO rename to EOL",
       "default": "\n",
       "type": "string"
     },
     "destination": {
+      "deprecated": true,
+      "$comment": "//TODO `string` means to collect all to that file, `FALSY` - nearby each file",
       "default": "${file}.d.ts",
       "$ref": "#/definitions/withFile",
       "examples": [
         "styles.d.ts",
         {}        
       ]
-    },  
-    "type": {
-      "type": "string",
-      "default": "string|undefined"
     }, 
-    "declarationPrefix": {
-      "default": [
-        "type IdentifiersMap = Partial<{"
-      ],
+    "template": {
       "type": "array",
-      "items": {
-        "$ref": "#/definitions/withFile"  
-      }
-    },
-    "internalSchema": {
-      "default": "  \"${identifier}\": ${type}",
-      "$ref": "#/definitions/withIdTy"
-    },
-    "declarationPostfix": {
+      "items": {"type": "string"},
       "default": [
+        "type IdentifiersMap = Partial<{",
+        "  \"${identifier}\": string|undefined",
         "}>",
         "",
         "declare const identifiersMap: IdentifiersMap;",
         "",
         "export default identifiersMap;",
-        ""
-      ],
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/withFile"  
-      }
-    },
-    "memberSchema": {
-      "default": "export const ${identifier}: ${type}",
-      "$ref": "#/definitions/withIdTy"
+        "",
+        "export const ${identifier}: string|undefined"
+      ]
     },
     "identifierParser": {
       "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
@@ -122,15 +105,6 @@
       "description": "Available: `${file}`",
       "anyOf": [
         {"pattern": "\\${file}"},
-        true
-      ]
-    },
-    "withIdTy": {
-      "type": "string",
-      "description": "Available: `${identifier}`, `${type}`",
-      "anyOf": [
-        { "pattern": "\\${identifier}" },
-        { "pattern": "\\${type}" },
         true
       ]
     }

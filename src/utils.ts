@@ -9,7 +9,7 @@ export type Extend<T, N> = {
   [K in keyof N & keyof T]: T[K] | N[K]
 }
 export type Part<T> =  { [P in keyof T]?: T[P] }
-type DefaultsAndExamples = {"default": any, "examples"?: any[]}
+type DefaultsAndExamples = {"default"?: any, "examples"?: any[]}
 type SchemaWithDefaultsAndExamples = {"properties": Record<string, DefaultsAndExamples>}
 export type SchemaDeclaredValues<T extends DefaultsAndExamples> = T["default"]
 | (T["examples"] extends any[] ? Exclude<T["examples"], undefined>[number] : T["default"] )

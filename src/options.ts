@@ -10,6 +10,7 @@ export type jsOptions = {
   identifierParser: RegExp
   memberMatcher: RegExp
   destination: Record<string, string[]>
+  template: string[]
 }
 
 export type Options = Part<Extend<DefOptions, jsOptions>>

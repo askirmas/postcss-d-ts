@@ -1,8 +1,6 @@
 interface IdentifiersMap {
   "classname"?: string|undefined
   "id"?: string|undefined
-  "class"?: string|undefined
-  "my-id"?: string|undefined
   "class2"?: string|undefined
 }
 

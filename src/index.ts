@@ -5,6 +5,7 @@ import {createInterface} from 'readline'
 import { regexpize, templating, extractDefaults } from './utils'
 import schema from "./schema.json"
 import { Options, jsOptions } from './options'
+import replaceMultiplicated from './replaceMultiplicated'
 
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
@@ -12,16 +13,12 @@ const $exists = promisify(exists)
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
     crlf,
-    declarationPrefix,
-    declarationPostfix,
     identifierParser: ip,
     memberMatcher: mm,
     identifierMatchIndex,
     destination,
-    internalSchema,
-    memberSchema,
-    type,
-    memberInvalid
+    memberInvalid,
+    template
   } = {...defaultOptions, ...opts} // WithDefault<Options, DefOptions>
   , identifierParser = regexpize(ip, "g")
   , memberMatcher = mm && regexpize(mm)
@@ -42,8 +39,6 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
 
     const oFile = {file}
     , names = new Set<string>()
-    , properties: string[] = []
-    , members: string[] = []
 
     root.walkRules(({selectors}) => {
       //TODO consider postcss-selector-parser
@@ -55,31 +50,18 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
         let identifier
 
         // TODO check that parser is moving
-        while (identifier = identifierParser.exec(selector)) {
-          identifier = identifier[identifierMatchIndex]
-          if (names.has(identifier))
-            continue
-          
-          const voc = {identifier, type}
-          
-          names.add(identifier)
-          properties.push(templating(internalSchema, voc))
-          if (
-            memberMatcher
-            && !notAllowedMember.has(identifier)
-            && memberMatcher.test(identifier)
-          )
-            members.push(templating(memberSchema, voc))
-        }
+        while (identifier = identifierParser.exec(selector))
+          names.add(identifier[identifierMatchIndex])
       }
     })
    
-    const lines = [
-      templating(declarationPrefix, oFile),
-      properties,
-      templating(declarationPostfix, oFile),
-      members
-    ].reduce((x, y) => x.concat(y))
+    const lines = replaceMultiplicated(
+      template,
+      //TODO several keywords
+      "${identifier}",
+      [...names]
+      .filter(identifier => !notAllowedMember.has(identifier) && (!memberMatcher || memberMatcher.test(identifier)))
+    )
     , {length} = lines
 
     writing: if (typeof destination === "string") {

@@ -6,7 +6,6 @@ describe(extractDefaults.name, () => {
       "default": {
         "default": "default"
       },
-      //@ts-expect-error
       "examples": {
         "examples": [
           "example1",
@@ -20,7 +19,6 @@ describe(extractDefaults.name, () => {
           "example2"
         ]
       },
-      //@ts-expect-error
       "empty": {}
     }
   })).toStrictEqual({

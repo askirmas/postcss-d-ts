@@ -1,3 +1,13 @@
 {
-  "type": "string"
+  "template":[
+    "type IdentifiersMap = Partial<{",
+    "  \"${identifier}\": string",
+    "}>",
+    "",
+    "declare const identifiersMap: IdentifiersMap;",
+    "",
+    "export default identifiersMap;",
+    "",
+    "export const ${identifier}: string"
+  ]
 }

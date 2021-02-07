@@ -1,19 +1,16 @@
 {
   "crlf": "\n",
-  "type": "string|undefined",
-  "declarationPrefix": [
-    "type IdentifiersMap = Partial<{"
-  ],
-  "internalSchema": "  \"${identifier}\": ${type}",
-  "declarationPostfix": [
+  "template":[
+    "type IdentifiersMap = Partial<{",
+    "  \"${identifier}\": string|undefined",
     "}>",
     "",
     "declare const identifiersMap: IdentifiersMap;",
     "",
     "export default identifiersMap;",
-    ""
+    "",
+    "export const ${identifier}: string|undefined"
   ],
-  "memberSchema": "export const ${identifier}: ${type}",
   
   "identifierParser": "[#\\.]([\\w\\d-]+)",
   "identifierMatchIndex": 1,

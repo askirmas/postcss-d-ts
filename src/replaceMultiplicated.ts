@@ -2,6 +2,7 @@ export default replaceMultiplicated
 
 function replaceMultiplicated(
   sources: string[],
+  //TODO `searchValue: string[]` or `replacementMap`
   searchValue: string,
   replacements: string[]
 ) {
