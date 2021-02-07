@@ -11,7 +11,7 @@
     "keyofStringsOnly": false,
     "lib": [
       "dom.iterable",
-      "esnext"
+      "ES2019"
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -22,7 +22,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES6",
+    "target": "ES2019",
     "types": [
       "node",
       "jest"
