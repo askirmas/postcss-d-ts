@@ -37,7 +37,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
 
     if (!file)
     // TODO To common place?
-      return //result.warn("Destination is falsy")
+      return //result.warn("Source is falsy")
 
     const oFile = {file}
     , names = new Set<string>()
@@ -52,8 +52,17 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
         let identifier
 
         // TODO check that parser is moving
-        while (identifier = identifierParser.exec(selector))
-          names.add(identifier[identifierMatchIndex])
+        while (identifier = identifierParser.exec(selector)) {
+          const name = identifier[identifierMatchIndex]
+          if (
+            !notAllowedMember.has(name)
+            && (
+              !memberMatcher
+              || memberMatcher.test(name)
+            )
+          )
+            names.add(name)
+        }
       }
     })
    
@@ -61,7 +70,6 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       template,
       identifierKeyword,
       [...names]
-      .filter(identifier => !notAllowedMember.has(identifier) && (!memberMatcher || memberMatcher.test(identifier)))
     )
     , {length} = lines
 
