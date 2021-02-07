@@ -9,6 +9,8 @@ import replaceMultiplicated from './replaceMultiplicated'
 
 const $exists = promisify(exists)
 , defaultOptions = extractDefaults(schema)
+//TODO several keywords
+, identifierKeyword = "__identifier__"
 
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
@@ -57,14 +59,14 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
    
     const lines = replaceMultiplicated(
       template,
-      //TODO several keywords
-      "${identifier}",
+      identifierKeyword,
       [...names]
       .filter(identifier => !notAllowedMember.has(identifier) && (!memberMatcher || memberMatcher.test(identifier)))
     )
     , {length} = lines
 
     writing: if (typeof destination === "string") {
+      //TODO Remove to hardcode due to typescript
       const filename = templating(destination, oFile)
       if (await $exists(filename)) {
         const lineReader = createInterface(createReadStream(filename))

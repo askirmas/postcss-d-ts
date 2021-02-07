@@ -23,14 +23,14 @@
       "items": {"type": "string"},
       "default": [
         "type IdentifiersMap = Partial<{",
-        "  \"${identifier}\": string|undefined",
+        "  \"__identifier__\": string|undefined",
         "}>",
         "",
         "declare const identifiersMap: IdentifiersMap;",
         "",
         "export default identifiersMap;",
         "",
-        "export const ${identifier}: string|undefined"
+        "export const __identifier__: string|undefined"
       ]
     },
     "identifierParser": {
