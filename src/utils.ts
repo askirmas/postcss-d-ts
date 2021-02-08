@@ -1,3 +1,4 @@
+import {readFileSync} from "fs"
 // TODO move to https://github.com/askirmas/ts-swiss
 // <ts-swiss>
 // type WithDefault<T, D> = {[K in keyof T]: K extends keyof D ? Exclude<T[K] | D[K], undefined> : T[K]}
@@ -29,7 +30,8 @@ const {keys: $keys} = Object
 
 export {
   regexpize,
-  extractDefaults
+  extractDefaults,
+  readlineSync
 }
 
 function regexpize(source: string|RegExp, flags = "") {
@@ -50,4 +52,9 @@ function extractDefaults<S extends SchemaWithDefaultsAndExamples>({properties}: 
   }
 
   return defaults as DefaultsAndExamplesFromSchema<S>
+}
+
+//TODO replace with common
+function readlineSync(path: string, splitter: string) {
+  return readFileSync(path).toString().split(splitter)
 }

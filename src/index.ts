@@ -1,19 +1,14 @@
 import postcss from 'postcss'
-import {promisify} from "util"
-import {createReadStream, createWriteStream, exists, readFileSync} from 'fs'
-import {createInterface} from 'readline'
 import {resolve} from "path"
-import { regexpize, extractDefaults } from './utils'
+import { regexpize, extractDefaults, readlineSync } from './utils'
 import schema from "./schema.json"
 import { Options, jsOptions } from './options'
 import replaceMultiplicated from './replaceMultiplicated'
+import collector from './collector'
+import rewrite from './rewrite'
 
-const $exists = promisify(exists)
-, defaultOptions = extractDefaults(schema)
-, {eol} = defaultOptions
-//TODO replace with common
-, readlineSync = (path: string, splitter = eol) => readFileSync(path).toString().split(splitter)
-, defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"))
+const defaultOptions = extractDefaults(schema)
+, defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"), "\n")
 
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
   const {
@@ -48,78 +43,25 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     // TODO To common file?
       return //result.warn("Source is falsy")
 
-    const filename = `${file}.d.ts`
-    , identifiers = new Set<string>()
+    const identifiers = new Set<string>()
 
-    root.walkRules(({selectors}) => {
-      //TODO consider postcss-selector-parser
-      const {length} = selectors
-      
-      for (let i = length; i--; ) {
-        const selector = selectors[i]
-        
-        let parsed: RegExpExecArray | null
-
-        // TODO check that parser is moving
-        while (parsed = identifierParser.exec(selector)) {
-          const identifier = parsed[identifierMatchIndex]
-          
-          if (
-            //TODO notAllowedMember = null
-            !jsNotAllowed.has(identifier)
-            && (
-              !jsMatcher
-              || jsMatcher.test(identifier)
-            )
-          )
-            identifiers.add(identifier)
-        }
-      }
-    })
+    root.walkRules(collector(
+      identifiers,
+      identifierParser,
+      identifierMatchIndex,
+      jsNotAllowed,
+      jsMatcher
+    ))
 
     const lines = replaceMultiplicated(
       templateContent,
       identifierKeyword,
       [...identifiers]
     )
-    , {length} = lines
 
-    writing: if (destination === false) {
-      if (await $exists(filename)) {
-        const lineReader = createInterface(createReadStream(filename))
-
-        let i = 0
-        , isSame = true
-
-        for await (const line of lineReader) 
-          if (!(isSame = line === lines[i++]))
-            break
-
-          
-        if (isSame) {
-          if (lines[length - 1] === "")
-            i++
-          if (length === i)
-            break writing
-        }
-      }
-
-      const stream = createWriteStream(filename)
-      
-      await new Promise((res, rej) => {
-
-        stream.on('error', rej).on('finish', res)
-
-        for (let i = 0; i < length; i++)
-          stream.write(
-            `${i ? eol : ''}${lines[i]}`,
-            /* istanbul ignore next */
-            err => err && rej(err)
-          )
-
-        stream.end()
-      }) 
-    } else
+    if (destination === false)
+      await rewrite(`${file}.d.ts`, lines, eol)
+    else
       // TODO Somehow get rid of `{}`
       (destination as jsOptions["destination"])[
         file
