@@ -12,7 +12,7 @@ npm install postcss-plugin-d-ts
 
 *TBD Clone from specs*
 
-- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next5/pages/index.tsx* 
+- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx* 
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
 
 Your component 
@@ -50,7 +50,7 @@ export const class2: string|undefined
 ### Resources
 - JsonSchema
 
-See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next3/postcss.config.json
+See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_9/postcss.config.json
 - TypeScript
 ```typescript
 import { Options as DTsOptions} from "postcss-plugin-d-ts/dist/options"
@@ -58,7 +58,7 @@ const dtsOpts: DTsOptions = {}
 ```
 - JSDoc
 
-See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next5/postcss.config.js
+See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/postcss.config.js
 
 ## PostCss Usage
 

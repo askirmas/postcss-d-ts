@@ -1,5 +1,5 @@
 {
-  "name": "next3",
+  "name": "next_9",
   "version": "1.0.0",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
@@ -9,6 +9,6 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
-    "next": "^9.5.1"
+    "next": "^9.3.6"
   }
 }
