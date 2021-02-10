@@ -3,9 +3,9 @@ import {sync} from 'globby'
 import { readOpts, rfs, suiteName, launcher, rfsl } from './test-runner'
 
 const $cwd = process.cwd()
-, unitsDir = "__unit__"
-, sourcePattern = `${unitsDir}/*.css`
-, configPattern = `${unitsDir}/*/postcss-plugin-d-ts.config.json`
+, suiteDir = "__func__"
+, sourcePattern = `${suiteDir}/*.css`
+, configPattern = `${suiteDir}/*/postcss-plugin-d-ts.config.json`
 , expectMask = "*{MUST,SHOULD,MAY}.d.ts"
 , globbing = (pattern: string) => sync(pattern, {
   "gitignore": true,
