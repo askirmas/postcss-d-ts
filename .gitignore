@@ -5,5 +5,7 @@ yarn-error.log
 dist
 
 coverage
+coverage-*
+
 *css.d.ts
 **/*.map

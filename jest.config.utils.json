@@ -1,6 +1,6 @@
 {
   "displayName": "utils",
-  "coverageDirectory": "src/coverage",
+  "coverageDirectory": "coverage-utils",
   "testRegex": "src/.*\\.(test|spec)\\.[jt]sx?$",
   "collectCoverageFrom": [
     "src/**/*.{ts,tsx,js,jsx}",
