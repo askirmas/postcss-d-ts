@@ -11,6 +11,7 @@ export type RunOpts = Partial<{
 }>
 
 const {parse: $parse} = JSON
+, eol = "\n"
 
 export default run
 export {
@@ -42,7 +43,7 @@ async function run(runOpts: RunOpts, opts?: Options) {
       rfsl(`${from}.d.ts`)
     ).toStrictEqual(
       output
-      .split("\n")
+      .split(eol)
     )
   
   return result

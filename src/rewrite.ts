@@ -36,7 +36,10 @@ async function rewrite(filename: string, lines: string[], eol: string) {
 
     for (let i = 0; i < length; i++)
       stream.write(
-        `${i ? eol : ''}${lines[i]}`,
+        `${
+          i ? eol : ''
+        }${lines[i]
+        }`,
         /* istanbul ignore next */
         err => err && rej(err)
       )
