@@ -1,12 +1,18 @@
 export default collector
 
-function collector(
+function collector({
+  identifiers,
+  identifierParser,
+  identifierMatchIndex,
+  jsNotAllowed,
+  jsMatcher
+}: {
   identifiers: Set<string>,
   identifierParser: RegExp,
   identifierMatchIndex: number,
   jsNotAllowed: Set<string>,
   jsMatcher: "" | null | RegExp
-) {
+}) {
   return ({selectors}: {selectors: string[]}) => {
     //TODO consider postcss-selector-parser
     const {length} = selectors
@@ -31,6 +37,8 @@ function collector(
           identifiers.add(identifier)
       }
     }
+
+    return identifiers
   }
 }
 

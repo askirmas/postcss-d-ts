@@ -1,4 +1,5 @@
-import { extractDefaults } from "./utils";
+import {resolve} from "path"
+import { extractDefaults, readlineSync, regexpize } from "./utils";
 
 describe(extractDefaults.name, () => {
   it("demo", () => expect(extractDefaults({
@@ -28,3 +29,28 @@ describe(extractDefaults.name, () => {
     "empty": undefined
   }))
 })
+
+describe(regexpize.name, () => {
+  it("string => regexp", () => expect(regexpize(
+    "abc"
+  ).source).toBe(
+    'abc'
+  ))
+
+  it("other => same", () => {
+    const source = [] as unknown as RegExp
+    expect(regexpize(
+      source
+    )).toBe(
+      source
+    )
+  })
+
+})
+
+it(readlineSync.name, () => expect(readlineSync(
+  resolve(__dirname, "rewrite.test", "without_last_new_line.txt"),
+  "\n"
+)).toStrictEqual([
+  "a", "b", "c"
+]))

@@ -25,20 +25,28 @@
   },
   "scripts": {
     "setup": "git config include.path ../.gitconfig && git-hooks-wrapper init",
+    
     "dev": "npm run jest -- --watch --coverage=false",
+    
     "test": "npm run build",
     "build": "npm run compile",
     "prebuild": "find . -type f -iname '*.css.d.ts' -exec rm {} \\; && npm run t",
     "postbuild": "npm run spec && npm run docs",
+
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs dist && mkdir docs",
     "postcompile": "cp src/_css-template.d.ts dist/",
+    
     "spec": "cd __recipes__ && npm run build",
-    "docs": "cd dist && find . -type f -iname '*.json' -exec cp {} ../docs/ \\;",
-    "t": "npm run jest && npm run t/tsc",
-    "t/tsc": "cd __unit__ && tsc",
+    
+    "t": "npm run t/utils && npm run t/func && npm run t/tsc",
+    "t/utils": "npm run jest -- --config jest.config.utils.json",
+    "t/func": "npm run jest",
+    "t/tsc": "cd __unit__ && tsc && cd ../__func__ && tsc",
     "jest": "jest --runInBand",
-    "prejest": "jest --clearCache",
+    
+    "docs": "cd dist && find . -type f -iname '*.json' -exec cp {} ../docs/ \\;",
+    
     "dev:n3": "cd __recipes__ && npm run dev:n3",
     "dev:n5": "cd __recipes__ && npm run dev:n5",
     "-eslint": "eslint --fix ."

@@ -45,13 +45,14 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
 
     const identifiers = new Set<string>()
 
-    root.walkRules(collector(
+    //TODO replace with just opts and inherit
+    root.walkRules(collector({
       identifiers,
       identifierParser,
       identifierMatchIndex,
       jsNotAllowed,
       jsMatcher
-    ))
+    }))
 
     const lines = replaceMultiplicated(
       templateContent,

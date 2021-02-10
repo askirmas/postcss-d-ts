@@ -1,6 +1,6 @@
 import rewrite from "./rewrite"
 import {resolve} from "path"
-import {readFileSync, appendFileSync, statSync, writeFileSync} from "fs"
+import {readFileSync, appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
 
 const eol = "\n"
 , ctx = (fileName: string) => {
@@ -18,6 +18,14 @@ const eol = "\n"
     write
   }
 }
+
+it("not exists - to write", async () => {
+  const filename = "rewrite.txt";
+  expect(existsSync(filename)).toBe(false)
+  await rewrite("rewrite.txt", ["whatever"], "")
+  expect(existsSync(filename)).toBe(true)
+  unlinkSync(filename)
+})
 
 describe("with_last_new_line", () => {
   const {filePath, original, modified, write} = ctx("with_last_new_line.txt")

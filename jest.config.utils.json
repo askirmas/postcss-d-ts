@@ -1,11 +1,12 @@
 {
-  "displayName": "func",
-  "coverageDirectory": "coverage",
-  "testRegex": "(unit|func)\\.(test|spec)\\.[jt]sx?$",
+  "displayName": "utils",
+  "coverageDirectory": "src/coverage",
+  "testRegex": "src/.*\\.(test|spec)\\.[jt]sx?$",
   "collectCoverageFrom": [
     "src/**/*.{ts,tsx,js,jsx}",
+    "!**/*.(test|spec).{ts,tsx,js,jsx}",
     "!src/coverage/**/*.*",
-    "!**/*.(test|spec).{ts,tsx,js,jsx}"
+    "!src/index.ts"
   ],
   "preset": "ts-jest",
   "testEnvironment": "node",
