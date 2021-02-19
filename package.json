@@ -49,6 +49,7 @@
     
     "dev:n3": "cd __recipes__ && npm run dev:n3",
     "dev:n5": "cd __recipes__ && npm run dev:n5",
+    "np": "np",
     "-eslint": "eslint --fix ."
   },
   "devDependencies": {
