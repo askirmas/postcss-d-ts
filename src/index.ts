@@ -58,6 +58,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       templateContent,
       identifierKeyword,
       [...identifiers]
+      //TODO Change with option
+      .sort()
     )
 
     if (destination === false)
