@@ -28,10 +28,10 @@ export default function Component() {
 Generated declaration *./css.module.css.d.ts*
 
 ```typescript
-type IdentifiersMap = Partial<{
+export type IdentifiersMap = {
   "class1": string|undefined
   "class2": string|undefined
-}>
+}
 
 declare const identifiersMap: IdentifiersMap;
 

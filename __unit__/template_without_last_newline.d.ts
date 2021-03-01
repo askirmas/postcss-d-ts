@@ -1,4 +1,4 @@
-type IdentifiersMap = {
+export type IdentifiersMap = {
   "__identifier__": string|undefined
 }
 

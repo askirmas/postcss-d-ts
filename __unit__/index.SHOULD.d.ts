@@ -1,4 +1,4 @@
-type IdentifiersMap = {
+export type IdentifiersMap = {
   "class2": string|undefined
   "classname": string|undefined
   "id": string|undefined
