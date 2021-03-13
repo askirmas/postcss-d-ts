@@ -2,7 +2,7 @@
 
 [PostCSS] plugin generates [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
-<center><img src="https://postcss.org/logo.svg" alt="postcss" width="64px" /> <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="64px;" /><img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" width="64px" /></center>
+<p align="center"><img src="https://postcss.org/logo.svg" alt="postcss" width="64px" /> <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="64px;" /><img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" width="64px" /></p>
 
 ## Installation
 
