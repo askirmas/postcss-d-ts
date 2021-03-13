@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://askirmas.github.io/postcss-plugin-d-ts/schema.json",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "default": "./node_modules/postcss-plugin-d-ts/dist/schema.json",
+            "examples": [
+                "https://askirmas.github.io/postcss-plugin-d-ts/schema.json"
+            ]
+        },
+        "template": {
+            "title": "Path to template `d.ts` file",
+            "type": "string",
+            "format": "uri-reference",
+            "default": false,
+            "examples": [
+                "./_css-template.d.ts"
+            ]
+        },
+        "identifierKeyword": {
+            "title": "Word in `d.ts` template to be replaced with CSS classes, ids, etc",
+            "type": "string",
+            "default": "__identifier__"
+        },
+        "identifierPattern": {
+            "title": "Regex to take CSS identifiers",
+            "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
+            "$comment": "//TODO consider postcss-selector-parser",
+            "default": "[#\\.]([\\w\\d-]+)",
+            "type": "string",
+            "format": "regex",
+            "examples": [
+                "\\.([\\w\\d-]+)"
+            ]
+        },
+        "identifierMatchIndex": {
+            "type": "integer",
+            "default": 1
+        },
+        "eol": {
+            "default": "\n",
+            "type": "string"
+        },
+        "destination": {
+            "title": "Used for debugging",
+            "$comment": "//TODO `string` means to collect all to that file, `FALSY` - nearby each file",
+            "oneOf": [
+                {
+                    "description": "Declaration next to source file",
+                    "const": false
+                },
+                {
+                    "description": "Write to this object rather than filesystem",
+                    "const": {}
+                }
+            ],
+            "default": false,
+            "examples": [
+                {}
+            ]
+        }
+    }
+}
