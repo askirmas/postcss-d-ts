@@ -10,7 +10,7 @@
             ]
         },
         "template": {
-            "title": "Path to template `d.ts` file",
+            "title": "Local path to a custom template for declarations generating",
             "type": "string",
             "format": "uri-reference",
             "default": false,
@@ -19,7 +19,7 @@
             ]
         },
         "identifierKeyword": {
-            "title": "Word in `d.ts` template to be replaced with CSS classes, ids, etc",
+            "title": "The word in `d.ts` template to be replaced with CSS classes, ids, etc",
             "type": "string",
             "default": "__identifier__"
         },

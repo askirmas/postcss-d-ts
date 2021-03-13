@@ -1,7 +1,6 @@
-interface IdentifiersMap {
-  "__css__": string
+import type { CSSProperties } from "react";
+interface Styled {
+  "data": Record<string, CSSProperties>;
 }
-
-declare const identifiersMap: IdentifiersMap;
-
-export default identifiersMap;
+declare const styled: Styled;
+export default styled;

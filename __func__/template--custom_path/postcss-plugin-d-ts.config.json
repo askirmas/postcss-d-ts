@@ -1,4 +1,4 @@
 {
   "template": "./template.d.ts",
-  "identifierKeyword": "__css__"
+  "identifierKeyword": "data"
 }

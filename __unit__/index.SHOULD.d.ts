@@ -1,4 +1,4 @@
-export type IdentifiersMap = {
+export type CssIdentifiersMap = {
   "class": string|undefined
   "class2": string|undefined
   "classname": string|undefined
@@ -6,6 +6,6 @@ export type IdentifiersMap = {
   "my-id": string|undefined
 }
 
-declare const identifiersMap: IdentifiersMap;
+declare const identifiersMap: CssIdentifiersMap
 
-export = identifiersMap;
+export = identifiersMap

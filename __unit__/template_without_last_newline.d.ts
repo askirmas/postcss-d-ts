@@ -1,7 +1,7 @@
-export type IdentifiersMap = {
+export type CssIdentifiersMap = {
   "__identifier__": string|undefined
 }
 
-declare const identifiersMap: IdentifiersMap;
+declare const identifiersMap: CssIdentifiersMap
 
-export = identifiersMap;
+export = identifiersMap
