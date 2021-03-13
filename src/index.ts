@@ -17,14 +17,10 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     identifierKeyword,
     "identifierPattern": cssP,
     identifierMatchIndex,
-    "jsIdentifierPattern": jsP,
-    jsIdentifierInvalidList,
     destination,
     "template": templatePath,
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(cssP, "g")
-  , jsMatcher = jsP && regexpize(jsP)
-  , jsNotAllowed = new Set(jsIdentifierInvalidList)
   //TODO check `templatePath === ""`
   , templateContent = typeof templatePath === "string"
   ? readlineSync(templatePath, eol)
@@ -43,6 +39,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     // TODO To common file?
       return //result.warn("Source is falsy")
 
+    //TODO Check performance - Set is not for serving, not collecting
     const identifiers = new Set<string>()
 
     //TODO replace with just opts and inherit
@@ -50,8 +47,6 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       identifiers,
       identifierParser,
       identifierMatchIndex,
-      jsNotAllowed,
-      jsMatcher
     }))
 
     const lines = replaceMultiplicated(

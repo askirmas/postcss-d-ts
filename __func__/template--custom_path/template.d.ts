@@ -5,5 +5,3 @@ interface IdentifiersMap {
 declare const identifiersMap: IdentifiersMap;
 
 export default identifiersMap;
-
-export const __css__: string

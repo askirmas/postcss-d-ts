@@ -56,61 +56,6 @@
             "examples": [
                 {}
             ]
-        },
-        "jsIdentifierPattern": {
-            "title": "Pattern of allowed JS variables or `null` to not check",
-            "default": "^[\\$\\w][\\$\\w\\d]+$",
-            "type": ["string", "null"],
-            "format": "regex",
-            "examples": [
-                null
-            ]
-        },
-        "jsIdentifierInvalidList": {
-            "title": "List to ignore - JS keywords and others",
-            "default": [
-                "break",
-                "case",
-                "catch",
-                "class",
-                "const",
-                "continue",
-                "debugger",
-                "default",
-                "delete",
-                "do",
-                "else",
-                "export",
-                "extends",
-                "finally",
-                "for",
-                "function",
-                "if",
-                "import",
-                "in",
-                "instanceof",
-                "new",
-                "return",
-                "super",
-                "switch",
-                "this",
-                "throw",
-                "try",
-                "typeof",
-                "var",
-                "void",
-                "while",
-                "with",
-                "yield",
-                "Array",
-                "Object",
-                "JSON",
-                "Function",
-                "Map",
-                "Set",
-                "Symbol",
-                "Proxy"
-            ]
         }
     }
 }

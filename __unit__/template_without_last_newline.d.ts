@@ -4,6 +4,4 @@ export type IdentifiersMap = {
 
 declare const identifiersMap: IdentifiersMap;
 
-export default identifiersMap;
-
-export const __identifier__: string|undefined
+export = identifiersMap;

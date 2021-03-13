@@ -1,7 +1,7 @@
 {
   "displayName": "func",
   "coverageDirectory": "coverage",
-  "testRegex": "(unit|func)\\.(test|spec)\\.[jt]sx?$",
+  "testRegex": ".*\\.(test|spec)\\.[jt]sx?$",
   "collectCoverageFrom": [
     "src/**/*.{ts,tsx,js,jsx}",
     "!src/coverage/**/*.*",
@@ -19,6 +19,7 @@
     }
   },
   "modulePathIgnorePatterns": [
-    "__unit__/index.*\\.d\\.ts"
+    "__unit__/index.*\\.d\\.ts",
+    ".*__sandbox__.*"
   ]
 }

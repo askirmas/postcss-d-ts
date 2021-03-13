@@ -8,7 +8,6 @@ type DefOptions = {
 }
 export type jsOptions = {
   identifierPattern: RegExp
-  jsIdentifierPattern: RegExp
   destination: Record<string, string[]>
 }
 
