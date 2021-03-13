@@ -103,7 +103,7 @@ Example with option `{"identifierKeyword": "data”}` [./\_\_func\_\_/template--
 ```typescript
 import type { CSSProperties } from "react";
 interface Styled {
-  "data": Record<string, CSSProperties>;
+  data: Record<string, CSSProperties>;
 }
 declare const styled: Styled;
 export default styled;

@@ -50,8 +50,6 @@
     "@types/globby": "^9.1.0",
     "@types/jest": "^26.0.20",
     "@types/react": "^16.9.46",
-    "bootstrap3": "npm:bootstrap@^3.4.1",
-    "bootstrap4": "npm:bootstrap@^4.6.0",
     "eslint": "^7.19.0",
     "eslint-config-postcss": "^4.0.0",
     "eslint-config-standard": "^16.0.2",
@@ -67,7 +65,6 @@
     "git-hooks-wrapper": "^0.7.1",
     "globby": "^11.0.2",
     "jest": "^26.6.3",
-    "material10": "npm:material-components-web@^10.0.0",
     "np": "^6.3.2",
     "postcss": "^7",
     "tailwindcss2": "npm:tailwindcss@^2.0.3",
@@ -99,5 +96,6 @@
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
-  ]
+  ],
+  "dependencies": {}
 }

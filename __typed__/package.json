@@ -1,0 +1,18 @@
+{
+  "name": "__typed__",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap3": "npm:bootstrap@^3.4.1",
+    "bootstrap4": "npm:bootstrap@^4.6.0",
+    "material10": "npm:material-components-web@^10.0.0",
+    "tailwindcss2": "npm:tailwindcss@^2.0.3"
+  }
+}
