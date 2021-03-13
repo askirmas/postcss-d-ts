@@ -89,7 +89,9 @@
     "access": "public"
   },
   "np": {
-    "yarn": false
+    "yarn": false,
+    "branch": "master",
+    "2fa": false
   },
   "files": [
     "dist",
