@@ -22,6 +22,6 @@
 [data-my_attribute-with-value='def'] {}
 [data-my_attribute-with-value=ghi] {}
 
-/* Multiple mentions */ 
+/* Multiple mentions */
 #id.class2{}
 #my-id.class2{}

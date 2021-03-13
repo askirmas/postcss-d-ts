@@ -12,10 +12,10 @@ npm install postcss-plugin-d-ts
 
 *TBD Clone from specs*
 
-- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx* 
+- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
 
-Your component 
+Your component
 
 ```tsx
 import classNames, {class2} from "./css.module.css"
@@ -45,7 +45,7 @@ export const class2: string|undefined
 
 ## Options
 
-*TBD Clone here https://github.com/askirmas/postcss-plugin-d-ts/tree/master/docs* 
+*TBD Clone here https://github.com/askirmas/postcss-plugin-d-ts/tree/master/docs*
 
 ### Resources
 - JsonSchema

@@ -1,16 +1,16 @@
-import postcss from 'postcss'
+import postcss = require('postcss')
 import {resolve} from "path"
 import { regexpize, extractDefaults, readlineSync } from './utils'
-import schema from "./schema.json"
-import { Options, jsOptions } from './options'
-import replaceMultiplicated from './replaceMultiplicated'
-import collector from './collector'
-import rewrite from './rewrite'
+import schema = require("./schema.json")
+import type { Options, jsOptions } from './options.types'
+import replaceMultiplicated = require('./replaceMultiplicated')
+import collector = require('./collector')
+import rewrite = require('./rewrite')
 
 const defaultOptions = extractDefaults(schema)
 , defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"), "\n")
 
-export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {  
+export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {
   const {
     eol,
     //TODO several keywords?

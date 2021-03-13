@@ -14,7 +14,7 @@ const $cwd = process.cwd()
 , sources = globbing(sourcePattern)
 .reduce((acc, path) => (
   acc[suiteName(path)] = rfs(path),
-  acc 
+  acc
 ), {} as Record<string, string>)
 
 
@@ -29,13 +29,13 @@ globbing(configPattern)
     afterAll(() => process.chdir($cwd))
 
     expects.forEach(exp => {
-      const name = suiteName(exp) 
+      const name = suiteName(exp)
       , from = resolve(exp)
       , expectation = rfsl(exp)
 
       it(name, async () => {
-        const destination: Record<string, string[]> = {} 
-        
+        const destination: Record<string, string[]> = {}
+
         await launcher({
           ...opts,
           destination

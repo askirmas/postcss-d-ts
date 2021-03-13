@@ -1,7 +1,7 @@
 import {readFileSync} from 'fs'
-import postcss from 'postcss'
-import plugin from "./src"
-import { Options } from './src/options'
+import postcss = require('postcss')
+import plugin = require("./src")
+import type { Options } from './src/options.types'
 
 export type RunOpts = Partial<{
   from: string
@@ -33,11 +33,12 @@ async function run(runOpts: RunOpts, opts?: Options) {
 
   const result = await launcher(opts).process(input, { from })
   , {
+    //TODO propagate modality with opts
     output = from && rfs(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
   } = runOpts
 
   expect(result.warnings()).toHaveLength(errorsCount)
-  
+
   if (output)
     expect(
       rfsl(`${from}.d.ts`)
@@ -45,7 +46,7 @@ async function run(runOpts: RunOpts, opts?: Options) {
       output
       .split(eol)
     )
-  
+
   return result
 }
 

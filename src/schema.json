@@ -19,7 +19,7 @@
       ]
     },
     "identifierKeyword": {
-      "title": "Word in `d.ts` template to replace with CSS classes, ids, etc",
+      "title": "Word in `d.ts` template to be replaced with CSS classes, ids, etc",
       "type": "string",
       "default": "__identifier__"
     },
@@ -29,8 +29,11 @@
       "$comment": "//TODO consider postcss-selector-parser",
       "default": "[#\\.]([\\w\\d-]+)",
       "type": "string",
-      "format": "regex"
-    }, 
+      "format": "regex",
+      "examples": [
+        "\\.([\\w\\d-]+)"
+      ]
+    },
     "identifierMatchIndex": {
       "type": "integer",
       "default": 1
@@ -54,7 +57,7 @@
       ],
       "default": false,
       "examples": [
-        {}        
+        {}
       ]
     }
   }

@@ -1,5 +1,5 @@
-import { SchemaDeclaredValues, Part, Extend } from './utils'
-import schema from "./schema.json"
+import type { SchemaDeclaredValues, Part, Extend } from './utils'
+import schema = require("./schema.json")
 
 type SchemaOptions = typeof schema
 type DefOptions = {

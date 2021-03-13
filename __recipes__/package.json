@@ -2,19 +2,17 @@
   "name": "recipes",
   "version": "1.0.0",
   "scripts": {
-    "setup": "cd next_9 && npm ci --prefer-offline --progress=false --no-audit && cd ../next_10 && npm ci --prefer-offline --progress=false --no-audit && cd ..",
     "build": "npm run compile/9 && npm run compile/10",
     "compile/9": "cd next_9 && npm run build",
     "compile/10": "cd next_10 && npm run build",
     "dev:n3": "cd next_9 && npm run dev",
     "dev:n5": "cd next_10 && npm run dev",
-    "reinstall": "npm uninstall postcss-plugin-d-ts && npm install ..",
-    "prebuild": "npm run setup && npm run reinstall"
+    "prebuild": "npm uninstall postcss-plugin-d-ts && npm install postcss-plugin-d-ts"
   },
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.9.44",
-    "postcss-plugin-d-ts": "file:..",
+    "postcss-plugin-d-ts": "^0.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sass": "^1.26.10",

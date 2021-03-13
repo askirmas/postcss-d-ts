@@ -2,11 +2,11 @@
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "alwaysStrict": true,
     "checkJs": false,
     "downlevelIteration": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "keyofStringsOnly": false,
@@ -19,6 +19,10 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "importsNotUsedAsValues": "error",
+    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -30,7 +34,8 @@
     ]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "coverage"
   ],
   "include": [
     "**/*.ts",

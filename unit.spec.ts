@@ -36,7 +36,7 @@ describe('features', () => {
       await run({from})
       expect(modifiedTime()).toBe(modified)
     })
-  
+
     it('overwrite after append new line', async () => {
       appendFileSync(dtsPath, "\n")
       const modified = modifiedTime()
@@ -56,7 +56,7 @@ describe('features', () => {
       await run({from}, {"template": `${suitFolder}/template_without_last_newline.d.ts`})
       expect(modifiedTime()).toBe(modified)
     })
-  })  
+  })
 })
 
 describe('options', () => {
@@ -72,8 +72,8 @@ describe('options', () => {
       {identifierPattern: /\.([\w-]+)/}
     ))
   })
-    
-  describe("destination", () => {  
+
+  describe("destination", () => {
     it('destionation here', async () => {
       const destination = {}
       await run({from}, {destination})
@@ -83,10 +83,10 @@ describe('options', () => {
         [resolve(from)]: dtsContent
       })
     })
-  
+
     it('falsy destination', async () => await Promise.all(
       //@ts-expect-error
       FALSY.map(destination => destination !== false && run({from, errorsCount: 1}, {destination}))
     ))
-  }) 
+  })
 })

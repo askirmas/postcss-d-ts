@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build && next export"
+    "build": "next build && next export",
+    "prebuild": "npm uninstall postcss-plugin-d-ts && npm install ../.."
   },
   "license": "MIT",
   "dependencies": {
-    "next": "^10.0.6"
+    "next": "^10.0.6",
+    "postcss-plugin-d-ts": "file:../.."
   }
 }

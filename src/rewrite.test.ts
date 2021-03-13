@@ -1,4 +1,4 @@
-import rewrite from "./rewrite"
+import rewrite = require("./rewrite")
 import {resolve} from "path"
 import {readFileSync, appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
 

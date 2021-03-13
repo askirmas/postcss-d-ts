@@ -9,7 +9,7 @@ it("last empty", async () => {
   let i = 0
   for await (const _ of lineReader)
     i++
-  
+
   expect(i).toBe(length - 1)
 })
 
@@ -21,6 +21,6 @@ it("last not empty", async () => {
   let i = 0
   for await (const _ of lineReader)
     i++
-  
+
   expect(i).toBe(length)
 })

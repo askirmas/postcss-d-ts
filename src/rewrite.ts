@@ -4,7 +4,7 @@ import {createInterface} from 'readline'
 
 const $exists = promisify(exists)
 
-export default rewrite
+export = rewrite
 
 async function rewrite(filename: string, lines: string[], eol: string) {
   const {length} = lines
@@ -15,11 +15,11 @@ async function rewrite(filename: string, lines: string[], eol: string) {
     let i = 0
     , isSame = true
 
-    for await (const line of lineReader) 
+    for await (const line of lineReader)
       if (!(isSame = line === lines[i++]))
         break
 
-      
+
     if (isSame) {
       if (lines[length - 1] === "")
         i++
@@ -29,7 +29,7 @@ async function rewrite(filename: string, lines: string[], eol: string) {
   }
 
   const stream = createWriteStream(filename)
-  
+
   await new Promise((res, rej) => {
 
     stream.on('error', rej).on('finish', res)
@@ -45,5 +45,5 @@ async function rewrite(filename: string, lines: string[], eol: string) {
       )
 
     stream.end()
-  }) 
+  })
 }

@@ -1,6 +1,6 @@
-import schema from "./schema.json"
+import schema = require("./schema.json")
 import { extractDefaults, regexpize } from "./utils";
-import collector from "./collector";
+import collector = require("./collector");
 
 const defaults = extractDefaults(schema)
 , opts = {

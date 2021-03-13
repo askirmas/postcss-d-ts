@@ -1,4 +1,4 @@
-import replaceMultiplicated from "./replaceMultiplicated"
+import replaceMultiplicated = require("./replaceMultiplicated")
 
 describe(replaceMultiplicated.name, () => {
   it("single", () => expect(replaceMultiplicated(
