@@ -12,7 +12,7 @@ npm install postcss-plugin-d-ts
 
 Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS. 
 
-## Basic Example
+## Basic example
 
 **If you’re not familiar with PostCss – start from [#PostCss Usage](#postcss-usage)**
 
@@ -75,6 +75,10 @@ function classNames(classes: Record<string, string|undefined>) {
   return Object.keys(classes).join(" ")
 }
 ```
+
+## With CSS libraries
+
+In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/tailwind2.SHOULD.d.ts).
 
 ## Basic options
 
@@ -164,10 +168,6 @@ module.exports = {
 
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
-
-### Popular libraries
-
-In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/tailwind2.SHOULD.d.ts).
 
 ## PostCss Usage
 
