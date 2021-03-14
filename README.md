@@ -33,7 +33,7 @@ export type CssIdentifiersMap = {
 
 declare const identifiersMap: CssIdentifiersMap
 
-export = identifiersMap
+export default identifiersMap
 ```
 
 Thus, in Component (i.e. React):
@@ -91,7 +91,7 @@ export type CssIdentifiersMap = {
 
 declare const identifiersMap: CssIdentifiersMap
 
-export = identifiersMap
+export default identifiersMap
 ```
 
 - Example: *[./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/template--custom_path/)*

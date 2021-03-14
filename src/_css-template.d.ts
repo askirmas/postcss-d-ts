@@ -4,4 +4,4 @@ export type CssIdentifiersMap = {
 
 declare const identifiersMap: CssIdentifiersMap
 
-export = identifiersMap
+export default identifiersMap
