@@ -46,8 +46,6 @@ async function run(runOpts: RunOpts, opts?: Options) {
       output
       .split(eol)
     )
-
-  return result
 }
 
 function rfs(path: string) {
