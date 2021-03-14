@@ -2,7 +2,7 @@ import type {PluginCreator} from 'postcss'
 import {resolve} from "path"
 import { regexpize, extractDefaults, readlineSync } from './utils'
 import schema = require("./schema.json")
-import type { Options, jsOptions } from './options.types'
+import type { Options } from './options.types'
 import replaceMultiplicated = require('./replaceMultiplicated')
 import collector = require('./collector')
 import rewrite = require('./rewrite')
@@ -38,8 +38,8 @@ const creator: PluginCreator<Options> = (opts?) => {
   return {
     postcssPlugin: "postcss-plugin-d-ts",
     prepare: (result) => {
-      if (!destination && destination !== false) {
-        result.warn("Destination is falsy")
+      if (!(destination === false || destination !== null && typeof destination === "object")) {
+        result.warn("Destination is of wrong type")
         return {}
       }
       //TODO check sticky
@@ -76,13 +76,11 @@ const creator: PluginCreator<Options> = (opts?) => {
             //TODO Change with option
             .sort()
           )
+
           if (destination === false)
             await rewrite(`${file}.d.ts`, lines, eol)
           else
-            // TODO Somehow get rid of `{}`
-            (destination as jsOptions["destination"])[
-              file
-            ] = lines
+            destination[file] = lines
         }
       }
     }
@@ -90,6 +88,5 @@ const creator: PluginCreator<Options> = (opts?) => {
 }
 
 creator.postcss = true
-
 
 export = creator

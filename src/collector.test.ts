@@ -1,6 +1,6 @@
 import schema = require("./schema.json")
 import { extractDefaults, regexpize } from "./utils";
-import type {CollectingArg} from "./ts-swiss.types"
+import type {CollectingArg} from "./$defs.types"
 import collector = require("./collector");
 
 const defaults = extractDefaults(schema)

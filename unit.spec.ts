@@ -74,7 +74,7 @@ describe('options', () => {
   })
 
   describe("destination", () => {
-    it('destionation here', async () => {
+    it('here', async () => {
       const destination = {}
       await run({from}, {destination})
       expect(
@@ -84,7 +84,8 @@ describe('options', () => {
       })
     })
 
-    it('falsy destination', async () => await Promise.all(
+    
+    it('falsy', async () => await Promise.all(
       //@ts-expect-error
       FALSY.map(destination => destination !== false && run({from, errorsCount: 1}, {destination}))
     ))

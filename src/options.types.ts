@@ -1,4 +1,4 @@
-import type { SchemaDeclaredValues, Part, Extend } from './utils'
+import type { SchemaDeclaredValues, Part, Extend } from './ts-swiss.types'
 import schema = require("./schema.json")
 
 type SchemaOptions = typeof schema
@@ -8,7 +8,6 @@ type DefOptions = {
 }
 export type jsOptions = {
   identifierPattern: RegExp
-  destination: Record<string, string[]>
 }
 
 export type Options = Part<Extend<DefOptions, jsOptions>>

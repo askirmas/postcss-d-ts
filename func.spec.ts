@@ -43,6 +43,8 @@ globbing(configPattern)
           sources[name],
           {from}
         )
+
+        // TODO launcher duplication?
         expect(
           destination[from]
         ).toStrictEqual(

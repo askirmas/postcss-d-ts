@@ -78,7 +78,7 @@
       ],
       "default": false,
       "examples": [
-        {}
+        {"file/path": ["xxx"]}
       ]
     }
   }

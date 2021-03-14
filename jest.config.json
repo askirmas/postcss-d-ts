@@ -1,7 +1,12 @@
 {
   "displayName": "func",
   "coverageDirectory": "coverage",
-  "testRegex": ".*\\.(test|spec)\\.[jt]sx?$",
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/sandbox/",
+    "/__sandbox__/",
+    "-src"
+  ],
   "collectCoverageFrom": [
     "src/**/*.{ts,tsx,js,jsx}",
     "!src/coverage/**/*.*",
@@ -17,9 +22,5 @@
       "functions": 100,
       "lines": 100
     }
-  },
-  "modulePathIgnorePatterns": [
-    "__unit__/index.*\\.d\\.ts",
-    ".*__sandbox__.*"
-  ]
+  }
 }

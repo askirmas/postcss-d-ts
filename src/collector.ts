@@ -1,4 +1,4 @@
-import type { CollectingArg } from "./ts-swiss.types"
+import type { CollectingArg } from "./$defs.types"
 
 export = collector
 
