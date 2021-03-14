@@ -23,8 +23,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     identifierMatchIndex,
     identifierCleanupSearch: escapedP,
     identifierCleanupReplace,
-    allowedAtRules: atRules  
-    
+    allowedAtRules: atRules
+
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(cssP, "g")
   , identifierCleanupParser = regexpize(escapedP, "g")

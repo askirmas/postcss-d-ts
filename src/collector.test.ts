@@ -12,7 +12,7 @@ function collectorCall(selectors: CollectingArg["selectors"], parent?: Collectin
     identifierMatchIndex: defaults.identifierMatchIndex,
     identifierCleanupParser: regexpize(defaults.identifierCleanupSearch, "g"),
     identifierCleanupReplace: defaults.identifierCleanupReplace,
-    allowedAtRules: new Set(defaults.allowedAtRules)  
+    allowedAtRules: new Set(defaults.allowedAtRules)
   })({
     selectors: selectors.reverse(),
     ...parent && {parent}
@@ -44,13 +44,13 @@ describe("at-rule", () => {
    * ```css
    * @-webkit-keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
    *   0%, 68.2% {}
-   * } */  
+   * } */
   it("without keyframes", () => expect(collectorCall(
     ['0%', '68.2%'],
     {"type": "atrule", "name": "keyframes"}
   )).toStrictEqual([
   ]))
-  
+
   it("with media", () => expect(collectorCall(
     ['.inside-media'],
     {"type": "atrule", "name": "media"}

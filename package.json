@@ -32,7 +32,7 @@
     "postbuild": "npm run spec && npm run docs",
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs dist && mkdir docs",
-    "postcompile": "cp src/_css-template.d.ts dist/",
+    "postcompile": "./postcompile.sh",
     "spec": "cd __recipes__ && npm run build",
     "t": "npm run t/utils && npm run t/func && npm run t/tsc",
     "t/utils": "npm run jest -- --config jest.config.utils.json",
@@ -96,7 +96,6 @@
   "files": [
     "dist",
     "README.md",
-    "CHANGELOG.md",
     "LICENSE"
   ],
   "dependencies": {}

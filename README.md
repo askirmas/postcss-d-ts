@@ -10,7 +10,7 @@ npm install postcss-plugin-d-ts
 
 ## Goal
 
-Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS. 
+Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS.
 
 ## Basic example
 
@@ -82,7 +82,7 @@ In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-plugin-d-ts/blob/mast
 
 ## Basic options
 
-### `template: string` 
+### `template: string`
 
 Local path to a custom template for declarations generating.
 

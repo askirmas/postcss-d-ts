@@ -58,7 +58,7 @@
     "identifierCleanupReplace": {
       "type": "string",
       "default": "$1"
-    },    
+    },
     "eol": {
       "default": "\n",
       "type": "string"
