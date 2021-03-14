@@ -6,7 +6,7 @@ type DefOptions = {
   [K in keyof SchemaOptions["properties"]]
   : SchemaDeclaredValues<SchemaOptions["properties"][K]>
 }
-export type jsOptions = {
+type jsOptions = {
   identifierPattern: RegExp
 }
 
