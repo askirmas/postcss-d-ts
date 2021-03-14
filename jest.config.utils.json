@@ -2,12 +2,6 @@
   "displayName": "utils",
   "coverageDirectory": "coverage-utils",
   "testRegex": "src/.*\\.(test|spec)\\.[jt]sx?$",
-  "collectCoverageFrom": [
-    "src/**/*.{ts,tsx,js,jsx}",
-    "!**/*.(test|spec).{ts,tsx,js,jsx}",
-    "!src/coverage/**/*.*",
-    "!src/index.ts"
-  ],
   "preset": "ts-jest",
   "testEnvironment": "node",
   "collectCoverage": true,
@@ -18,8 +12,5 @@
       "functions": 100,
       "lines": 100
     }
-  },
-  "modulePathIgnorePatterns": [
-    "__unit__/index.*\\.d\\.ts"
-  ]
+  }
 }

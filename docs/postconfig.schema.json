@@ -7,22 +7,38 @@
             "properties": {
                 "postcss-plugin-d-ts": {
                     "$ref": "./schema.json"
+                },
+                "postcss-plugin-d-ts/dist/7": {
+                    "$ref": "./schema.json"
                 }
             },
-            "-items": {
+            "--- items ---": {
                 "type": ["array", "string"],
-                "examples": ["postcss-plugin-d-ts", ["postcss-plugin-d-ts", {}]],
+                "examples": [
+                    "postcss-plugin-d-ts",
+                    ["postcss-plugin-d-ts", {}],
+                    "postcss-plugin-d-ts/dist/7",
+                    ["postcss-plugin-d-ts/dist/7", {}]
+                ],
                 "if": {
-                    "items": [{ "const": "postcss-plugin-d-ts" }]
+                    "items": [{ "$ref": "#/definitions/versions" }]
                 },
                 "then": {
                     "items": [
-                        { "const": "postcss-plugin-d-ts" },
+                        { "$ref": "#/definitions/versions" },
                         { "$ref": "./schema.json" }
                     ],
                     "maxItems": 2
                 }
             }
+        }
+    },
+    "definitions": {
+        "versions": {
+            "enum": [
+                "postcss-plugin-d-ts",
+                "postcss-plugin-d-ts/dist/7"
+            ]
         }
     }
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "npm run compile/9 && npm run compile/10",
-    "compile/9": "echo 'Internal dep with v7' && exit 0 && cd next_9 && npm run build",
+    "compile/9": "cd next_9 && npm run build",
     "compile/10": "cd next_10 && npm run build",
     "dev:n3": "cd next_9 && npm run dev",
     "dev:n5": "cd next_10 && npm run dev",

@@ -1,6 +1,6 @@
 // TODO move to https://github.com/askirmas/ts-swiss
 
-export type Picker<T, K extends string> = {[k in K]?: T extends {[_ in k]: infer V} ? V : undefined}
+export type Picker<T, K extends string> = {[k in K]?: T extends {[_ in k]?: infer V} ? V : undefined}
 
 // type WithDefault<T, D> = {[K in keyof T]: K extends keyof D ? Exclude<T[K] | D[K], undefined> : T[K]}
 

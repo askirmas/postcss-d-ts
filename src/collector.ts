@@ -17,7 +17,7 @@ function collector(
   return ({selectors, parent}: CollectingArg) => {
     if (parent?.type === "atrule") {
       const {name} = parent
-      //@ts-expect-error
+      
       if (name && !allowedAtRuleNames.has(name))
         return
     }

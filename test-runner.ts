@@ -1,6 +1,7 @@
 import {readFileSync} from 'fs'
-import postcss from 'postcss'
-import plugin = require("./src")
+// import postcss from 'postcss8'
+import postcss7 = require("postcss")
+import creator7 = require("./src/7")
 import type { Options } from './src/options.types'
 
 export type RunOpts = Partial<{
@@ -19,7 +20,8 @@ export {
 }
 
 function launcher(opts?: Options) {
-  return postcss([plugin(opts)])
+  
+  return postcss7([creator7(opts)])
 }
 
 async function run(runOpts: RunOpts, opts?: Options) {

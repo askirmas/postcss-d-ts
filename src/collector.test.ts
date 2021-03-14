@@ -50,14 +50,12 @@ describe("at-rule", () => {
    * } */
   it("without keyframes", () => expect(collectorCall(
     ['0%', '68.2%'],
-    //@ts-expect-error
     {"type": "atrule", "name": "keyframes"}
   )).toStrictEqual([
   ]))
 
   it("with media", () => expect(collectorCall(
     ['.inside-media'],
-    //@ts-expect-error
     {"type": "atrule", "name": "media"}
   )).toStrictEqual([
     "inside-media"
