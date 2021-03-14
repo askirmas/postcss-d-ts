@@ -39,7 +39,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     // TODO To common file?
       return //result.warn("Source is falsy")
 
-    //TODO Check performance - Set is not for serving, not collecting
+    //TODO Replace with {} https://jsbench.me/q5km8xdgbb
     const identifiers = new Set<string>()
 
     //TODO replace with just opts and inherit

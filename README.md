@@ -1,5 +1,4 @@
-# [postcss-plugin-d-ts](https://github.com/askirmas/postcss-plugin-d-ts) <img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" width="64px" align="right" /><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="64px;" align="right" /><img src="https://postcss.org/logo.svg" alt="postcss" width="64px" align="right" /></p>
-
+# [postcss-plugin-d-ts](https://github.com/askirmas/postcss-plugin-d-ts) <img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" height="56px" align="right" /><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="56px;" align="right" /><img src="https://postcss.org/logo.svg" alt="postcss" height="56px" align="right" />
 
 [PostCSS] plugin generates [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
@@ -11,7 +10,7 @@ npm install postcss-plugin-d-ts
 
 ## Goal
 
-These declarations are [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS. 
+Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS. 
 
 ## Basic Example
 
@@ -34,7 +33,7 @@ export type CssIdentifiersMap = {
 
 declare const identifiersMap: CssIdentifiersMap
 
-export default identifiersMap
+export = identifiersMap
 ```
 
 Thus, in Component (i.e. React):
@@ -47,12 +46,10 @@ const {
   class2,
 	//@ts-expect-error - we have only .class1 and .class2
   class3
-} = regularClasses
+} = moduleClasses
 
 export default function Component() {
-    return <>
-      <div className={`${class1} ${class2}`}/>
-    </>
+    return <div className={`${class1} ${class2}`}/>
 }
 ```
 
@@ -60,18 +57,16 @@ or
 
 ```tsx
 // No CSS-modules at all
-import regularClasses from "./some.css" // regularClasses === {}
+import type { CssIdentifiersMap } from "./some.css"
 
 const {
   class1,
   class2,
   class3
-} = regularClasses
+} = {} as CssIdentifiersMap
 
 export default function Component() {
-    return <>
-      <div className={classNames({class1, class2})}/>
-    </>
+    return <div className={classNames({class1, class2})}/>
 }
 
 // Better to use `react-classnaming` https://www.npmjs.com/package/react-classnaming
@@ -87,7 +82,7 @@ function classNames(classes: Record<string, string|undefined>) {
 
 Local path to a custom template for declarations generating.
 
-Default:
+- Default: *[./src/\_css-template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/src/_css-template.d.ts)*
 
 ```typescript
 export type CssIdentifiersMap = {
@@ -99,20 +94,39 @@ declare const identifiersMap: CssIdentifiersMap
 export = identifiersMap
 ```
 
-Example with option `{"identifierKeyword": "data”}` [./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/template--custom_path/)
+- Example: *[./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/template--custom_path/)*
 
 ```typescript
 import type { CSSProperties } from "react";
 interface Styled {
-  data: Record<string, CSSProperties>;
+  __identifier__: Record<string, CSSProperties>;
 }
 declare const styled: Styled;
 export default styled;
-export declare const data: CSSProperties;
+export declare const __identifier__: CSSProperties;
 ```
 
 ### `identifierKeyword: string`
 The word in `d.ts` template to be replaced with CSS classes, ids, etc.
+
+```diff
+// postcss.config.js
+module.exports = {
+  plugins: {
+    "postcss-plugin-d-ts", {
++     identifierKeyword: "data"
+    }
+  }
+}
+```
+
+```diff
+// _css-template.d.ts
+export type CssIdentifiersMap = {
+-  "__identifier__": string|undefined
++  "data": string|undefined
+}
+```
 
 ### Other options
 
@@ -132,9 +146,9 @@ import { Options } from "postcss-plugin-d-ts/dist/options.types"
 
 ```javascript
 /** @type {{
- *  plugins: {
- *    "postcss-plugin-d-ts": import("postcss-plugin-d-ts/dist/options.types").Options
- *  }
+ *  plugins: Array<
+*    ["postcss-plugin-d-ts", import("postcss-plugin-d-ts/dist/options.types").Options]
+ *  >
  * }}
  */
 module.exports = {
@@ -150,20 +164,6 @@ module.exports = {
 
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
 - *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
-
-## Resources
-
-- JsonSchema
-
-See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_9/postcss.config.json
-- TypeScript
-```typescript
-import { Options } from "postcss-plugin-d-ts/dist/options.types"
-const dtsOpts: DTsOptions = {}
-```
-- JSDoc
-
-See https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/postcss.config.js
 
 ## PostCss Usage
 
