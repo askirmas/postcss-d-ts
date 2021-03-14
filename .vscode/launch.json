@@ -13,7 +13,6 @@
         "--config", "jest.config.json",
         "--testTimeout", "9999999",
         "--watch",
-        "--onlyFailures",
         "--runInBand",
         "--detectOpenHandles",
         "--logHeapUsage"
