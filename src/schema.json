@@ -23,6 +23,18 @@
       "type": "string",
       "default": "__identifier__"
     },
+    "allowedAtRules": {
+      "description": "https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "media",
+        "supports"
+      ]
+    },
     "identifierPattern": {
       "title": "Regex to take CSS identifiers",
       "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",

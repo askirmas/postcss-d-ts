@@ -22,7 +22,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     identifierPattern: cssP,
     identifierMatchIndex,
     identifierCleanupSearch: escapedP,
-    identifierCleanupReplace
+    identifierCleanupReplace,
+    allowedAtRules: atRules  
     
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(cssP, "g")
@@ -31,6 +32,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
   , templateContent = typeof templatePath === "string"
   ? readlineSync(templatePath, eol)
   : defaultTemplate
+
+  const allowedAtRules = new Set(atRules)
 
   return async (root, result) => {
     if (!destination && destination !== false)
@@ -54,7 +57,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       identifierParser,
       identifierMatchIndex,
       identifierCleanupParser,
-      identifierCleanupReplace
+      identifierCleanupReplace,
+      allowedAtRules
     }))
 
     const lines = replaceMultiplicated(

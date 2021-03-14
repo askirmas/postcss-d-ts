@@ -1,3 +1,5 @@
+import type { CollectingArg } from "./ts-swiss.types"
+
 export = collector
 
 function collector({
@@ -5,15 +7,23 @@ function collector({
   identifierParser,
   identifierMatchIndex,
   identifierCleanupParser,
-  identifierCleanupReplace
+  identifierCleanupReplace,
+  allowedAtRules,
 }: {
   identifiers: Record<string, true>,
   identifierParser: RegExp,
   identifierMatchIndex: number,
   identifierCleanupParser: RegExp,
-  identifierCleanupReplace: string
+  identifierCleanupReplace: string,
+  allowedAtRules: Set<string>
 }) {
-  return ({selectors}: {selectors: string[]}) => {
+  return ({selectors, parent}: CollectingArg) => {
+    if (parent?.type === "atrule") {
+      const {name} = parent
+      if (name && !allowedAtRules.has(name))
+        return identifiers
+    }
+
     //TODO consider postcss-selector-parser
     const {length} = selectors
 
