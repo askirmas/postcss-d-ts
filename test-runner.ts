@@ -1,5 +1,5 @@
 import {readFileSync} from 'fs'
-import postcss = require('postcss')
+import postcss from 'postcss'
 import plugin = require("./src")
 import type { Options } from './src/options.types'
 

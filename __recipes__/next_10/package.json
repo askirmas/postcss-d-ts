@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "next": "^10.0.6",
+    "postcss": "^8.2.8",
     "postcss-plugin-d-ts": "file:../.."
   }
 }

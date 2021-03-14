@@ -44,7 +44,7 @@ import moduleClasses from "./some.module.css"
 const {
   class1,
   class2,
-	//@ts-expect-error - we have only .class1 and .class2
+  //@ts-expect-error - we have only .class1 and .class2
   class3
 } = moduleClasses
 
@@ -62,6 +62,7 @@ import type { CssIdentifiersMap } from "./some.css"
 const {
   class1,
   class2,
+  //@ts-expect-error - we have only .class1 and .class2
   class3
 } = {} as CssIdentifiersMap
 

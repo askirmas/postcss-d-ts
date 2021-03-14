@@ -6,8 +6,10 @@ import collector = require("./collector");
 const defaults = extractDefaults(schema)
 
 function collectorCall(selectors: CollectingArg["selectors"], parent?: CollectingArg["parent"]) {
-  return Object.keys(collector({
-    identifiers: {},
+  const identifiers = {}
+
+  collector({
+    identifiers,
     identifierParser: regexpize(defaults.identifierPattern, "g"),
     identifierMatchIndex: defaults.identifierMatchIndex,
     identifierCleanupParser: regexpize(defaults.identifierCleanupSearch, "g"),
@@ -16,7 +18,9 @@ function collectorCall(selectors: CollectingArg["selectors"], parent?: Collectin
   })({
     selectors: selectors.reverse(),
     ...parent && {parent}
-  }))
+  })
+
+  return Object.keys(identifiers)
 }
 
 it("demo", () => expect(collectorCall([
@@ -47,12 +51,14 @@ describe("at-rule", () => {
    * } */
   it("without keyframes", () => expect(collectorCall(
     ['0%', '68.2%'],
+    //@ts-expect-error
     {"type": "atrule", "name": "keyframes"}
   )).toStrictEqual([
   ]))
 
   it("with media", () => expect(collectorCall(
     ['.inside-media'],
+    //@ts-expect-error
     {"type": "atrule", "name": "media"}
   )).toStrictEqual([
     "inside-media"

@@ -20,8 +20,9 @@ function collector({
   return ({selectors, parent}: CollectingArg) => {
     if (parent?.type === "atrule") {
       const {name} = parent
+      //@ts-expect-error
       if (name && !allowedAtRules.has(name))
-        return identifiers
+        return
     }
 
     //TODO consider postcss-selector-parser
@@ -40,8 +41,6 @@ function collector({
         identifiers[identifier] = true
       }
     }
-
-    return identifiers
   }
 }
 
