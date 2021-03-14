@@ -7,6 +7,8 @@ import replaceMultiplicated = require('./replaceMultiplicated')
 import collector = require('./collector')
 import rewrite = require('./rewrite')
 
+const {keys: $keys} = Object
+
 const defaultOptions = extractDefaults(schema)
 , defaultTemplate = readlineSync(resolve(__dirname, "_css-template.d.ts"), "\n")
 
@@ -39,8 +41,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     // TODO To common file?
       return //result.warn("Source is falsy")
 
-    //TODO Replace with {} https://jsbench.me/q5km8xdgbb
-    const identifiers = new Set<string>()
+    //TODO https://jsbench.me/q5km8xdgbb
+    const identifiers: Record<string, true> = {}
 
     //TODO replace with just opts and inherit
     root.walkRules(collector({
@@ -52,7 +54,7 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
     const lines = replaceMultiplicated(
       templateContent,
       identifierKeyword,
-      [...identifiers]
+      $keys(identifiers)
       //TODO Change with option
       .sort()
     )

@@ -5,7 +5,7 @@ function collector({
   identifierParser,
   identifierMatchIndex,
 }: {
-  identifiers: Set<string>,
+  identifiers: Record<string, true>,
   identifierParser: RegExp,
   identifierMatchIndex: number,
 }) {
@@ -22,7 +22,7 @@ function collector({
       while (parsed = identifierParser.exec(selector)) {
         const identifier = parsed[identifierMatchIndex]
 
-        identifiers.add(identifier)
+        identifiers[identifier] = true
       }
     }
 
