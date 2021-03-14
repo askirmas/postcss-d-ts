@@ -1,27 +1,24 @@
-import type { CollectingArg } from "./$defs.types"
+import type { CollectingArg, InternalOptions } from "./$defs.types"
+import type { Options } from "./options.types"
 
 export = collector
 
-function collector({
-  identifiers,
-  identifierParser,
-  identifierMatchIndex,
-  identifierCleanupParser,
-  identifierCleanupReplace,
-  allowedAtRules,
-}: {
+function collector(
   identifiers: Record<string, true>,
-  identifierParser: RegExp,
-  identifierMatchIndex: number,
-  identifierCleanupParser: RegExp,
-  identifierCleanupReplace: string,
-  allowedAtRules: Set<string>
-}) {
+  {
+    identifierParser,
+    identifierMatchIndex,
+    identifierCleanupParser,
+    identifierCleanupReplace,
+    allowedAtRuleNames,
+  }: Pick<Required<Options>, "identifierMatchIndex"|"identifierCleanupReplace"> 
+  & Pick<InternalOptions, "identifierParser"|"identifierCleanupParser"|"allowedAtRuleNames"> 
+) {
   return ({selectors, parent}: CollectingArg) => {
     if (parent?.type === "atrule") {
       const {name} = parent
       //@ts-expect-error
-      if (name && !allowedAtRules.has(name))
+      if (name && !allowedAtRuleNames.has(name))
         return
     }
 

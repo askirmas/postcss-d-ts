@@ -8,13 +8,12 @@ const defaults = extractDefaults(schema)
 function collectorCall(selectors: CollectingArg["selectors"], parent?: CollectingArg["parent"]) {
   const identifiers = {}
 
-  collector({
-    identifiers,
+  collector(identifiers, {
     identifierParser: regexpize(defaults.identifierPattern, "g"),
     identifierMatchIndex: defaults.identifierMatchIndex,
-    identifierCleanupParser: regexpize(defaults.identifierCleanupSearch, "g"),
+    identifierCleanupParser: regexpize(defaults.identifierCleanupPattern, "g"),
     identifierCleanupReplace: defaults.identifierCleanupReplace,
-    allowedAtRules: new Set(defaults.allowedAtRules)
+    allowedAtRuleNames: new Set(defaults.allowedAtRules)
   })({
     selectors: selectors.reverse(),
     ...parent && {parent}

@@ -50,7 +50,7 @@
             "type": "integer",
             "default": 1
         },
-        "identifierCleanupSearch": {
+        "identifierCleanupPattern": {
             "type": "string",
             "format": "regex",
             "default": "\\\\3?(.)"
