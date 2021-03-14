@@ -25,33 +25,19 @@ it("demo", () => expect(collectorCall([
   "class", "positive_mistake", "ke-bab"
 ]))
 
-describe("tailwind", () => {
-  it("TBD", () => expect(collectorCall([
-    ".group-hover\\:bg-pink-200",
-    ".w-0\\.5",
-    ".w-1\\/2",
-    '.\\32xl',
-    '.\\32xl\\:container',
-  ])).not.toStrictEqual([
-    "group-hover:bg-pink-200",
-    "w-0.5",
-    "w-1/2",
-    "2xl",
-    "2xl:container",
-  ]))
-
-  it("cur", () => expect(collectorCall([
-    ".group-hover\\:bg-pink-200",
-    ".w-0\\.5",
-    ".w-1\\/2",
-    '.\\32xl',
-    '.\\32xl\\:container',
-  ])).toStrictEqual([
-    "group-hover:bg-pink-200",
-    "w-0.5",
-    "w-1/2",
-  ]))
-})
+it("tailwind", () => expect(collectorCall([
+  ".group-hover\\:bg-pink-200",
+  ".w-0\\.5",
+  ".w-1\\/2",
+  '.\\32xl',
+  '.\\32xl\\:container',
+])).toStrictEqual([
+  "group-hover:bg-pink-200",
+  "w-0.5",
+  "w-1/2",
+  "2xl",
+  "2xl:container",
+]))
 
 describe("at-rule", () => {
   /** Appears in material
