@@ -4,10 +4,14 @@ function collector({
   identifiers,
   identifierParser,
   identifierMatchIndex,
+  identifierCleanupParser,
+  identifierCleanupReplace
 }: {
   identifiers: Record<string, true>,
   identifierParser: RegExp,
   identifierMatchIndex: number,
+  identifierCleanupParser: RegExp,
+  identifierCleanupReplace: string
 }) {
   return ({selectors}: {selectors: string[]}) => {
     //TODO consider postcss-selector-parser
@@ -21,6 +25,7 @@ function collector({
       // TODO check that parser is moving
       while (parsed = identifierParser.exec(selector)) {
         const identifier = parsed[identifierMatchIndex]
+        .replace(identifierCleanupParser, identifierCleanupReplace)
 
         identifiers[identifier] = true
       }

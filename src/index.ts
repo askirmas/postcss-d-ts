@@ -15,14 +15,18 @@ const {keys: $keys} = Object
 export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => {
   const {
     eol,
+    destination,
+    template: templatePath,
     //TODO several keywords?
     identifierKeyword,
-    "identifierPattern": cssP,
+    identifierPattern: cssP,
     identifierMatchIndex,
-    destination,
-    "template": templatePath,
+    identifierCleanupSearch: escapedP,
+    identifierCleanupReplace
+    
   } = {...defaultOptions, ...opts}
   , identifierParser = regexpize(cssP, "g")
+  , identifierCleanupParser = regexpize(escapedP, "g")
   //TODO check `templatePath === ""`
   , templateContent = typeof templatePath === "string"
   ? readlineSync(templatePath, eol)
@@ -49,6 +53,8 @@ export = postcss.plugin<Options>('postcss-plugin-css-d-ts', (opts?: Options) => 
       identifiers,
       identifierParser,
       identifierMatchIndex,
+      identifierCleanupParser,
+      identifierCleanupReplace
     }))
 
     const lines = replaceMultiplicated(

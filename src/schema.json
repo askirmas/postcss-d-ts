@@ -27,17 +27,26 @@
       "title": "Regex to take CSS identifiers",
       "description": "https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier",
       "$comment": "//TODO consider postcss-selector-parser",
-      "default": "[#\\.]([\\w\\d-]+)",
+      "default": "[#\\.](([\\w\\d-]|\\\\[.#:$@*\\/'\"(){}[\\]])+)",
       "type": "string",
       "format": "regex",
       "examples": [
-        "\\.([\\w\\d-]+)"
+        "\\.([\\w\\d$-]+)"
       ]
     },
     "identifierMatchIndex": {
       "type": "integer",
       "default": 1
     },
+    "identifierCleanupSearch": {
+      "type": "string",
+      "format": "regex",
+      "default": "\\\\(.)"
+    },
+    "identifierCleanupReplace": {
+      "type": "string",
+      "default": "$1"
+    },    
     "eol": {
       "default": "\n",
       "type": "string"

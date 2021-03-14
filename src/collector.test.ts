@@ -3,16 +3,22 @@ import { extractDefaults, regexpize } from "./utils";
 import collector = require("./collector");
 
 const defaults = extractDefaults(schema)
-, opts = {
-  identifierParser: regexpize(defaults.identifierPattern, "g"),
-  identifierMatchIndex: defaults.identifierMatchIndex,
+
+function collectorCall(selectors: string[]) {
+  return Object.keys(collector({
+    identifiers: {},
+    identifierParser: regexpize(defaults.identifierPattern, "g"),
+    identifierMatchIndex: defaults.identifierMatchIndex,
+    identifierCleanupParser: regexpize(defaults.identifierCleanupSearch, "g"),
+    identifierCleanupReplace: defaults.identifierCleanupReplace,  
+  })({
+    selectors: selectors.reverse()
+  }))
 }
 
-it("demo", () => expect(Object.keys(
-  collector({...opts, identifiers: {}})({
-    selectors: [".class [id='.positive_mistake'] .ke-bab"]
-  })
-)).toStrictEqual([
+it("demo", () => expect(collectorCall([
+  ".class [id='.positive_mistake'] .ke-bab"
+])).toStrictEqual([
   "class", "positive_mistake", "ke-bab"
 ]))
 
@@ -22,47 +28,37 @@ it("demo", () => expect(Object.keys(
  *   0%, 68.2% {}
  * }
 */
-it("material10 postcss issue", () => expect(Object.keys(
-  collector({...opts, identifiers: {}})({
-    selectors: ['0%', '68.2%']
-  })
-)).toStrictEqual([
+it("material10 postcss issue", () => expect(collectorCall([
+  '0%',
+  '68.2%'
+])).toStrictEqual([
   "2"
 ]))
 
 describe("tailwind", () => {
-  it("TBD", () => expect(Object.keys(
-    collector({...opts, identifiers: {}})({
-      selectors: [
-        ".group-hover\\:bg-pink-200",
-        '.\\32xl',
-        '.\\32xl\\:container',
-        ".w-0\\.5",
-        ".w-1\\/2"
-      ]
-    })
-  )).not.toStrictEqual([
+  it("TBD", () => expect(collectorCall([
+    ".group-hover\\:bg-pink-200",
+    ".w-0\\.5",
+    ".w-1\\/2",
+    '.\\32xl',
+    '.\\32xl\\:container',
+  ])).not.toStrictEqual([
     "group-hover:bg-pink-200",
+    "w-0.5",
+    "w-1/2",
     "2xl",
     "2xl:container",
-    "w-0.5",
-    "w-1/2"
   ]))
 
-  it("cur", () => expect(Object.keys(
-    collector({...opts, identifiers: {}})({
-      selectors: [
-        ".group-hover\\:bg-pink-200",
-        '.\\32xl',
-        '.\\32xl\\:container',
-        ".w-0\\.5",
-        ".w-1\\/2"
-      ]
-    })
-  )).toStrictEqual([
-    "5",
-    "w-1",
-    "w-0",
-    "group-hover"
+  it("cur", () => expect(collectorCall([
+    ".group-hover\\:bg-pink-200",
+    ".w-0\\.5",
+    ".w-1\\/2",
+    '.\\32xl',
+    '.\\32xl\\:container',
+  ])).toStrictEqual([
+    "group-hover:bg-pink-200",
+    "w-0.5",
+    "w-1/2",
   ]))
 })
