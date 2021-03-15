@@ -1,11 +1,8 @@
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" href="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.svg" type="image/svg+xml" sizes="any">
+# [postcss-d-ts](https://github.com/askirmas/postcss-d-ts) [<img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.svg" alt="logo" height="51px" align="right" />](https://github.com/askirmas/postcss-d-ts)
 
-# [postcss-d-ts](https://github.com/askirmas/postcss-d-ts)
+[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
-<img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.svg" alt="logo" height="56px" align="right" />[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
-
-<p align="center"><img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.gif" width="50%;" align=/></p>
+<p align="center"><a href="https://github.com/askirmas/postcss-d-ts/blob/master/images/postcss-d-ts.gif"><img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.gif" width="50%;" align=/></a></p>
 
 ## Installation
 

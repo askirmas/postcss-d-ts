@@ -97,9 +97,7 @@
   },
   "files": [
     "dist",
-    "favicon.ico",
     "LICENSE"
   ],
-  "dependencies": {},
-  "icon": "https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.svg"
+  "dependencies": {}
 }
