@@ -1,6 +1,6 @@
-# [postcss-plugin-d-ts](https://github.com/askirmas/postcss-plugin-d-ts) <img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" height="56px" align="right" /><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="56px;" align="right" /><img src="https://postcss.org/logo.svg" alt="postcss" height="56px" align="right" />
+# [postcss-plugin-d-ts](https://github.com/askirmas/postcss-plugin-d-ts)
 
-[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
+<img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" height="56px" align="right" /><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="56px;" align="right" /><img src="https://postcss.org/logo.svg" alt="postcss" height="56px" align="right" />[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
 ## Installation
 
@@ -12,9 +12,13 @@ npm install postcss-plugin-d-ts
 
 Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS.
 
-## Basic example
+## Compatibility
 
-**If you’re not familiar with PostCss – start from [#PostCss Usage](#postcss-usage)**
+For PostCss v8 use  [`"postcss-plugin-d-ts"`](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__recipes__/next_10/postcss.config.js#L12), for v7 [`"postcss-plugin-d-ts/dist/7"`](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__recipes__/next_9/postcss.config.json)
+
+## Demonstration
+
+**If you’re not familiar with PostCss – start with [#PostCss Usage](#postcss-usage)**
 
 CSS content:
 
