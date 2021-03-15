@@ -4,13 +4,13 @@
   "description": "PostCSS plugin to generate `.d.ts` of all used CSS classes and ids in imported stylesheets",
   "homepage": "https://github.com/askirmas/postcss-plugin-d-ts#readme",
   "keywords": [
-    "postcss",
-    "css modules",
-    "postcss-plugin",
+    "css",
     "d.ts",
+    "css-modules",
+    "postcss-plugin",
     "typescript",
     "declare",
-    "declaration",
+    "declarations",
     "sass"
   ],
   "author": {
@@ -73,7 +73,8 @@
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
-    "postcss": ">=7"
+    "postcss": ">=7",
+    "react-classnaming": "*"
   },
   "eslintConfig": {
     "extends": "eslint-config-postcss"
@@ -85,7 +86,7 @@
     "url": "https://github.com/askirmas/postcss-plugin-d-ts/labels/bug"
   },
   "main": "dist/index.js",
-  "types": "dist/options.types.d.ts",
+  "types": "dist/",
   "publishConfig": {
     "access": "public"
   },
@@ -96,7 +97,6 @@
   },
   "files": [
     "dist",
-    "README.md",
     "LICENSE"
   ],
   "dependencies": {}
