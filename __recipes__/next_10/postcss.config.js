@@ -1,14 +1,14 @@
 /** @type {{
  *  plugins:
  *  {
- *    "postcss-plugin-d-ts": import("postcss-plugin-d-ts/dist/options.types").Options
+ *    "postcss-d-ts": import("postcss-d-ts/dist/options.types").Options
  *  } | Array<
- *    ["postcss-plugin-d-ts", import("postcss-plugin-d-ts/dist/options.types").Options]
+ *    ["postcss-d-ts", import("postcss-d-ts/dist/options.types").Options]
  *  >
 * }}
 */
 module.exports = {
   plugins: [
-    ["postcss-plugin-d-ts", {}]
+    ["postcss-d-ts", {}]
   ]
 }

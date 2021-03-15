@@ -1,24 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "https://askirmas.github.io/postcss-plugin-d-ts/postconfig.schema.json",
+  "$id": "https://askirmas.github.io/postcss-d-ts/postconfig.schema.json",
   "properties": {
     "plugins": {
       "type": ["array", "object"],
       "properties": {
-        "postcss-plugin-d-ts": {
+        "postcss-d-ts": {
           "$ref": "./schema.json"
         },
-        "postcss-plugin-d-ts/dist/7": {
+        "postcss-d-ts/dist/7": {
           "$ref": "./schema.json"
         }
       },
       "--- items ---": {
         "type": ["array", "string"],
         "examples": [
-          "postcss-plugin-d-ts",
-          ["postcss-plugin-d-ts", {}],
-          "postcss-plugin-d-ts/dist/7",
-          ["postcss-plugin-d-ts/dist/7", {}]
+          "postcss-d-ts",
+          ["postcss-d-ts", {}],
+          "postcss-d-ts/dist/7",
+          ["postcss-d-ts/dist/7", {}]
         ],
         "if": {
           "items": [{"$ref": "#/definitions/versions"}]
@@ -36,8 +36,8 @@
   "definitions": {
     "versions": {
       "enum": [
-        "postcss-plugin-d-ts",
-        "postcss-plugin-d-ts/dist/7"
+        "postcss-d-ts",
+        "postcss-d-ts/dist/7"
       ]
     }
   }

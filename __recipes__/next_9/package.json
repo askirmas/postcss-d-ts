@@ -4,13 +4,13 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build && next export",
-    "prebuild": "npm uninstall postcss-plugin-d-ts && npm install ../.."
+    "prebuild": "npm uninstall postcss-d-ts && npm install ../.."
   },
   "license": "MIT",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "next": "9.3.6",
-    "postcss-plugin-d-ts": "file:../.."
+    "postcss-d-ts": "file:../.."
   }
 }

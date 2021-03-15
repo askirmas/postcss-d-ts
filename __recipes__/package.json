@@ -6,13 +6,11 @@
     "compile/9": "cd next_9 && npm run build",
     "compile/10": "cd next_10 && npm run build",
     "dev:n3": "cd next_9 && npm run dev",
-    "dev:n5": "cd next_10 && npm run dev",
-    "prebuild": "npm uninstall postcss-plugin-d-ts && npm install postcss-plugin-d-ts"
+    "dev:n5": "cd next_10 && npm run dev"
   },
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.9.44",
-    "postcss-plugin-d-ts": "^0.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sass": "^1.26.10",

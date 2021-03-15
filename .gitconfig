@@ -18,3 +18,9 @@
     tool = vscode
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
+[remote "origin"]
+	url = git@github.com:askirmas/postcss-d-ts.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master

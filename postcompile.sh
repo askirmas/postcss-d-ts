@@ -3,7 +3,8 @@
 # From https://github.com/askirmas/react-classnaming/blob/main/postcompile.sh
 
 src="src"
-find "$src" -name '*.d.ts' -exec cp {} "$(dirname "$npm_package_types")" \;
+types="$npm_package_types" 
+find "$src" -name '*.d.ts' -exec cp {} "$types" \;
 
 dist="$(dirname "$npm_package_main")"
 

@@ -1,8 +1,8 @@
 {
-  "name": "postcss-plugin-d-ts",
+  "name": "postcss-d-ts",
   "version": "0.13.0",
   "description": "PostCSS plugin to generate `.d.ts` of all used CSS classes and ids in imported stylesheets",
-  "homepage": "https://github.com/askirmas/postcss-plugin-d-ts#readme",
+  "homepage": "https://github.com/askirmas/postcss-d-ts#readme",
   "keywords": [
     "css",
     "d.ts",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/askirmas/postcss-plugin-d-ts.git"
+    "url": "git+https://github.com/askirmas/postcss-d-ts.git"
   },
   "scripts": {
     "setup": "git config include.path ../.gitconfig && git-hooks-wrapper init",
@@ -83,7 +83,7 @@
     "node": ">=10.0.0"
   },
   "bugs": {
-    "url": "https://github.com/askirmas/postcss-plugin-d-ts/labels/bug"
+    "url": "https://github.com/askirmas/postcss-d-ts/labels/bug"
   },
   "main": "dist/index.js",
   "types": "dist/",

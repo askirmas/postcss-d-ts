@@ -1,11 +1,11 @@
-# [postcss-plugin-d-ts](https://github.com/askirmas/postcss-plugin-d-ts)
+# [postcss-d-ts](https://github.com/askirmas/postcss-d-ts)
 
 <img src="https://static.npmjs.com/6d9930e83bbb43bba93e22eda2871b55.svg" alt="d.ts" height="56px" align="right" /><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="css" height="56px;" align="right" /><img src="https://postcss.org/logo.svg" alt="postcss" height="56px" align="right" />[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
 ## Installation
 
 ```bash
-npm install postcss-plugin-d-ts
+npm install postcss-d-ts
 ```
 
 ## Goal
@@ -14,7 +14,7 @@ Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS 
 
 ## Compatibility
 
-For PostCss v8 use  [`"postcss-plugin-d-ts"`](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__recipes__/next_10/postcss.config.js#L12), for v7 [`"postcss-plugin-d-ts/dist/7"`](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__recipes__/next_9/postcss.config.json)
+For PostCss v8 use  [`"postcss-d-ts"`](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_10/postcss.config.js#L12), for v7 [`"postcss-d-ts/dist/7"`](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_9/postcss.config.json)
 
 ## Demonstration
 
@@ -27,7 +27,7 @@ CSS content:
 .class2 { ... }
 ```
 
-Generated declaration from template (i.e. default [./src/\_css-template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/src/_css-template.d.ts)):
+Generated declaration from template (i.e. default [./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)):
 
 ```typescript
 export type CssIdentifiersMap = {
@@ -83,7 +83,7 @@ function classNames(classes: Record<string, string|undefined>) {
 
 ## With CSS libraries
 
-In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__typing__/tailwind2.SHOULD.d.ts).
+In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/tailwind2.SHOULD.d.ts).
 
 ## Basic options
 
@@ -91,7 +91,7 @@ In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-plugin-d-ts/blob/mast
 
 Local path to a custom template for declarations generating.
 
-- Default: *[./src/\_css-template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/src/_css-template.d.ts)*
+- Default: *[./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)*
 
 ```typescript
 export type CssIdentifiersMap = {
@@ -103,7 +103,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 ```
 
-- Example: *[./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/template--custom_path/)*
+- Example: *[./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/__func__/template--custom_path/)*
 
 ```typescript
 import type { CSSProperties } from "react";
@@ -122,7 +122,7 @@ The word in `d.ts` template to be replaced with CSS classes, ids, etc.
 // postcss.config.js
 module.exports = {
   plugins: {
-    "postcss-plugin-d-ts", {
+    "postcss-d-ts", {
 +     identifierKeyword: "data"
     }
   }
@@ -141,28 +141,28 @@ export type CssIdentifiersMap = {
 
 Full list in different formats
 
-- JSON schema [./\_\_recipes\_\_/next\_9/postcss.config.json](https://github.com/askirmas/postcss-plugin-d-ts/blob/299955b1335037b759dd2a0960db9df2816bd326/__recipes__/next_9/postcss.config.json):
-  - https://askirmas.github.io/postcss-plugin-d-ts/schema.json
-  - *<u>./node_modules/postcss-plugin-d-ts/dist/schema.json</u>*
+- JSON schema [./\_\_recipes\_\_/next\_9/postcss.config.json](https://github.com/askirmas/postcss-d-ts/blob/299955b1335037b759dd2a0960db9df2816bd326/__recipes__/next_9/postcss.config.json):
+  - https://askirmas.github.io/postcss-d-ts/schema.json
+  - *<u>./node_modules/postcss-d-ts/dist/schema.json</u>*
 
 - TypeScript
 
 ```typescript
-import { Options } from "postcss-plugin-d-ts/dist/options.types"
+import { Options } from "postcss-d-ts/dist/options.types"
 ```
 
-- JSDoc [./\_\_recipes\_\_/next\_10/postcss.config.js](https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__recipes__/next_10/postcss.config.js)
+- JSDoc [./\_\_recipes\_\_/next\_10/postcss.config.js](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_10/postcss.config.js)
 
 ```javascript
 /** @type {{
  *  plugins: Array<
-*    ["postcss-plugin-d-ts", import("postcss-plugin-d-ts/dist/options.types").Options]
+*    ["postcss-d-ts", import("postcss-d-ts/dist/options.types").Options]
  *  >
  * }}
  */
 module.exports = {
   plugins: [
-    ["postcss-plugin-d-ts", {}]
+    ["postcss-d-ts", {}]
   ]
 }
 ```
@@ -171,8 +171,8 @@ module.exports = {
 
 *TBD Clone from specs*
 
-- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
-- *https://github.com/askirmas/postcss-plugin-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
+- *https://github.com/askirmas/postcss-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
+- *https://github.com/askirmas/postcss-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
 
 ## PostCss Usage
 
@@ -188,7 +188,7 @@ If you already use PostCSS, add the plugin to plugins list:
 module.exports = {
   plugins: [
     require('autoprefixer'),
-+   require('postcss-plugin-d-ts'),
++   require('postcss-d-ts'),
   ]
 }
 ```
