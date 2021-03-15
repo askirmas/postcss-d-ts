@@ -6,6 +6,8 @@ const $exists = promisify(exists)
 
 export = rewrite
 
+// TODO #12 with .trim() https://jsbench.me/fykmaajqmc/
+
 async function rewrite(filename: string, lines: string[], eol: string) {
   const {length} = lines
 

@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build && next export",
-    "prebuild": "npm uninstall postcss-d-ts && npm install ../.."
+    "build": "next build",
+    "prebuild": "npm run ci && npm uninstall postcss-d-ts && npm install ../..",
+    "ci": "npm ci --prefer-offline --no-audit --silent --quiet --no-progress"
   },
   "license": "MIT",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "@zeit/next-less": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "@zeit/next-stylus": "^1.0.1",
+    "less": "^4.1.1",
     "next": "9.3.6",
-    "postcss-d-ts": "file:../.."
+    "postcss-d-ts": "file:../..",
+    "stylus": "^0.54.8"
   }
 }
