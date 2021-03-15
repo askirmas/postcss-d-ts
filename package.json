@@ -1,6 +1,6 @@
 {
   "name": "postcss-d-ts",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "PostCSS plugin to generate `.d.ts` of all used CSS classes and ids in imported stylesheets",
   "homepage": "https://github.com/askirmas/postcss-d-ts#readme",
   "keywords": [
