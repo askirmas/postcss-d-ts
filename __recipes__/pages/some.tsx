@@ -5,9 +5,9 @@ import stylus from "../styles/some.styl"
 
 export default function Page() {
   return <main>
-    <div className={css.some_css}>css</div>
-    <div className={scss.some_scss}>scss</div>    
-    <div className={less.some_less}>less</div>
-    <div className={stylus.some_stylus}>stylus</div>
+    <div className={css.dialog__title}>css</div>
+    <div className={scss.dialog__submit}>scss</div>    
+    <div className={less.dialog__cancel}>less</div>
+    <div className={stylus.dialog__close}>stylus</div>
   </main>
 }
