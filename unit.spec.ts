@@ -2,7 +2,7 @@ import {statSync, appendFileSync, unlinkSync, existsSync} from 'fs'
 import {resolve} from 'path'
 import run, { rfsl, rfs } from './test-runner'
 
-const FALSY = ["", undefined, null, false, 0,]
+const FALSY = ["", undefined, null, false, 0]
 , suitFolder = "__unit__"
 , from = `${suitFolder}/index.css`
 , fromContent = rfs(from)
@@ -20,8 +20,12 @@ beforeAll(async () => {
 
 describe('features', () => {
   it('falsy file', async () => await Promise.all(
-    //@ts-expect-error
-    FALSY.map(from => run({from, input: ".class{}"}))
+    FALSY.map(from => run({
+      //@ts-expect-error
+      from,
+      
+      input: ".class{}"
+    }))
   ))
 
   describe('content overwrite', () => {
@@ -84,10 +88,13 @@ describe('options', () => {
       })
     })
 
-    
     it('falsy', async () => await Promise.all(
-      //@ts-expect-error
-      FALSY.map(destination => destination !== false && run({from, errorsCount: 1}, {destination}))
+      FALSY.map(destination => destination === false ? void 0 :
+        run({from, errorsCount: 1}, {
+          //@ts-expect-error
+          destination
+        })
+      )
     ))
   })
 })

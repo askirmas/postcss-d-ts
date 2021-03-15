@@ -20,7 +20,7 @@ async function rewrite(filename: string, lines: string[], eol: string) {
         break
 
     lineReader.close()
-    
+
     if (isSame) {
       if (lines[length - 1] === "")
         i++

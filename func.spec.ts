@@ -1,6 +1,6 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import { readOpts, rfs, suiteName, launcher, rfsl } from './test-runner'
+import run, { readOpts, rfs, suiteName, rfsl } from './test-runner'
 
 const $cwd = process.cwd()
 , suiteDir = "__func__"
@@ -30,26 +30,21 @@ globbing(configPattern)
 
     expects.forEach(exp => {
       const name = suiteName(exp)
-      , from = resolve(exp)
+      , from = resolve(exp).replace(".d.ts", "")
+      , input = sources[name]
       , expectation = rfsl(exp)
 
       it(name, async () => {
         const destination: Record<string, string[]> = {}
 
-        await launcher({
+        await run({
+          from,
+          input,
+          output: expectation
+        }, {
           ...opts,
           destination
-        }).process(
-          sources[name],
-          {from}
-        )
-
-        // TODO launcher duplication?
-        expect(
-          destination[from]
-        ).toStrictEqual(
-          expectation
-        )
+        })
       })
     })
   })

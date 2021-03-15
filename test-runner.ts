@@ -1,53 +1,47 @@
 import {readFileSync} from 'fs'
-// import postcss from 'postcss8'
+import type { Options } from './src/options.types'
 import postcss7 = require("postcss")
 import creator7 = require("./src/7")
-import type { Options } from './src/options.types'
+import postcss8 from 'postcss8'
+import creator8 = require("./src")
 
 export type RunOpts = Partial<{
   from: string
   input: string
-  output: string
+  output: string[]
   errorsCount: number
 }>
 
 const {parse: $parse} = JSON
-, eol = "\n"
+, launcher7 = (opts?: Options) => postcss7([creator7(opts)])
+, launcher8 = (opts?: Options) => postcss8([creator8(opts)])
+, launchers = [launcher7, launcher8]
 
 export default run
 export {
-  rfs, rfsl, readOpts, suiteName, launcher
-}
-
-function launcher(opts?: Options) {
-  
-  return postcss7([creator7(opts)])
+  rfs, rfsl, readOpts, suiteName
 }
 
 async function run(runOpts: RunOpts, opts?: Options) {
   const {
     errorsCount = 0,
     from,
-    input = from && rfs(from)
+    input = from && rfs(from),
   } = runOpts
   if (!input)
     throw Error("no test input")
 
-  const result = await launcher(opts).process(input, { from })
-  , {
-    //TODO propagate modality with opts
-    output = from && rfs(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
-  } = runOpts
+  for (let i = 0; i < launchers.length; i++) {
+    const result = await launchers[i](opts).process(input, { from })
+    , {
+      //TODO propagate modality with opts
+      output = from && rfsl(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
+    } = runOpts
 
-  expect(result.warnings()).toHaveLength(errorsCount)
+    expect(result.warnings()).toHaveLength(errorsCount)
 
-  if (output)
-    expect(
-      rfsl(`${from}.d.ts`)
-    ).toStrictEqual(
-      output
-      .split(eol)
-    )
+    output && expect(rfsl(`${from}.d.ts`)).toStrictEqual(output)
+  }
 }
 
 function rfs(path: string) {

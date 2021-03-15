@@ -11,13 +11,13 @@ function collector(
     identifierCleanupParser,
     identifierCleanupReplace,
     allowedAtRuleNames,
-  }: Pick<Required<Options>, "identifierMatchIndex"|"identifierCleanupReplace"> 
-  & Pick<InternalOptions, "identifierParser"|"identifierCleanupParser"|"allowedAtRuleNames"> 
+  }: Pick<Required<Options>, "identifierMatchIndex"|"identifierCleanupReplace">
+  & Pick<InternalOptions, "identifierParser"|"identifierCleanupParser"|"allowedAtRuleNames">
 ) {
   return ({selectors, parent}: CollectingArg) => {
     if (parent?.type === "atrule") {
       const {name} = parent
-      
+
       if (name && !allowedAtRuleNames.has(name))
         return
     }

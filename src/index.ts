@@ -42,10 +42,10 @@ const creator8 = (opts?: Options) => {
         result.warn(message)
         return {}
       }
-      
+
       // https://jsbench.me/q5km8xdgbb
       const identifiers: Record<string, true> = {}
-            
+
       return {
         RuleExit: collector(identifiers, options),
         RootExit: writer(identifiers, options)
@@ -64,7 +64,7 @@ function OptsCheck({
 }: {destination: any} & Pick<InternalOptions, "identifierParser">) {
   if (!(destination === false || destination !== null && typeof destination === "object"))
     throw Error("Destination is of wrong type")
-  
+
   //TODO check sticky
   if (!identifierParser.flags.includes('g'))
     throw Error('identifierParser should have global flag')
@@ -96,7 +96,7 @@ function internalOpts({
   template: templatePath,
   identifierPattern: cssP,
   identifierCleanupPattern: escapedP,
-  allowedAtRules: atRules  
+  allowedAtRules: atRules
 }: Pick<Opts, "eol"|"template"|"identifierPattern"|"identifierCleanupPattern"|"allowedAtRules">): InternalOptions {
   const identifierParser = regexpize(cssP, "g")
   , identifierCleanupParser = regexpize(escapedP, "g")

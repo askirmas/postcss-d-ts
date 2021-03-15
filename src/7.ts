@@ -7,7 +7,7 @@ export = postcss.plugin<Options>(meta.name, opts => {
   const {
     prepare
   } = creator8(opts)
-  
+
   return async (root, result) => {
     const {
       RootExit, RuleExit

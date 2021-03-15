@@ -37,7 +37,7 @@
     "versions": {
       "enum": [
         "postcss-plugin-d-ts",
-        "postcss-plugin-d-ts/dist/7"        
+        "postcss-plugin-d-ts/dist/7"
       ]
     }
   }
