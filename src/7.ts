@@ -1,9 +1,9 @@
 import type { Options } from './options.types'
 import postcss = require("postcss")
 import creator8 = require(".")
-import meta = require("./meta.json")
+import schema = require("./schema.json")
 
-export = postcss.plugin<Options>(meta.name, opts => {
+export = postcss.plugin<Options>(schema.title, opts => {
   const {
     prepare
   } = creator8(opts)

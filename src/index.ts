@@ -6,25 +6,24 @@ import replaceMultiplicated = require('./replaceMultiplicated')
 import collector = require('./collector')
 import rewrite = require('./rewrite')
 import type { InternalOptions, WithSource } from './$defs.types'
-import meta = require("./meta.json")
 
 type Opts = Required<Options>
 
 const {keys: $keys} = Object
 , defaultOptions = extractDefaults(schema) as Opts
 , {
-  name,
+  title,
   signature,
   templateEol,
-  templatePath
-} = meta
+  properties: {template: {$comment: templatePath}}
+} = schema
 , defaultTemplate = readlineSync(resolve(__dirname, templatePath), templateEol)
 
 const creator8 = (opts?: Options) => {
   const options = makeOpts(opts)
 
   return {
-    postcssPlugin: name,
+    postcssPlugin: title,
     prepare: (result: {
       warn: (arg: string) => any
       root: WithSource
