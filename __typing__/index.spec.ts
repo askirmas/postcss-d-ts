@@ -32,14 +32,3 @@ it('material10', async () => {
     input
   })
 })
-
-it('tailwind2', async () => {
-  const from = `${__dirname}/node_modules/tailwindcss2/dist/tailwind.css`
-  , localFrom = `${__dirname}/tailwind2.css`
-  , input = rfs(from)
-
-  await run({
-    from: localFrom,
-    input
-  })
-})
