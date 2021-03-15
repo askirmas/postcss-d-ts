@@ -29,9 +29,15 @@ function collector(
       const selector = selectors[i]
 
       let parsed: RegExpExecArray | null
+      let lastIndex: number|undefined = undefined
 
-      // TODO check that parser is moving
       while (parsed = identifierParser.exec(selector)) {
+        const {index} = parsed
+        if (index === lastIndex)
+          // TODO consider throw error
+          return
+          
+        lastIndex = index
         const identifier = parsed[identifierMatchIndex]
         .replace(identifierCleanupParser, identifierCleanupReplace)
 

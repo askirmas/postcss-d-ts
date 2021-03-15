@@ -5,7 +5,7 @@ import collector = require("./collector");
 
 const defaults = extractDefaults(schema)
 
-function collectorCall(selectors: CollectingArg["selectors"], parent?: CollectingArg["parent"]) {
+function collectorCall(selectors: CollectingArg["selectors"], parent?: CollectingArg["parent"], opts?: Partial<Parameters<typeof collector>[1]>) {
   const identifiers = {}
 
   collector(identifiers, {
@@ -13,7 +13,8 @@ function collectorCall(selectors: CollectingArg["selectors"], parent?: Collectin
     identifierMatchIndex: defaults.identifierMatchIndex,
     identifierCleanupParser: regexpize(defaults.identifierCleanupPattern, "g"),
     identifierCleanupReplace: defaults.identifierCleanupReplace,
-    allowedAtRuleNames: new Set(defaults.allowedAtRules)
+    allowedAtRuleNames: new Set(defaults.allowedAtRules),
+    ...opts
   })({
     selectors: selectors.reverse(),
     ...parent && {parent}
@@ -61,3 +62,11 @@ describe("at-rule", () => {
     "inside-media"
   ]))
 })
+
+it("stuck parser", () => expect(collectorCall(
+  [".class1 .class2"],
+  undefined,
+  {identifierParser: regexpize(defaults.identifierPattern)}
+)).toStrictEqual([
+  "class1"
+]))
