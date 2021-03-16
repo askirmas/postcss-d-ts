@@ -5,6 +5,10 @@
   "preset": "ts-jest",
   "testEnvironment": "node",
   "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx,js,jsx}",
+    "!src/{index,7}.ts"
+  ],
   "coverageThreshold": {
     "global": {
       "statements": 100,

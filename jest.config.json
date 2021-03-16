@@ -8,9 +8,7 @@
     "-src"
   ],
   "collectCoverageFrom": [
-    "src/**/*.{ts,tsx,js,jsx}",
-    "!src/coverage/**/*.*",
-    "!**/*.(test|spec).{ts,tsx,js,jsx}"
+    "src/**/*.{ts,tsx,js,jsx}"
   ],
   "preset": "ts-jest",
   "testEnvironment": "node",

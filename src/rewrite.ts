@@ -12,7 +12,11 @@ async function rewrite(filename: string, lines: string[], eol: string) {
   const {length} = lines
 
   if (await $exists(filename)) {
-    const lineReader = createInterface(createReadStream(filename))
+    const lineReader = createInterface({
+      input: createReadStream(filename),
+      crlfDelay: Infinity,
+      historySize: 0
+    })
 
     let i = 0
     , isSame = true

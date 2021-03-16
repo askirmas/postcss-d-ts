@@ -1,8 +1,9 @@
 import rewrite = require("./rewrite")
 import {resolve} from "path"
-import {readFileSync, appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
+import {appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
 
 import { platform } from "os"
+import { rfsl } from "../test-runner"
 
 const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
 
@@ -11,7 +12,7 @@ const eol = "\n"
   //TODO change to .cwd setting
   const filePath = resolve(__dirname, "rewrite.test", fileName)
   , modified = () => statSync(filePath).mtimeMs
-  , read = () => readFileSync(filePath).toString().split(eol)
+  , read = () => rfsl(filePath)
   , write = (content: string[]) => writeFileSync(filePath, content.join(eol))
   , original = read()
 
