@@ -1,0 +1,7 @@
+version: "2"
+exclude_patterns:
+  - "**/node_modules/"
+  - "**/*.test.ts"
+  - "**/*.spec.ts"
+  - "**/*.d.ts"
+  - "__recipes__/"
