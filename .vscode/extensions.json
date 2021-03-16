@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "sonarsource.sonarlint-vscode",
+    "deepscan.vscode-deepscan",
+    "codefactor.repo-status"
+  ]
+}

@@ -12,5 +12,7 @@
       ],
       "url": "./src/schema.json"
     }
-  ]
+  ],
+  "sonarlint.testFilePattern": "{**/*.test.*, **/*.spec.*}",
+  "deepscan.enable": true
 }
