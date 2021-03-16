@@ -55,7 +55,7 @@ describe('features', () => {
       appendFileSync(dtsPath, "/**/")
       const modified = modifiedTime()
       await run({from})
-      expect(modifiedTime()).toBeGreaterThan(modified)
+      expect(modifiedTime())[osBasedAssertion](modified)
     })
 
     it('no overwrite on template without last newline', async () => {
