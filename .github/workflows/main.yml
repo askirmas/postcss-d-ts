@@ -50,4 +50,4 @@ jobs:
       - name: coverage:codeclimate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
-          CC_TEST_REPORTER_ID: 8990a51943746d079ecf12bcde2e889369d19d62e67e8e0b37ace4555c454a20
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
