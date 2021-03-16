@@ -2,6 +2,11 @@
 
 [PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
 
+[![build@ci](https://github.com/askirmas/postcss-d-ts/workflows/build/badge.svg)](https://github.com/askirmas/postcss-d-ts/actions) [![codecov](https://codecov.io/gh/askirmas/postcss-d-ts/branch/master/graph/badge.svg?token=TFJ9TMJ3YJ)](https://codecov.io/gh/askirmas/postcss-d-ts) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=askirmas_postcss-d-ts&metric=alert_status)](https://sonarcloud.io/dashboard?id=askirmas_postcss-d-ts) [![Maintainability](https://api.codeclimate.com/v1/badges/f6a1ef03e39733e2827c/maintainability)](https://codeclimate.com/github/askirmas/postcss-d-ts/maintainability) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/askirmas/postcss-d-ts/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/askirmas/postcss-d-ts/?branch=master) [![DeepScan grade](https://deepscan.io/api/teams/13158/projects/16299/branches/346523/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=13158&pid=16299&bid=346523) [![CodeFactor](https://www.codefactor.io/repository/github/askirmas/postcss-d-ts/badge)](https://www.codefactor.io/repository/github/askirmas/postcss-d-ts)
+
+[![dependencies Status](https://status.david-dm.org/gh/askirmas/postcss-d-ts.svg)](https://david-dm.org/askirmas/postcss-d-ts) [![version](https://img.shields.io/npm/v/postcss-d-ts)](https://www.npmjs.com/package/postcss-d-ts) [![license](https://img.shields.io/npm/l/postcss-d-ts)](https://github.com/askirmas/postcss-d-ts/blob/master/LICENSE)
+
+
 <p align="center"><a href="https://github.com/askirmas/postcss-d-ts/blob/master/images/postcss-d-ts.gif"><img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.gif" width="50%;" align=/></a></p>
 
 ## Installation
