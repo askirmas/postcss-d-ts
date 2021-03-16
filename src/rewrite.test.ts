@@ -2,6 +2,10 @@ import rewrite = require("./rewrite")
 import {resolve} from "path"
 import {readFileSync, appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
 
+import { platform } from "os"
+
+const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
+
 const eol = "\n"
 , ctx = (fileName: string) => {
   const filePath = resolve(__dirname, "rewrite.test", fileName)
@@ -39,27 +43,27 @@ describe("with_last_new_line", () => {
   it("append => Rewrite", async () => {
     const m = modified()
     await rewrite(filePath, original.concat(""), eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 
   it("appended => Rewrite", async () => {
     appendFileSync(filePath, "\n")
     const m = modified()
     await rewrite(filePath, original, eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 
   it("detach => Rewrite", async () => {
     const m = modified()
     await rewrite(filePath, original.slice(-1), eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 
   it("detached => Rewrite", async () => {
     write(original.slice(-1))
     const m = modified()
     await rewrite(filePath, original, eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 })
 
@@ -88,13 +92,13 @@ describe("without_last_new_line", () => {
   it("detach => Rewrite", async () => {
     const m = modified()
     await rewrite(filePath, original.slice(-1), eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 
   it("detached => Rewrite", async () => {
     write(original.slice(-1))
     const m = modified()
     await rewrite(filePath, original, eol)
-    expect(modified()).toBeGreaterThan(m)
+    expect(modified())[osBasedAssertion](m)
   })
 })

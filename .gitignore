@@ -9,3 +9,6 @@ coverage-*
 
 *css.d.ts
 **/*.map
+
+.next
+out

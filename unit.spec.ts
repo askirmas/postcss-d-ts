@@ -2,7 +2,10 @@ import {statSync, appendFileSync, unlinkSync, existsSync} from 'fs'
 import {resolve} from 'path'
 import run, { rfsl, rfs } from './test-runner'
 
-const FALSY = ["", undefined, null, false, 0]
+import { platform } from "os"
+
+const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
+, FALSY = ["", undefined, null, false, 0]
 , suitFolder = "__unit__"
 , from = `${suitFolder}/index.css`
 , fromContent = rfs(from)
@@ -45,7 +48,7 @@ describe('features', () => {
       appendFileSync(dtsPath, "\n")
       const modified = modifiedTime()
       await run({from})
-      expect(modifiedTime()).toBeGreaterThan(modified)
+      expect(modifiedTime())[osBasedAssertion](modified)
     })
 
     it('overwrite after append new content', async () => {
