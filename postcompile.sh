@@ -12,4 +12,7 @@ find "$dist" -name "*.types.js" -delete
 
 find "$dist" -name "*.d.ts" -not -name "options.*" -not -name "ts-swiss.*" -not -name "_css-template.*" -delete
 
+rm -rf unpacked
+mkdir unpacked
 mv "$(npm pack --quiet | tail -n 1)" pack.tgz
+tar zxf pack.tgz

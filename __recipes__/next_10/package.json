@@ -5,14 +5,14 @@
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "prebuild": "npm run ci && npm run reinstall",
-    "reinstall": "npm uninstall postcss-d-ts && npm install ../../pack.tgz",
+    "reinstall": "npm uninstall postcss-d-ts && npm install ../../package/",
     "ci": "npm ci --prefer-offline --no-audit --silent --quiet --no-progress"
   },
   "license": "MIT",
   "dependencies": {
     "next": "^10.0.6",
     "postcss": "^8.2.8",
-    "postcss-d-ts": "file:../../pack.tgz",
+    "postcss-d-ts": "file:../../package",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "sass": "^1.32.8",

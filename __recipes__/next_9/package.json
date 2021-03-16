@@ -5,7 +5,7 @@
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "prebuild": "npm run ci && npm run reinstall",
-    "reinstall": "npm uninstall postcss-d-ts && npm install ../../pack.tgz",
+    "reinstall": "npm uninstall postcss-d-ts && npm install ../../package/",
     "ci": "npm ci --prefer-offline --no-audit --silent --quiet --no-progress"
   },
   "license": "MIT",
@@ -17,7 +17,7 @@
     "@zeit/next-stylus": "^1.0.1",
     "less": "^4.1.1",
     "next": "9.3.6",
-    "postcss-d-ts": "file:../../pack.tgz",
+    "postcss-d-ts": "file:../../package",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "sass": "^1.32.8",

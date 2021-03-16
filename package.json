@@ -31,7 +31,7 @@
     "prebuild": "find . -type f -name '*.css.d.ts' -not -path '*/__recipes__/*' -delete && npm run t",
     "postbuild": "npm run spec && npm run docs",
     "compile": "tsc --project tsconfig.compile.json",
-    "precompile": "rm -rf docs dist && mkdir docs",
+    "precompile": "rm -rf docs dist unpacked && mkdir docs",
     "postcompile": "./postcompile.sh",
     "spec": "cd __recipes__ && npm run build",
     "t": "npm run t/utils && npm run t/func && npm run t/tsc",
