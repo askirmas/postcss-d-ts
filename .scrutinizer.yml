@@ -1,0 +1,32 @@
+# checks:
+#   javascript:
+#     no_var: true
+#     no_param_assign: true
+#     no_loop_var_assign: true
+#     no_implicit_undefined_return: true
+#     no_else_return: true
+#     no_alert: true
+#     eqeqeq: true
+build:
+  environment:
+    node: 14.16.0
+  nodes:
+    analysis:
+      tests:
+        override:
+          - js-scrutinizer-run
+    tests: true
+    # coverage:
+    #   tests:
+    #     override:
+    #       - command: npm run test
+    #         coverage:
+    #           file: coverage/clover.xml
+    #           format: clover
+filter:
+  excluded_paths:
+    - "*/__sandbox__/*"
+    - "*/__recipes__/*"
+    - "*.test.*"
+    - "*.spec.*"
+    - "*.d.ts"
