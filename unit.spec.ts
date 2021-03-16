@@ -26,7 +26,7 @@ describe('features', () => {
     FALSY.map(from => run({
       //@ts-expect-error
       from,
-      
+
       input: ".class{}"
     }))
   ))

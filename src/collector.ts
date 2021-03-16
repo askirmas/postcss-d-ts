@@ -36,7 +36,7 @@ function collector(
         if (index === lastIndex)
           // TODO consider throw error
           return
-          
+
         lastIndex = index
         const identifier = parsed[identifierMatchIndex]
         .replace(identifierCleanupParser, identifierCleanupReplace)
