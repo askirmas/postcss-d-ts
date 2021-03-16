@@ -3,7 +3,6 @@
   "coverageDirectory": "coverage",
   "testPathIgnorePatterns": [
     "/node_modules/",
-    "/sandbox/",
     "/__sandbox__/",
     "-src"
   ],

@@ -1,26 +1,49 @@
-import {createReadStream, readFileSync} from 'fs'
+import {createReadStream, unlinkSync, writeFileSync} from 'fs'
 import {createInterface} from 'readline'
 
-it("last empty", async () => {
-  const filename = `${__dirname}/readline.last--empty.txt`
-  , {length} = readFileSync(filename).toString().split("\n")
-  , lineReader = createInterface(createReadStream(filename))
+const filename = `${__dirname}/readline.txt`
 
-  let i = 0
-  for await (const _ of lineReader)
-    i++
-
-  expect(i).toBe(length - 1)
-})
+afterAll(() => unlinkSync(filename))
 
 it("last not empty", async () => {
-  const filename = `${__dirname}/readline.last--not_empty.txt`
-  , {length} = readFileSync(filename).toString().split("\n")
-  , lineReader = createInterface(createReadStream(filename))
+  const length = write(["first", "second"])
+   expect(await lineReaderCount()).toBe(length)
+})
+
+it("first empty", async () => {
+  const length = write(["", "first", "second"])
+  expect(await lineReaderCount()).toBe(length)
+})
+
+it("last empty", async () => {
+  const length = write(["first", "second", ""])
+  expect(await lineReaderCount()).toBe(length - 1)
+})
+
+it("two last empty", async () => {
+  const length = write(["first", "second", "", ""])
+  expect(await lineReaderCount()).toBe(length - 1)
+})
+
+
+async function lineReaderCount() {
+  const lineReader = createInterface({
+    input: createReadStream(filename),
+    crlfDelay: Infinity,
+    historySize: 0
+  })
 
   let i = 0
   for await (const _ of lineReader)
     i++
 
-  expect(i).toBe(length)
-})
+  lineReader.close()
+
+  return i
+}
+
+function write(content: string[]) {
+  writeFileSync(filename, content.join("\n"))
+  return content.length
+}
+
