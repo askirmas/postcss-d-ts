@@ -68,7 +68,6 @@
     "np": "^6.3.2",
     "postcss": "^7.0.35",
     "postcss8": "npm:postcss@^8.2.8",
-    "tailwindcss2": "npm:tailwindcss@^2.0.3",
     "ts-jest": "^26.5.0",
     "typescript": "^4.1.3",
     "typing": "file:__typing__"
