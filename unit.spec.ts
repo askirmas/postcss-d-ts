@@ -44,13 +44,6 @@ describe('features', () => {
       expect(modifiedTime()).toBe(modified)
     })
 
-    it('overwrite after append new line', async () => {
-      appendFileSync(dtsPath, "\n")
-      const modified = modifiedTime()
-      await run({from})
-      expect(modifiedTime())[osBasedAssertion](modified)
-    })
-
     it('overwrite after append new content', async () => {
       appendFileSync(dtsPath, "/**/")
       const modified = modifiedTime()

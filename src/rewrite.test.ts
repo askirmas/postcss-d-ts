@@ -1,136 +1,88 @@
 import rewrite = require("./rewrite")
-import {resolve} from "path"
-import {appendFileSync, statSync, writeFileSync, existsSync, unlinkSync} from "fs"
-
-import { platform } from "os"
+import {statSync, writeFileSync, unlinkSync, existsSync} from "fs"
 import { rfsl } from "../test-runner"
 
-const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
-
 const eol = "\n"
-, ctx = (fileName: string) => {
-  //TODO change to .cwd setting
-  const filePath = resolve(__dirname, "rewrite.test", fileName)
-  , modified = () => statSync(filePath).mtimeMs
-  , read = () => rfsl(filePath)
-  , write = (content: string[]) => writeFileSync(filePath, content.join(eol))
-  , original = read()
-
-  afterEach(() => write(original))
-
-  return {
-    filePath,
-    original,
-    modified,
-    read,
-    write
-  }
+, filePath = `${__dirname}/rewrite.txt`
+, whenModified = () => statSync(filePath).mtimeMs
+, $unlink = () => existsSync(filePath) && unlinkSync(filePath)
+, write = (content: string[]) => {
+  writeFileSync(filePath, content.join(eol))
+  return whenModified()
+}
+, rewriteCheck = async (content: string[], expectedContent = content) => {
+  await rewrite(filePath, content, eol)
+  expect(rfsl(filePath)).toStrictEqual(expectedContent)
+  return whenModified()
 }
 
-it("not exists - to write", async () => {
-  const filename = "rewrite.txt";
-  expect(existsSync(filename)).toBe(false)
-  await rewrite(filename, ["whatever"], "")
-  expect(existsSync(filename)).toBe(true)
-  unlinkSync(filename)
+afterAll($unlink)
+
+describe("create", () => {
+  beforeEach($unlink)
+
+  it("content", async () => expect(typeof await rewriteCheck(
+    ["content"]
+  )).toBe("number"))
+  it("empty", async () => expect(typeof await rewriteCheck(
+    [""]
+  )).toBe("number"))
+  it("blank", async () => expect(typeof await rewriteCheck(
+    [],
+    [""]
+  )).toBe("number"))
 })
 
-describe("with_last_new_line", () => {
-  const {filePath, original, modified, write} = ctx("with_last_new_line.txt")
-
-  it("same => No rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified()).toBe(m)
+describe("same", () => {
+  it("no last line", async () => {
+    const created = write(["first line", "second line"])
+    expect(await rewriteCheck(["first line", "second line"])).toBe(created)
   })
 
-  it("append => Rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original.concat(""), eol)
-    expect(modified())[osBasedAssertion](m)
+  it("with last line", async () => {
+    const created = write(["first line", "second line", ""])
+    expect(await rewriteCheck(["first line", "second line", ""])).toBe(created)
   })
 
-  it("appended => Rewrite", async () => {
-    appendFileSync(filePath, "\n")
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified())[osBasedAssertion](m)
-  })
-
-  it("detach => Rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original.slice(-1), eol)
-    expect(modified())[osBasedAssertion](m)
-  })
-
-  it("detached => Rewrite", async () => {
-    write(original.slice(-1))
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified())[osBasedAssertion](m)
+  it("with 2 last lines", async () => {
+    const created = write(["first line", "second line", "", ""])
+    expect(await rewriteCheck(["first line", "second line", "", ""])).toBe(created)
   })
 })
 
-describe("without_last_new_line", () => {
-  const {filePath, original, modified, write} = ctx("without_last_new_line.txt")
-
-  it("same => No rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified()).toBe(m)
+describe("cross new lines", () => {
+  it("with to no", async () => {
+    const created = write(["first line", "second line", ""])
+    expect(await rewriteCheck(
+      ["first line", "second line"],
+      ["first line", "second line", ""]
+    )).toBe(
+      created
+    )
   })
 
-  it("appended => No rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original.concat(""), eol)
-    expect(modified()).toBe(m)
-  })
-
-  it("appended => No rewrite", async () => {
-    appendFileSync(filePath, "\n")
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified()).toBe(m)
-  })
-
-  it("detach => Rewrite", async () => {
-    const m = modified()
-    await rewrite(filePath, original.slice(-1), eol)
-    expect(modified())[osBasedAssertion](m)
-  })
-
-  it("detached => Rewrite", async () => {
-    write(original.slice(-1))
-    const m = modified()
-    await rewrite(filePath, original, eol)
-    expect(modified())[osBasedAssertion](m)
+  it("no to with", async () => {
+    const created = write(
+      ["first line", "second line"]
+    )
+    expect(await rewriteCheck(
+      ["first line", "second line", ""],
+      ["first line", "second line"]
+    )).toBe(created)
   })
 })
 
-describe("scenario", () => {
-  const {filePath, read, original, write} = ctx("base.txt")
-
-  it("trunc", async () => {
-    write(original.concat(`${Math.random()}\n`))
-    await rewrite(filePath, original, eol)
-    expect(read()).toStrictEqual(original)
+describe("modifications", () => {
+  it("less", async () => {
+    write(["first line", "second line", "third line", ""])
+    await rewriteCheck(["first line", "second line", ""])
   })
-
-  it("append", async () => {
-    write(original.slice(-2))
-    await rewrite(filePath, original, eol)
-    expect(read()).toStrictEqual(original)
+  it("more", async () => {
+    write(["first line", "second line", ""])
+    await rewriteCheck(["first line", "second line", "third line", ""])
   })
-
-  it("rewrite less", async () => {
-    write(original.slice(-2).concat(`${Math.random()}`))
-    await rewrite(filePath, original, eol)
-    expect(read()).toStrictEqual(original)
-  })
-
-  it("rewrite more", async () => {
-    write(original.slice(-2).concat(`${Math.random()}\n`.repeat(3)))
-    await rewrite(filePath, original, eol)
-    expect(read()).toStrictEqual(original)
+  it("changed", async () => {
+    write(["first line", "second line", "old line", ""])
+    await rewriteCheck(["first line", "second line", "third line", ""])
   })
 })
