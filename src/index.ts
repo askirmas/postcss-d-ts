@@ -35,7 +35,7 @@ const creator8 = (opts?: Options) => {
         return {}
 
       try {
-        OptsCheck(options)
+        optsCheck(options)
       } catch ({message}) {
         // TODO throw error
         result.warn(message)
@@ -57,7 +57,7 @@ creator8.postcss = true
 
 export = creator8
 
-function OptsCheck({
+function optsCheck({
   destination,
   identifierParser
 }: {destination: any} & Pick<InternalOptions, "identifierParser">) {
@@ -136,7 +136,7 @@ function writer(
     )
 
     if (destination === false)
-      await rewrite(`${file}.d.ts`, lines, eol)
+      await rewrite(`${file}.d.ts`, lines, eol, process.env.NODE_ENV === "production")
     else
       destination[file] = lines
   })

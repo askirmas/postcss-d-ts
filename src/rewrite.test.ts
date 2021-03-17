@@ -5,6 +5,19 @@ import { rfsl } from "../test-runner"
 const filePath = `${__dirname}/rewrite.txt`
 , whenModified = () => statSync(filePath).mtimeMs
 , $unlink = () => existsSync(filePath) && unlinkSync(filePath)
+, ctx = (eol: string, checkMode: boolean) => ({
+  write: (content: string[]) => {
+    writeFileSync(filePath, content.join(eol))
+    return whenModified()
+  },
+  rewriteCheck: async (content: string[], expectedContent = content) => {
+    await rewrite(filePath, content, eol, checkMode)
+    expect(rfsl(filePath, eol)).toStrictEqual(expectedContent)
+    return whenModified()
+  }
+})
+
+afterEach($unlink)
 
 describe("eols", () =>
   ([
@@ -12,19 +25,11 @@ describe("eols", () =>
     ["\\r\\n", "\r\n"],
   ] as const)
   .forEach(([title, eol]) => {
-    const write = (content: string[]) => {
-      writeFileSync(filePath, content.join(eol))
-      return whenModified()
-    }
-    , rewriteCheck = async (content: string[], expectedContent = content) => {
-      await rewrite(filePath, content, eol)
-      expect(rfsl(filePath, eol)).toStrictEqual(expectedContent)
-      return whenModified()
-    }
+    afterEach($unlink)
+
+    const {write, rewriteCheck} = ctx(eol, false)
 
     describe(title, () => {
-      afterAll($unlink)
-
       describe("create", () => {
         beforeEach($unlink)
 
@@ -104,3 +109,20 @@ describe("eols", () =>
     })
   })
 )
+
+describe("check mode", () => {
+  const {write, rewriteCheck} = ctx("\n", true)
+
+  it("same", async () => {
+    const created = write(["line1"])
+    expect(await rewriteCheck(["line1"])).toBe(created)
+  })
+
+  it("changed", async () => {
+    write(["line1"])
+    expect(
+      await rewriteCheck(["line2"])
+      .catch(err => err)
+    ).toBeInstanceOf(Error)
+  })
+})

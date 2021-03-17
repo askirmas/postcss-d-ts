@@ -12,7 +12,7 @@ export = rewrite
 
 // TODO #12 with .trim() https://jsbench.me/fykmaajqmc/
 
-async function rewrite(filename: string, lines: string[], eol: string) {
+async function rewrite(filename: string, lines: string[], eol: string, checkMode: boolean) {
   const {length} = lines
   , {length: eolLength} = eol
   , fileExists = await $exists(filename)
@@ -47,8 +47,11 @@ async function rewrite(filename: string, lines: string[], eol: string) {
         return
     }
 
-    await $truncate(filename, position + eolLength * (row - 1))
+    !checkMode && await $truncate(filename, position + eolLength * (row - 1))
   }
+
+  if (checkMode)
+    throw Error(`Content of ${filename} should be another`)
 
   const fd = await $open(filename, "a")
 
