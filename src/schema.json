@@ -19,6 +19,14 @@
         "./_css-template.d.ts"
       ]
     },
+    "checkMode": {
+      "title": "Throw an error instead of file rewrite. By default, this mode is on for `NODE_ENV === 'production'`",
+      "type": ["boolean", "null"],
+      "default": null,
+      "examples": [
+        false
+      ]
+    },
     "identifierKeyword": {
       "title": "The word in `d.ts` template to be replaced with CSS classes, ids, etc",
       "type": "string",

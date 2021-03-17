@@ -26,7 +26,6 @@ describe('features', () => {
     FALSY.map(from => run({
       //@ts-expect-error
       from,
-
       input: ".class{}"
     }))
   ))
@@ -92,5 +91,24 @@ describe('options', () => {
         })
       )
     ))
+  })
+
+  describe("checkMode", () => {
+    it("production", async () => {
+      const {NODE_ENV} = process.env
+      , created = modifiedTime()
+      //@ts-expect-error
+      process.env.NODE_ENV = "production"
+      expect(await run({from, input: "input {}"}).catch(err => err)).toBeInstanceOf(Error)
+      expect(modifiedTime()).toBe(created)
+      //@ts-expect-error
+      process.env.NODE_ENV = NODE_ENV
+    })
+
+    it("true", async () => {
+      const created = modifiedTime()
+      expect(await run({from, input: "input {}"}, {checkMode: true}).catch(err => err)).toBeInstanceOf(Error)
+      expect(modifiedTime()).toBe(created)
+    })
   })
 })

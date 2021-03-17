@@ -9,6 +9,7 @@ export type InternalOptions = {
   identifierCleanupParser: RegExp;
   templateContent: string[];
   allowedAtRuleNames: Set<string>;
+  checkMode: boolean
 }
 
 export type WithSource = {

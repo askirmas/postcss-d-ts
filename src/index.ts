@@ -95,8 +95,9 @@ function internalOpts({
   template: templatePath,
   identifierPattern: cssP,
   identifierCleanupPattern: escapedP,
-  allowedAtRules: atRules
-}: Pick<Opts, "eol"|"template"|"identifierPattern"|"identifierCleanupPattern"|"allowedAtRules">): InternalOptions {
+  allowedAtRules: atRules,
+  checkMode
+}: Pick<Opts, "eol"|"template"|"identifierPattern"|"identifierCleanupPattern"|"allowedAtRules"|"checkMode">): InternalOptions {
   const identifierParser = regexpize(cssP, "g")
   , identifierCleanupParser = regexpize(escapedP, "g")
   //TODO check `templatePath === ""`
@@ -111,7 +112,8 @@ function internalOpts({
     identifierParser,
     identifierCleanupParser,
     templateContent,
-    allowedAtRuleNames
+    allowedAtRuleNames,
+    checkMode: checkMode ?? process.env.NODE_ENV === "production"
   }
 }
 
@@ -121,9 +123,10 @@ function writer(
     eol,
     templateContent,
     identifierKeyword,
-    destination
+    destination,
+    checkMode
   }: Pick<Opts, "eol"|"identifierKeyword"|"destination">
-  & Pick<InternalOptions, "templateContent">
+  & Pick<InternalOptions, "templateContent"|"checkMode">
 ) {
   return (async ({source}: WithSource) => {
     const file = source!.input.file!
@@ -136,7 +139,7 @@ function writer(
     )
 
     if (destination === false)
-      await rewrite(`${file}.d.ts`, lines, eol, process.env.NODE_ENV === "production")
+      await rewrite(`${file}.d.ts`, lines, eol, checkMode)
     else
       destination[file] = lines
   })
