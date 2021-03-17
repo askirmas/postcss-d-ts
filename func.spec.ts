@@ -1,6 +1,6 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import {run, readOpts, rfs, suiteName, rfsl } from './test-runner'
+import {launch, run, readOpts, rfs, suiteName, rfsl } from './test-runner'
 
 const $cwd = process.cwd()
 , suiteDir = "__func__"
@@ -34,18 +34,14 @@ globbing(configPattern)
       , input = sources[name]
       , expectation = rfsl(exp)
 
-      it(name, async () => {
-        const destination: Record<string, string[]> = {}
-
-        await run({
+      it(name, async () => await run(
+        launch({...opts, destination: {}}),
+        {
           from,
           input,
           output: expectation
-        }, {
-          ...opts,
-          destination
-        })
-      })
+        }
+      ))
     })
   })
 })

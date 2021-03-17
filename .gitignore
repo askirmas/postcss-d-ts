@@ -7,7 +7,6 @@ dist
 coverage
 coverage-*
 
-*css.d.ts
 **/*.map
 
 .next

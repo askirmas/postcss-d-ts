@@ -13,16 +13,14 @@ export type RunOpts = Partial<{
 }>
 
 const {parse: $parse} = JSON
-, launcher7 = (opts?: Options) => postcss7([creator7(opts)])
-, launcher8 = (opts?: Options) => postcss8([creator8(opts)])
-, launchers = [launcher7, launcher8]
+, launch = (opts?: Options) => [postcss7([creator7(opts)]), postcss8([creator8(opts)])]
 
 export {
-  run,
+  launch, run,
   rfs, rfsl, readOpts, suiteName
 }
 
-async function run(runOpts: RunOpts, opts?: Options) {
+async function run(launchers: ReturnType<typeof launch>, runOpts: RunOpts) {
   const {
     errorsCount = 0,
     from,
@@ -32,7 +30,7 @@ async function run(runOpts: RunOpts, opts?: Options) {
     throw Error("no test input")
 
   for (let i = 0; i < launchers.length; i++) {
-    const result = await launchers[i](opts).process(input, { from })
+    const result = await launchers[i].process(input, { from })
     , {
       //TODO propagate modality with opts
       output = from && rfsl(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)

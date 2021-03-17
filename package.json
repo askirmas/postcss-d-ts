@@ -28,7 +28,7 @@
     "dev": "npm run jest -- --watch --coverage=false",
     "test": "npm run build",
     "build": "npm run compile",
-    "prebuild": "find . -type f -name '*.css.d.ts' -not -path '*/__recipes__/*' -delete && npm run t",
+    "prebuild": "npm run t",
     "postbuild": "npm run spec && npm run docs",
     "compile": "tsc --project tsconfig.compile.json",
     "precompile": "rm -rf docs dist unpacked && mkdir docs",
