@@ -87,34 +87,20 @@ describe("eols", () =>
 
       describe("modifications", () => {
         it("less", async () => {
-          write(["first line", "second line", "third line", ""])
+          write(["first line", "second line", "", "third line", ""])
           await rewriteCheck(["first line", "second line", ""])
         })
 
         it("more", async () => {
           write(["first line", "second line", ""])
-          await rewriteCheck(["first line", "second line", "third line", ""])
+          await rewriteCheck(["first line", "second line", "", "third line", ""])
         })
 
-        it("changed 11", async () => {
-          write(["first line", "second line", "old line", ""])
-          await rewriteCheck(["first line", "second line", "third line", ""])
+        it("changed", async () => {
+          write(["first line", "second line", "", "third line", ""])
+          await rewriteCheck(["first line", "second line", "", "LINE", ""])
         })
-        it("changed 01", async () => {
-          write(["first line", "second line", "old line"])
-          await rewriteCheck(["first line", "second line", "third line", ""])
-        })
-        it("changed 10", async () => {
-          write(["first line", "second line", "old line", ""])
-          await rewriteCheck(["first line", "second line", "third line"])
-        })
-        it("changed 00", async () => {
-          write(["first line", "second line", "old line"])
-          await rewriteCheck(["first line", "second line", "third line"])
-        })
-
       })
-
     })
   })
 )
