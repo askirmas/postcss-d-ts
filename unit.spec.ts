@@ -1,6 +1,6 @@
 import {statSync, appendFileSync, writeFileSync} from 'fs'
 import {resolve} from 'path'
-import run, { rfsl, rfs } from './test-runner'
+import {run, rfsl, rfs } from './test-runner'
 
 import { platform } from "os"
 import { $exists, $unlink } from './src/utils'

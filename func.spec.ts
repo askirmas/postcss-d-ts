@@ -1,6 +1,6 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import run, { readOpts, rfs, suiteName, rfsl } from './test-runner'
+import {run, readOpts, rfs, suiteName, rfsl } from './test-runner'
 
 const $cwd = process.cwd()
 , suiteDir = "__func__"

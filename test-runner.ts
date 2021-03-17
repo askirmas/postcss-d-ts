@@ -17,8 +17,8 @@ const {parse: $parse} = JSON
 , launcher8 = (opts?: Options) => postcss8([creator8(opts)])
 , launchers = [launcher7, launcher8]
 
-export default run
 export {
+  run,
   rfs, rfsl, readOpts, suiteName
 }
 

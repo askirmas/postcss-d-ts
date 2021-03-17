@@ -1,4 +1,4 @@
-import run, { rfs } from '../test-runner'
+import {run, rfs } from '../test-runner'
 
 it('bootstrap3', async () => {
   const from = require.resolve("bootstrap3/dist/css/bootstrap.css")
