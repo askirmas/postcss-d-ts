@@ -44,8 +44,7 @@ jobs:
       - name: node version
         run: node --version
       - name: install
-        run: |
-          npm ci --prefer-offline --no-audit --silent --quiet --no-progress
+        run: npm run ci
 
       - name: build
         run: npm run build
