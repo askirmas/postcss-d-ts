@@ -31,6 +31,9 @@ describe("create", () => {
     [],
     [""]
   )).toBe("number"))
+  it("new line", async () => expect(typeof await rewriteCheck(
+    ["", ""],
+  )).toBe("number"))
 })
 
 describe("same", () => {
