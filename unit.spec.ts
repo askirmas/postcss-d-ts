@@ -1,8 +1,9 @@
-import {statSync, appendFileSync, unlinkSync, existsSync} from 'fs'
+import {statSync, appendFileSync, writeFileSync} from 'fs'
 import {resolve} from 'path'
 import run, { rfsl, rfs } from './test-runner'
 
 import { platform } from "os"
+import { $exists, $unlink } from './src/utils'
 
 const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
 , FALSY = ["", undefined, null, false, 0]
@@ -15,7 +16,7 @@ const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGre
 let dtsContent: Readonly<string[]>
 beforeAll(async () => {
   const dtsPath = `${from}.d.ts`
-  existsSync(dtsPath) && unlinkSync(dtsPath)
+  await $unlink(dtsPath)
   await run({from})
   dtsContent = rfsl(dtsPath)
 })
@@ -32,7 +33,7 @@ describe('features', () => {
 
   describe('content overwrite', () => {
     beforeAll(async () => {
-      existsSync(dtsPath) && unlinkSync(dtsPath)
+      await $unlink(dtsPath)
       await run({from})
       dtsContent = rfsl(dtsPath)
     })
@@ -99,7 +100,7 @@ describe('options', () => {
       , created = modifiedTime()
       //@ts-expect-error
       process.env.NODE_ENV = "production"
-      expect(await run({from, input: "input {}"}).catch(err => err)).toBeInstanceOf(Error)
+      expect(await run({from, input: ".input {}"}).catch(err => err)).toBeInstanceOf(Error)
       expect(modifiedTime()).toBe(created)
       //@ts-expect-error
       process.env.NODE_ENV = NODE_ENV
@@ -107,8 +108,16 @@ describe('options', () => {
 
     it("true", async () => {
       const created = modifiedTime()
-      expect(await run({from, input: "input {}"}, {checkMode: true}).catch(err => err)).toBeInstanceOf(Error)
+      expect(await run({from, input: ".input {}"}, {checkMode: true}).catch(err => err)).toBeInstanceOf(Error)
       expect(modifiedTime()).toBe(created)
     })
+  })
+
+  it("delete on empty", async () => {
+    writeFileSync(dtsPath, dtsContent.join("\n"))
+    //@ts-expect-error
+    await run({from, input: "input {}", output: false})
+    expect(await $exists(dtsPath)).toBe(false)
+    writeFileSync(dtsPath, dtsContent.join("\n"))
   })
 })

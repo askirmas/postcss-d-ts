@@ -1,9 +1,9 @@
 import {promisify} from "util"
-import {createReadStream, exists, open, writeFile, close, truncate } from 'fs'
+import {createReadStream, open, writeFile, close, truncate } from 'fs'
 import {createInterface} from 'readline'
+import { $exists } from "./utils"
 
-const $exists = promisify(exists)
-, $open = promisify(open)
+const $open = promisify(open)
 , $write = promisify(writeFile)
 , $truncate = promisify(truncate)
 , $close = promisify(close)
@@ -51,7 +51,7 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
   }
 
   if (checkMode)
-    throw Error(`Content of ${filename} should be another`)
+    throw Error(`Content of "${filename}" should be another`)
 
   const fd = await $open(filename, "a")
 

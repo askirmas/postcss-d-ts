@@ -1,5 +1,5 @@
 import {resolve} from "path"
-import { regexpize, extractDefaults, readlineSync } from './utils'
+import { regexpize, extractDefaults, readlineSync, $unlink } from './utils'
 import schema = require("./schema.json")
 import type { Options } from './options.types'
 import replaceMultiplicated = require('./replaceMultiplicated')
@@ -129,18 +129,22 @@ function writer(
   & Pick<InternalOptions, "templateContent"|"checkMode">
 ) {
   return (async ({source}: WithSource) => {
-    const file = source!.input.file!
+    //TODO ? Change `sort` with option
+    const keys = $keys(identifiers).sort()
+    , file = source!.input.file!
+    , target = `${file}.d.ts`
     , lines = replaceMultiplicated(
       signature.concat(templateContent),
       identifierKeyword,
-      $keys(identifiers)
-      //TODO Change with option
-      .sort()
+      keys
     )
 
-    if (destination === false)
-      await rewrite(`${file}.d.ts`, lines, eol, checkMode)
-    else
+    if (destination === false) {
+      if (keys.length !== 0)
+        return await rewrite(target, lines, eol, checkMode)
+
+      await $unlink(target)
+    } else
       destination[file] = lines
   })
 }

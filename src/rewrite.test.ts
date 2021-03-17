@@ -1,10 +1,10 @@
 import rewrite = require("./rewrite")
-import {statSync, writeFileSync, unlinkSync, existsSync} from "fs"
+import {statSync, writeFileSync} from "fs"
 import { rfsl } from "../test-runner"
+import { $unlink } from "./utils"
 
 const filePath = `${__dirname}/rewrite.txt`
 , whenModified = () => statSync(filePath).mtimeMs
-, $unlink = () => existsSync(filePath) && unlinkSync(filePath)
 , ctx = (eol: string, checkMode: boolean) => ({
   write: (content: string[]) => {
     writeFileSync(filePath, content.join(eol))
@@ -16,8 +16,9 @@ const filePath = `${__dirname}/rewrite.txt`
     return whenModified()
   }
 })
+, unlink = () => $unlink(filePath)
 
-afterEach($unlink)
+afterEach(unlink)
 
 describe("eols", () =>
   ([
@@ -25,13 +26,13 @@ describe("eols", () =>
     ["\\r\\n", "\r\n"],
   ] as const)
   .forEach(([title, eol]) => {
-    afterEach($unlink)
+    afterEach(unlink)
 
     const {write, rewriteCheck} = ctx(eol, false)
 
     describe(title, () => {
       describe("create", () => {
-        beforeEach($unlink)
+        beforeEach(unlink)
 
         it("content", async () => expect(typeof await rewriteCheck(
           ["content"]
