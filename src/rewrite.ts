@@ -1,10 +1,11 @@
 import {promisify} from "util"
-import {createReadStream, exists, open, writeFile, close } from 'fs'
+import {createReadStream, exists, open, writeFile, close, truncate } from 'fs'
 import {createInterface} from 'readline'
 
 const $exists = promisify(exists)
 , $open = promisify(open)
 , $write = promisify(writeFile)
+, $truncate = promisify(truncate)
 , $close = promisify(close)
 
 export = rewrite
@@ -13,7 +14,11 @@ export = rewrite
 
 async function rewrite(filename: string, lines: string[], eol: string) {
   const {length} = lines
+  , {length: eolLength} = eol
   , fileExists = await $exists(filename)
+
+  let row = 0
+  , position = 0
 
   if (fileExists) {
     const lineReader = createInterface({
@@ -22,8 +27,7 @@ async function rewrite(filename: string, lines: string[], eol: string) {
       historySize: 0
     })
 
-    let row = 0
-    , isSame = true
+    let isSame = true
 
     for await (const line of lineReader) {
       if (line !== lines[row]) {
@@ -31,6 +35,7 @@ async function rewrite(filename: string, lines: string[], eol: string) {
         continue
       }
       row++
+      position += line.length
     }
 
     lineReader.close()
@@ -41,14 +46,17 @@ async function rewrite(filename: string, lines: string[], eol: string) {
       if (length === row)
         return
     }
+
+    await $truncate(filename, position + eolLength * (row - 1))
   }
 
-  const fd = await $open(filename, "w")
+  const fd = await $open(filename, "a")
 
-  for (let i = 0; i < length; i++)
+  for (let i = row; i < length; i++)
     await $write(fd, `${
       i ? eol : ''
-    }${lines[i]
+    }${
+      lines[i]
     }`)
 
   await $close(fd)

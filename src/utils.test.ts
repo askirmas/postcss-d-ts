@@ -1,5 +1,4 @@
-import {resolve} from "path"
-import { extractDefaults, readlineSync, regexpize } from "./utils";
+import { extractDefaults, regexpize } from "./utils";
 
 describe(extractDefaults.name, () => {
   it("demo", () => expect(extractDefaults({
@@ -45,12 +44,4 @@ describe(regexpize.name, () => {
       source
     )
   })
-
 })
-
-it(readlineSync.name, () => expect(readlineSync(
-  resolve(__dirname, "rewrite.test", "without_last_new_line.txt"),
-  "\n"
-)).toStrictEqual([
-  "a", "b", "c"
-]))

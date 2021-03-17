@@ -48,8 +48,8 @@ function rfs(path: string) {
   return readFileSync(path).toString()
 }
 
-function rfsl(path: string) {
-  return rfs(path).split('\n')
+function rfsl(path: string, eol = "\n") {
+  return rfs(path).split(eol)
 }
 
 function readOpts(path: string) {
