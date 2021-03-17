@@ -94,6 +94,13 @@ describe('options', () => {
     ))
   })
 
+  it("delete on empty", async () => {
+    writeFileSync(dtsPath, dtsContent.join("\n"))
+    await run({from, input: "input {}", output: false})
+    expect(await $exists(dtsPath)).toBe(false)
+    writeFileSync(dtsPath, dtsContent.join("\n"))
+  })
+
   describe("checkMode", () => {
     it("production", async () => {
       const {NODE_ENV} = process.env
@@ -113,11 +120,24 @@ describe('options', () => {
     })
   })
 
-  it("delete on empty", async () => {
-    writeFileSync(dtsPath, dtsContent.join("\n"))
-    //@ts-expect-error
-    await run({from, input: "input {}", output: false})
-    expect(await $exists(dtsPath)).toBe(false)
-    writeFileSync(dtsPath, dtsContent.join("\n"))
+  describe("checkMode + existence", () => {
+    it("exists, but shouldn't", async () => {
+      const created = modifiedTime()
+      expect(
+        await run({from, input: "input {}", output: false}, {checkMode: true})
+        .catch(err => err)
+      ).toBeInstanceOf(Error)
+      expect(modifiedTime()).toBe(created)
+    })
+
+    it("not exists, but should", async () => {
+      await $unlink(dtsPath)
+      expect(
+        await run({from, input: fromContent, output: false}, {checkMode: true})
+        .catch(err => err)
+      ).toBeInstanceOf(Error)
+      expect(await $exists(dtsPath)).toBe(false)
+      writeFileSync(dtsPath, dtsContent.join("\n"))
+    })
   })
 })

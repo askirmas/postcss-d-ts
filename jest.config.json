@@ -9,6 +9,9 @@
   "collectCoverageFrom": [
     "src/**/*.{ts,tsx,js,jsx}"
   ],
+  "watchPathIgnorePatterns": [
+    ".*\\.d\\.ts"
+  ],
   "preset": "ts-jest",
   "testEnvironment": "node",
   "collectCoverage": true,

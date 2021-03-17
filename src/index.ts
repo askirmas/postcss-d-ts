@@ -1,5 +1,5 @@
 import {resolve} from "path"
-import { regexpize, extractDefaults, readlineSync, $unlink } from './utils'
+import { regexpize, extractDefaults, readlineSync, $unlink, $exists } from './utils'
 import schema = require("./schema.json")
 import type { Options } from './options.types'
 import replaceMultiplicated = require('./replaceMultiplicated')
@@ -142,6 +142,9 @@ function writer(
     if (destination === false) {
       if (keys.length !== 0)
         return await rewrite(target, lines, eol, checkMode)
+
+      if (checkMode && await $exists(target))
+        throw Error(`File "${target}" should not exist`)
 
       await $unlink(target)
     } else

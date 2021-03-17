@@ -8,7 +8,7 @@ import creator8 = require("./src")
 export type RunOpts = Partial<{
   from: string
   input: string
-  output: string[]
+  output: string[] | false
   errorsCount: number
 }>
 
