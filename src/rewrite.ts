@@ -22,23 +22,23 @@ async function rewrite(filename: string, lines: string[], eol: string) {
       historySize: 0
     })
 
-    let row = -1
+    let row = 0
     , isSame = true
 
     for await (const line of lineReader) {
-      row++
       if (line !== lines[row]) {
         isSame = false
         continue
       }
+      row++
     }
 
     lineReader.close()
 
     if (isSame) {
-      if (lines[row + 1] === "")
+      if (lines[row] === "")
         row++
-      if (length === row + 1)
+      if (length === row)
         return
     }
   }
