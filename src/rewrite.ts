@@ -1,8 +1,11 @@
 import {promisify} from "util"
-import {createReadStream, createWriteStream, exists } from 'fs'
+import {createReadStream, exists, open, writeFile, close } from 'fs'
 import {createInterface} from 'readline'
 
 const $exists = promisify(exists)
+, $open = promisify(open)
+, $write = promisify(writeFile)
+, $close = promisify(close)
 
 export = rewrite
 
@@ -10,8 +13,9 @@ export = rewrite
 
 async function rewrite(filename: string, lines: string[], eol: string) {
   const {length} = lines
+  , fileExists = await $exists(filename)
 
-  if (await $exists(filename)) {
+  if (fileExists) {
     const lineReader = createInterface({
       input: createReadStream(filename),
       crlfDelay: Infinity,
@@ -35,22 +39,13 @@ async function rewrite(filename: string, lines: string[], eol: string) {
     }
   }
 
-  const stream = createWriteStream(filename)
+  const fd = await $open(filename, "w")
 
-  await new Promise((res, rej) => {
+  for (let i = 0; i < length; i++)
+    await $write(fd, `${
+      i ? eol : ''
+    }${lines[i]
+    }`)
 
-    stream.on('error', rej).on('finish', res)
-
-    for (let i = 0; i < length; i++)
-      stream.write(
-        `${
-          i ? eol : ''
-        }${lines[i]
-        }`,
-        /* istanbul ignore next */
-        err => err && rej(err)
-      )
-
-    stream.end()
-  })
+  await $close(fd)
 }
