@@ -60,19 +60,22 @@ describe('features', () => {
       expect(modifiedTime())[osBasedAssertion](modified)
     })
   })
-
-  describe("scenario", () => {
-    it("2", async () => {
-      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index2.css`), outputPath: `${suitesDir}/index2.css.d.ts`})
-    })
-    it("3", async () => {
-      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index3.css`), outputPath: `${suitesDir}/index3.css.d.ts`})
-    })
-    it("back", async () => {
-      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index.css`), outputPath: `${suitesDir}/index.css.d.ts`})
-    })
-  })
 })
+
+describe("scenario", () => {
+  const running = (file: string, outputPath: string|false = `${suitesDir}/${file}.css.d.ts`) => run(defaultLaunchers, {from, input: rfs(`${suitesDir}/${file}.css`), outputPath })
+
+  it("start", () => running("index"))
+  it("strip to classname", () => running("only-classname"))
+  it("change to button", () => running("only-button"))
+  it("no classes", async () => {
+    await running("empty", false)
+    expect(await $exists(dtsPath)).toBe(false)
+  })
+  it("classname", () => running("only-classname"))
+  it("append to recovery", () => running("index"))
+})
+
 
 describe('options', () => {
   describe('identifierPattern', () => {

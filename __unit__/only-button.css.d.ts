@@ -4,5 +4,5 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "class": string|undefined
+  "button": string|undefined
 }
