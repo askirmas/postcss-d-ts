@@ -1,14 +1,14 @@
-import type { Rule } from "postcss8"
+import type {Rule} from "postcss8"
 
 export type CollectingArg = Pick<Rule, "selectors"> & {
-  parent?: {type?: string, name?: string}
+  parent?: {type?: string; name?: string}
 }
 
 export type InternalOptions = {
-  identifierParser: RegExp;
-  identifierCleanupParser: RegExp;
-  templateContent: string[];
-  allowedAtRuleNames: Set<string>;
+  identifierParser: RegExp
+  identifierCleanupParser: RegExp
+  templateContent: string[]
+  allowedAtRuleNames: Set<string>
   checkMode: boolean
 }
 

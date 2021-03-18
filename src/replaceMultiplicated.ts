@@ -6,11 +6,12 @@ function replaceMultiplicated(
   searchValue: string,
   replacements: string[]
 ) {
-  const $return: (string|string[])[] = sources.concat()
+  const $return: (string|string[])[] = [...sources]
   , {length} = replacements
 
   for (let i = $return.length; i--;) {
     const line = sources[i]
+
     if (!line.includes(searchValue))
       continue
 
@@ -24,7 +25,7 @@ function replaceMultiplicated(
       do {
         pre = next
         next = pre.replace(searchValue, replacements[j])
-      } while(next !== pre)
+      } while (next !== pre)
 
       replaced[j] = next
     }

@@ -1,11 +1,9 @@
-import { extractDefaults, regexpize } from "./utils";
+import {extractDefaults, regexpize} from "./utils"
 
 describe(extractDefaults.name, () => {
   it("demo", () => expect(extractDefaults({
     "properties": {
-      "default": {
-        "default": "default"
-      },
+      "default": {"default": "default"},
       "examples": {
         "examples": [
           "example1",
@@ -38,6 +36,7 @@ describe(regexpize.name, () => {
 
   it("other => same", () => {
     const source = [] as unknown as RegExp
+
     expect(regexpize(
       source
     )).toBe(

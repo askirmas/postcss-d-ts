@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "extends": [
+    "./configs/.eslintrc.json"
+  ],
+  "rules": {
+    "jest/expect-expect": "off",
+    "unicorn/import-style": "off"
+  }
+}

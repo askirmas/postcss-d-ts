@@ -1,12 +1,14 @@
 import {resolve} from "path"
-import { regexpize, extractDefaults } from './utils'
-import { readlineSync, $unlink, $exists } from './fs'
+import {extractDefaults, regexpize} from './utils'
+import {
+  $exists, $unlink, readlineSync
+} from './fs'
 import schema = require("./schema.json")
-import type { Options } from './options.types'
+import type {Options} from './options.types'
 import replaceMultiplicated = require('./replaceMultiplicated')
 import collector = require('./collector')
 import rewrite = require('./rewrite')
-import type { InternalOptions, WithSource } from './$defs.types'
+import type {InternalOptions, WithSource} from './$defs.types'
 
 type Opts = Required<Options>
 
@@ -18,9 +20,9 @@ const {keys: $keys} = Object
   templateEol,
   properties: {template: {$comment: templatePath}}
 } = schema
-, defaultTemplate = readlineSync(resolve(__dirname, templatePath), templateEol)
+, defaultTemplate = readlineSync(resolve(__dirname, templatePath), templateEol),
 
-const creator8 = (opts?: Options) => {
+creator8 = (opts?: Options) => {
   const options = makeOpts(opts)
 
   return {
@@ -37,10 +39,12 @@ const creator8 = (opts?: Options) => {
 
       try {
         const warn = optsCheck(options)
+
         warn && result.warn(warn)
       } catch ({message}) {
         // TODO throw error
         result.warn(message)
+
         return {}
       }
 
@@ -64,7 +68,7 @@ function optsCheck({
   identifierParser
 }: {destination: any} & Pick<InternalOptions, "identifierParser">) {
   if (!(destination === false || destination !== null && typeof destination === "object"))
-    throw Error("Destination is of wrong type")
+    throw new Error("Destination is of wrong type")
 
   if (!identifierParser.flags.includes('g'))
     return 'identifierParser without global flag may take only first occurance'
@@ -80,7 +84,7 @@ function makeOpts(opts?: Options) {
     //TODO several keywords?
     identifierKeyword,
     identifierMatchIndex,
-    identifierCleanupReplace,
+    identifierCleanupReplace
   } = options
 
   return {
@@ -100,7 +104,7 @@ function internalOpts({
   identifierCleanupPattern: escapedP,
   allowedAtRules: atRules,
   checkMode
-}: Pick<Opts, "eol"|"template"|"identifierPattern"|"identifierCleanupPattern"|"allowedAtRules"|"checkMode">): InternalOptions {
+}: Pick<Opts, "eol"|"template"|"identifierPattern"|"identifierCleanupPattern"|"allowedAtRules"|"checkMode">) :InternalOptions {
   const identifierParser = regexpize(cssP, "g")
   , identifierCleanupParser = regexpize(escapedP, "g")
   //TODO check `templatePath === ""`
@@ -131,7 +135,7 @@ function writer(
   }: Pick<Opts, "eol"|"identifierKeyword"|"destination">
   & Pick<InternalOptions, "templateContent"|"checkMode">
 ) {
-  return (async ({source}: WithSource) => {
+  return async({source}: WithSource) => {
     //TODO ? Change `sort` with option
     const keys = $keys(identifiers).sort()
     , file = source!.input.file!
@@ -147,10 +151,10 @@ function writer(
         return await rewrite(target, lines, eol, checkMode)
 
       if (checkMode && await $exists(target))
-        throw Error(`File "${target}" should not exist`)
+        throw new Error(`File "${target}" should not exist`)
 
       await $unlink(target)
     } else
       destination[file] = lines
-  })
+  }
 }

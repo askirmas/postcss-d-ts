@@ -1,5 +1,5 @@
 import {readFileSync} from 'fs'
-import type { Options } from './src/options.types'
+import type {Options} from './src/options.types'
 import postcss7 = require("postcss")
 import creator7 = require("./src/7")
 import postcss8 from 'postcss8'
@@ -16,6 +16,7 @@ export type RunOpts = Partial<{
 const {parse: $parse} = JSON
 , launch = (opts?: Options) => {
   const launchers = [postcss7([creator7(opts)]), postcss8([creator8(opts)])]
+
   return (runOpts: RunOpts) => run(launchers, runOpts)
 }
 
@@ -29,14 +30,15 @@ async function run(launchers: (postcss7.Processor | Processor)[], runOpts: RunOp
   const {
     errorsCount = 0,
     from,
-    input = from && rfs(from),
+    input = from && rfs(from)
   } = runOpts
+
   if (!input)
-    throw Error("no test input")
+    throw new Error("no test input")
 
   for (let i = 0; i < launchers.length; i++) {
-    const result = await launchers[i].process(input, { from })
-    , { outputPath: output } = runOpts
+    const result = await launchers[i].process(input, {from})
+    , {outputPath: output} = runOpts
 
     expect(result.warnings()).toHaveLength(errorsCount)
 

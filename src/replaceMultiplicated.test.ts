@@ -14,7 +14,7 @@ describe(replaceMultiplicated.name, () => {
       "export default {",
       "  __id__: string;",
       "}",
-      "export const __id__: string",
+      "export const __id__: string"
     ],
     "__id__",
     ["class1", "class2"]
@@ -24,6 +24,6 @@ describe(replaceMultiplicated.name, () => {
     "  class2: string;",
     "}",
     "export const class1: string",
-    "export const class2: string",
+    "export const class2: string"
   ]))
 })

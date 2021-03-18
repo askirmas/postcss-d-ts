@@ -1,5 +1,5 @@
-import type { CollectingArg, InternalOptions } from "./$defs.types"
-import type { Options } from "./options.types"
+import type {CollectingArg, InternalOptions} from "./$defs.types"
+import type {Options} from "./options.types"
 
 export = collector
 
@@ -10,7 +10,7 @@ function collector(
     identifierMatchIndex,
     identifierCleanupParser,
     identifierCleanupReplace,
-    allowedAtRuleNames,
+    allowedAtRuleNames
   }: Pick<Required<Options>, "identifierMatchIndex"|"identifierCleanupReplace">
   & Pick<InternalOptions, "identifierParser"|"identifierCleanupParser"|"allowedAtRuleNames">
 ) {
@@ -25,14 +25,15 @@ function collector(
     //TODO consider postcss-selector-parser
     const {length} = selectors
 
-    for (let i = length; i--; ) {
+    for (let i = length; i--;) {
       const selector = selectors[i]
 
-      let parsed: RegExpExecArray | null
-      let lastIndex: number|undefined = undefined
+      let parsed: RegExpExecArray | null,
+      lastIndex: number|undefined = undefined
 
       while (parsed = identifierParser.exec(selector)) {
         const {index} = parsed
+
         if (index === lastIndex)
           // TODO consider throw error
           return

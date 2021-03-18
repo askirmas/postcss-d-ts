@@ -1,6 +1,8 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import launch, {readOpts, rfs, suiteName } from './test-runner'
+import launch, {
+  readOpts, rfs, suiteName
+} from './test-runner'
 
 const $cwd = process.cwd()
 , suitesDir = "__func__"
@@ -17,9 +19,7 @@ const $cwd = process.cwd()
   acc
 ), {} as Record<string, string>)
 
-
-globbing(configPattern)
-.forEach(configPath => {
+for (const configPath of globbing(configPattern)) {
   const suiteDir = dirname(configPath)
   , opts = readOpts(configPath)
   , expects = globbing(`${suiteDir}/${expectMask}`)
@@ -28,18 +28,16 @@ globbing(configPattern)
     beforeAll(() => process.chdir(suiteDir))
     afterAll(() => process.chdir($cwd))
 
-    expects.forEach(exp => {
+    for (const exp of expects) {
       const name = suiteName(exp)
       , from = resolve(exp).replace(".d.ts", "")
       , input = sources[name]
 
-      it(name, () => launch({
-        ...opts, destination: {}
-      })({
+      it(name, () => launch({...opts, destination: {}})({
         from,
         input,
         outputPath: exp.replace(`${suiteDir}/`, "")
       }))
-    })
+    }
   })
-})
+}

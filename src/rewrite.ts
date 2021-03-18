@@ -1,11 +1,11 @@
-import { createReadStream } from 'fs'
-import { createInterface} from 'readline'
+import {createReadStream} from 'fs'
+import {createInterface} from 'readline'
 import {
+  $close,
   $exists,
   $open,
-  $write,
-  $close,
   $rename,
+  $write,
   tempFileName
 } from "./fs"
 
@@ -44,7 +44,7 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
   }
 
   if (checkMode)
-    throw Error(`Content of "${filename}" should be another`)
+    throw new Error(`Content of "${filename}" should be another`)
 
   const tempFile = await tempFileName()
   , fd = await $open(tempFile, "w")

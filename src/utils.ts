@@ -1,4 +1,4 @@
-import type { SchemaWithDefaultsAndExamples, DefaultsAndExamplesFromSchema } from "./ts-swiss.types"
+import type {DefaultsAndExamplesFromSchema, SchemaWithDefaultsAndExamples} from "./ts-swiss.types"
 
 const {keys: $keys} = Object
 , {random: $random} = Math
@@ -20,9 +20,10 @@ function extractDefaults<S extends SchemaWithDefaultsAndExamples>({properties}: 
   , {length} = keys
   , defaults: Partial<DefaultsAndExamplesFromSchema<S>> = {}
 
-  for (let i = length; i--; ) {
+  for (let i = length; i--;) {
     const key = keys[i]
     //@ts-ignore
+
     defaults[key] = properties[key].default
   }
 
@@ -30,5 +31,6 @@ function extractDefaults<S extends SchemaWithDefaultsAndExamples>({properties}: 
 }
 
 function randomString() {
-  return $random().toString(36).substr(2)
+  return $random().toString(36)
+  .slice(2)
 }

@@ -1,18 +1,18 @@
 import schema = require("./schema.json")
 import {
-  readFileSync,
-  unlink,
-  exists,
-  open,
-  writeFile,
   close,
+  exists,
   mkdir,
-  rename
+  open,
+  readFileSync,
+  rename,
+  unlink,
+  writeFile
 } from "fs"
-import { tmpdir } from "os"
-import { join } from "path"
-import { promisify } from "util"
-import { randomString } from "./utils"
+import {tmpdir} from "os"
+import {join} from "path"
+import {promisify} from "util"
+import {randomString} from "./utils"
 
 const $exists = promisify(exists)
 , _unlink = promisify(unlink)
@@ -37,7 +37,8 @@ export {
 
 //TODO replace with common
 function readlineSync(path: string, splitter: string) {
-  return readFileSync(path).toString().split(splitter)
+  return readFileSync(path).toString()
+  .split(splitter)
 }
 
 function $unlink(source: Parameters<typeof _unlink>[0]) {
@@ -47,5 +48,6 @@ function $unlink(source: Parameters<typeof _unlink>[0]) {
 
 async function tempFileName() {
   await $exists(tempDir) || await $mkdir(tempDir)
+
   return join(tempDir, randomString())
 }

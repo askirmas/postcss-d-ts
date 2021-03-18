@@ -1,5 +1,5 @@
 import schema = require("./schema.json")
-import { extractDefaults, regexpize } from "./utils";
+import {extractDefaults, regexpize} from "./utils"
 import type {CollectingArg} from "./$defs.types"
 import collector = require("./collector");
 
@@ -34,13 +34,13 @@ it("tailwind", () => expect(collectorCall([
   ".w-0\\.5",
   ".w-1\\/2",
   '.\\32xl',
-  '.\\32xl\\:container',
+  '.\\32xl\\:container'
 ])).toStrictEqual([
   "group-hover:bg-pink-200",
   "w-0.5",
   "w-1/2",
   "2xl",
-  "2xl:container",
+  "2xl:container"
 ]))
 
 describe("at-rule", () => {

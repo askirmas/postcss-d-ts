@@ -37,7 +37,8 @@
     "node_modules",
     "coverage",
     "coverage-utils",
-    "__recipes__"
+    "__recipes__",
+    "configs"
   ],
   "include": [
     "**/*.ts",

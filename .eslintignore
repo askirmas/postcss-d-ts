@@ -1,0 +1,15 @@
+node_modules
+configs
+
+_next
+out
+build
+dist
+
+coverage*
+package
+
+*.d.ts
+.js
+
+__recipes__

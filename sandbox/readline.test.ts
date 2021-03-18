@@ -1,30 +1,35 @@
-import {createReadStream, unlinkSync, writeFileSync} from 'fs'
+import {
+  createReadStream, unlinkSync, writeFileSync
+} from 'fs'
 import {createInterface} from 'readline'
 
 const filename = `${__dirname}/readline.txt`
 
 afterAll(() => unlinkSync(filename))
 
-it("last not empty", async () => {
+it("last not empty", async() => {
   const length = write(["first", "second"])
-   expect(await lineReaderCount()).toBe(length)
-})
 
-it("first empty", async () => {
-  const length = write(["", "first", "second"])
   expect(await lineReaderCount()).toBe(length)
 })
 
-it("last empty", async () => {
+it("first empty", async() => {
+  const length = write(["", "first", "second"])
+
+  expect(await lineReaderCount()).toBe(length)
+})
+
+it("last empty", async() => {
   const length = write(["first", "second", ""])
+
   expect(await lineReaderCount()).toBe(length - 1)
 })
 
-it("two last empty", async () => {
+it("two last empty", async() => {
   const length = write(["first", "second", "", ""])
+
   expect(await lineReaderCount()).toBe(length - 1)
 })
-
 
 async function lineReaderCount() {
   const lineReader = createInterface({
@@ -34,6 +39,7 @@ async function lineReaderCount() {
   })
 
   let i = 0
+
   for await (const _ of lineReader)
     i++
 
@@ -44,6 +50,7 @@ async function lineReaderCount() {
 
 function write(content: string[]) {
   writeFileSync(filename, content.join("\n"))
+
   return content.length
 }
 
