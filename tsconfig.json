@@ -35,7 +35,9 @@
   },
   "exclude": [
     "node_modules",
-    "coverage"
+    "coverage",
+    "coverage-utils",
+    "__recipes__"
   ],
   "include": [
     "**/*.ts",

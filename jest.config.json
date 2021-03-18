@@ -4,6 +4,7 @@
   "testPathIgnorePatterns": [
     "/node_modules/",
     "/__sandbox__/",
+    "/__recipes__/",
     "-src"
   ],
   "collectCoverageFrom": [

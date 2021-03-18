@@ -2,11 +2,11 @@ import launch, { rfs } from '../test-runner'
 
 const {NODE_ENV} = process.env
 
-//@ts-expect-error
+//@ts-ignore
 process.env.NODE_ENV = "production"
 const launchProd = launch()
 
-//@ts-expect-error
+//@ts-ignore
 afterAll(() => process.env.NODE_ENV = NODE_ENV)
 
 it('bootstrap3', async () => {

@@ -11,6 +11,7 @@ coverage-*
 
 .next
 out
+build
 
 *.tgz
 package/

@@ -1,13 +1,13 @@
 {
   "displayName": "utils",
-  "coverageDirectory": "coverage-utils",
-  "testRegex": "src/.*\\.(test|spec)\\.[jt]sx?$",
+  "rootDir": "src",
+  "coverageDirectory": "../coverage-utils",
   "preset": "ts-jest",
   "testEnvironment": "node",
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "src/**/*.{ts,tsx,js,jsx}",
-    "!src/{index,7}.ts"
+    "**/*.{ts,tsx,js,jsx}",
+    "!{index,7}.ts"
   ],
   "coverageThreshold": {
     "global": {
