@@ -10,7 +10,8 @@
     "@types/node": "^12.20.6",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
-    "postcss-cli": "^8.3.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.2",
     "postcss-d-ts": "file:../../package",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -19,8 +20,12 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
+    "postcss-d-ts": "postcss 'src/**/*.css' --use postcss-d-ts/dist/7 --dir postcss-output",
+    "postcss": "postcss 'src/**/*.{css,scss,sass}' --dir postcss-output",
+    "postcss:dev": "npm run postcss -- --watch",
+    "start:both": "npm-run-all -p postcss:dev start",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run postcss && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prebuild": "npm run ci && npm install ../../package/",
