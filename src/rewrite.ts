@@ -1,6 +1,13 @@
 import { createReadStream } from 'fs'
 import { createInterface} from 'readline'
-import { $exists, $open, $write, $close } from "./fs"
+import {
+  $exists,
+  $open,
+  $write,
+  $close,
+  $rename,
+  tempFileName
+} from "./fs"
 
 export = rewrite
 
@@ -39,7 +46,8 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
   if (checkMode)
     throw Error(`Content of "${filename}" should be another`)
 
-  const fd = await $open(filename, "w")
+  const tempFile = await tempFileName()
+  , fd = await $open(tempFile, "w")
 
   for (let i = 0; i < length; i++)
     await $write(fd, `${
@@ -49,4 +57,5 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
     }`)
 
   await $close(fd)
+  await $rename(tempFile, filename)
 }

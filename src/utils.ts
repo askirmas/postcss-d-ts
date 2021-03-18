@@ -1,10 +1,12 @@
 import type { SchemaWithDefaultsAndExamples, DefaultsAndExamplesFromSchema } from "./ts-swiss.types"
 
 const {keys: $keys} = Object
+, {random: $random} = Math
 
 export {
   regexpize,
   extractDefaults,
+  randomString
 }
 
 function regexpize(source: string|RegExp, flags = "") {
@@ -25,4 +27,8 @@ function extractDefaults<S extends SchemaWithDefaultsAndExamples>({properties}: 
   }
 
   return defaults as DefaultsAndExamplesFromSchema<S>
+}
+
+function randomString() {
+  return $random().toString(36).substr(2)
 }
