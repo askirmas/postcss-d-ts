@@ -1,4 +1,0 @@
-[submodule "configs"]
-	path = configs
-	url = https://github.com/askirmas/template.git
-	branch = master
