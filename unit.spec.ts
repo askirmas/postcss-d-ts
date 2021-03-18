@@ -80,12 +80,13 @@ describe("scenario", () => {
 describe('options', () => {
   describe('identifierPattern', () => {
     it('not global pattern', () => launch({
-      identifierPattern: /\.([\w-]+)/
+      identifierPattern: /\.([\w-]+)/,
+      checkMode: true
     })({
-      from,
-      input: fromContent,
+      from: `${suitesDir}/only-button.css`,
+      input: rfs(`${suitesDir}/only-button-due-to-bad-identifier.css`),
       errorsCount: 1,
-      outputPath
+      outputPath: false
     }))
   })
 

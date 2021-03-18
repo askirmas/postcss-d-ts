@@ -35,7 +35,8 @@ const creator8 = (opts?: Options) => {
         return {}
 
       try {
-        optsCheck(options)
+        const warn = optsCheck(options)
+        warn && result.warn(warn)
       } catch ({message}) {
         // TODO throw error
         result.warn(message)
@@ -64,9 +65,10 @@ function optsCheck({
   if (!(destination === false || destination !== null && typeof destination === "object"))
     throw Error("Destination is of wrong type")
 
-  //TODO check sticky
   if (!identifierParser.flags.includes('g'))
-    throw Error('identifierParser should have global flag')
+    return 'identifierParser without global flag may take only first occurance'
+
+  return
 }
 
 function makeOpts(opts?: Options) {
