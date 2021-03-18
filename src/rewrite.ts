@@ -1,11 +1,6 @@
-import {promisify} from "util"
-import {createReadStream, open, writeFile, close } from 'fs'
-import {createInterface} from 'readline'
-import { $exists } from "./utils"
-
-const $open = promisify(open)
-, $write = promisify(writeFile)
-, $close = promisify(close)
+import { createReadStream } from 'fs'
+import { createInterface} from 'readline'
+import { $exists, $open, $write, $close } from "./fs"
 
 export = rewrite
 

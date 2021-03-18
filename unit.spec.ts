@@ -3,7 +3,7 @@ import {resolve} from "path"
 import { platform } from "os"
 
 import launch, { rfsl, rfs } from './test-runner'
-import { $exists, $unlink } from './src/utils'
+import { $exists, $unlink } from './src/fs'
 
 const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
 , launchDefault = launch()

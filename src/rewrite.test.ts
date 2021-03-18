@@ -1,7 +1,7 @@
 import rewrite = require("./rewrite")
 import {statSync, writeFileSync} from "fs"
 import { rfsl } from "../test-runner"
-import { $unlink } from "./utils"
+import { $unlink } from "./fs"
 
 const filePath = `${__dirname}/rewrite.txt`
 , whenModified = () => statSync(filePath).mtimeMs

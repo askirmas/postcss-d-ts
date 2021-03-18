@@ -1,5 +1,6 @@
 import {resolve} from "path"
-import { regexpize, extractDefaults, readlineSync, $unlink, $exists } from './utils'
+import { regexpize, extractDefaults } from './utils'
+import { readlineSync, $unlink, $exists } from './fs'
 import schema = require("./schema.json")
 import type { Options } from './options.types'
 import replaceMultiplicated = require('./replaceMultiplicated')
