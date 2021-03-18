@@ -32,7 +32,7 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
     for await (const line of lineReader) {
       if (line !== lines[row]) {
         isSame = false
-        continue
+        break
       }
       row++
       position += line.length

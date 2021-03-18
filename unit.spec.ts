@@ -8,9 +8,9 @@ import { $exists, $unlink } from './src/utils'
 const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGreaterThanOrEqual"
 , defaultLaunchers = launch()
 , FALSY = ["", undefined, null, false, 0]
-, suitFolder = "__unit__"
-, from = `${suitFolder}/index.css`
-, output = `${suitFolder}/index.SHOULD.d.ts`
+, suitesDir = "__unit__"
+, from = `${suitesDir}/index.css`
+, outputPath = `${suitesDir}/index.SHOULD.d.ts`
 , fromContent = rfs(from)
 , dtsPath = `${from}.d.ts`
 , modifiedTime = () => statSync(dtsPath).mtimeMs
@@ -32,6 +32,7 @@ describe('features', () => {
       input: ".class{}"
     }))
   ))
+
   it("delete on empty", async () => {
     writeFileSync(dtsPath, dtsContent.join("\n"))
     await run(defaultLaunchers, {from, input: "input {}", outputPath: false})
@@ -42,23 +43,34 @@ describe('features', () => {
   describe('content overwrite', () => {
     beforeAll(async () => {
       await $unlink(dtsPath)
-      await run(defaultLaunchers, {from, outputPath: output})
+      await run(defaultLaunchers, {from, outputPath})
       dtsContent = rfsl(dtsPath)
     })
 
     it('no overwrite on same content', async () => {
       const modified = modifiedTime()
-      await run(defaultLaunchers, {from, outputPath: output})
+      await run(defaultLaunchers, {from, outputPath})
       expect(modifiedTime()).toBe(modified)
     })
 
     it('overwrite after file append', async () => {
       appendFileSync(dtsPath, "/**/")
       const modified = modifiedTime()
-      await run(defaultLaunchers, {from, outputPath: output})
+      await run(defaultLaunchers, {from, outputPath})
       expect(modifiedTime())[osBasedAssertion](modified)
     })
+  })
 
+  describe("scenario", () => {
+    it("2", async () => {
+      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index2.css`), outputPath: `${suitesDir}/index2.css.d.ts`})
+    })
+    it("3", async () => {
+      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index3.css`), outputPath: `${suitesDir}/index3.css.d.ts`})
+    })
+    it("back", async () => {
+      await run(defaultLaunchers, {from, input: rfs(`${suitesDir}/index.css`), outputPath: `${suitesDir}/index.css.d.ts`})
+    })
   })
 })
 
@@ -70,7 +82,7 @@ describe('options', () => {
         from,
         input: fromContent,
         errorsCount: 1,
-        outputPath: output
+        outputPath
       }
     ))
   })
