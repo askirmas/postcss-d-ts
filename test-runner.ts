@@ -4,6 +4,7 @@ import postcss7 = require("postcss")
 import creator7 = require("./src/7")
 import postcss8 from 'postcss8'
 import creator8 = require("./src")
+import type Processor from 'postcss8/lib/processor'
 
 export type RunOpts = Partial<{
   from: string
@@ -13,14 +14,18 @@ export type RunOpts = Partial<{
 }>
 
 const {parse: $parse} = JSON
-, launch = (opts?: Options) => [postcss7([creator7(opts)]), postcss8([creator8(opts)])]
+, launch = (opts?: Options) => {
+  const launchers = [postcss7([creator7(opts)]), postcss8([creator8(opts)])]
+  return (runOpts: RunOpts) => run(launchers, runOpts)
+}
+
+export default launch
 
 export {
-  launch, run,
   rfs, rfsl, readOpts, suiteName
 }
 
-async function run(launchers: ReturnType<typeof launch>, runOpts: RunOpts) {
+async function run(launchers: (postcss7.Processor | Processor)[], runOpts: RunOpts) {
   const {
     errorsCount = 0,
     from,

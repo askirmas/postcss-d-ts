@@ -1,10 +1,10 @@
-import {launch, run, rfs } from '../test-runner'
+import launch, { rfs } from '../test-runner'
 
 const {NODE_ENV} = process.env
 
 //@ts-expect-error
 process.env.NODE_ENV = "production"
-const launchers = launch()
+const launchProd = launch()
 
 //@ts-expect-error
 afterAll(() => process.env.NODE_ENV = NODE_ENV)
@@ -14,7 +14,7 @@ it('bootstrap3', async () => {
   , localFrom = `${__dirname}/bootstrap3.css`
   , input = rfs(from)
 
-  await run(launchers, {
+  await launchProd({
     from: localFrom,
     input,
     outputPath: false
@@ -26,7 +26,7 @@ it('bootstrap4', async () => {
   , localFrom = `${__dirname}/bootstrap4.css`
   , input = rfs(from)
 
-  await run(launchers, {
+  await launchProd({
     from: localFrom,
     input,
     outputPath: false
@@ -38,7 +38,7 @@ it('material10', async () => {
   , localFrom = `${__dirname}/material10.css`
   , input = rfs(from)
 
-  await run(launchers, {
+  await launchProd({
     from: localFrom,
     input,
     outputPath: false

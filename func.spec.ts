@@ -1,6 +1,6 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import {launch, run, readOpts, rfs, suiteName } from './test-runner'
+import launch, {readOpts, rfs, suiteName } from './test-runner'
 
 const $cwd = process.cwd()
 , suitesDir = "__func__"
@@ -33,14 +33,13 @@ globbing(configPattern)
       , from = resolve(exp).replace(".d.ts", "")
       , input = sources[name]
 
-      it(name, async () => await run(
-        launch({...opts, destination: {}}),
-        {
-          from,
-          input,
-          outputPath: exp.replace(`${suiteDir}/`, "")
-        }
-      ))
+      it(name, () => launch({
+        ...opts, destination: {}
+      })({
+        from,
+        input,
+        outputPath: exp.replace(`${suiteDir}/`, "")
+      }))
     })
   })
 })
