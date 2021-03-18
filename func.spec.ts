@@ -1,11 +1,11 @@
 import {dirname, resolve} from 'path'
 import {sync} from 'globby'
-import {launch, run, readOpts, rfs, suiteName, rfsl } from './test-runner'
+import {launch, run, readOpts, rfs, suiteName } from './test-runner'
 
 const $cwd = process.cwd()
-, suiteDir = "__func__"
-, sourcePattern = `${suiteDir}/*.css`
-, configPattern = `${suiteDir}/*/postcss-d-ts.config.json`
+, suitesDir = "__func__"
+, sourcePattern = `${suitesDir}/*.css`
+, configPattern = `${suitesDir}/*/postcss-d-ts.config.json`
 , expectMask = "*{MUST,SHOULD,MAY}.d.ts"
 , globbing = (pattern: string) => sync(pattern, {
   "gitignore": true,
@@ -32,14 +32,13 @@ globbing(configPattern)
       const name = suiteName(exp)
       , from = resolve(exp).replace(".d.ts", "")
       , input = sources[name]
-      , expectation = rfsl(exp)
 
       it(name, async () => await run(
         launch({...opts, destination: {}}),
         {
           from,
           input,
-          output: expectation
+          outputPath: exp.replace(`${suiteDir}/`, "")
         }
       ))
     })

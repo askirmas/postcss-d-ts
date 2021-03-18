@@ -10,6 +10,7 @@ const osBasedAssertion = platform() ===  "darwin" ? "toBeGreaterThan" : "toBeGre
 , FALSY = ["", undefined, null, false, 0]
 , suitFolder = "__unit__"
 , from = `${suitFolder}/index.css`
+, output = `${suitFolder}/index.SHOULD.d.ts`
 , fromContent = rfs(from)
 , dtsPath = `${from}.d.ts`
 , modifiedTime = () => statSync(dtsPath).mtimeMs
@@ -33,7 +34,7 @@ describe('features', () => {
   ))
   it("delete on empty", async () => {
     writeFileSync(dtsPath, dtsContent.join("\n"))
-    await run(defaultLaunchers, {from, input: "input {}", output: false})
+    await run(defaultLaunchers, {from, input: "input {}", outputPath: false})
     expect(await $exists(dtsPath)).toBe(false)
     writeFileSync(dtsPath, dtsContent.join("\n"))
   })
@@ -41,29 +42,23 @@ describe('features', () => {
   describe('content overwrite', () => {
     beforeAll(async () => {
       await $unlink(dtsPath)
-      await run(defaultLaunchers, {from})
+      await run(defaultLaunchers, {from, outputPath: output})
       dtsContent = rfsl(dtsPath)
     })
 
     it('no overwrite on same content', async () => {
       const modified = modifiedTime()
-      await run(defaultLaunchers, {from})
+      await run(defaultLaunchers, {from, outputPath: output})
       expect(modifiedTime()).toBe(modified)
     })
 
-    it('overwrite after append new content', async () => {
+    it('overwrite after file append', async () => {
       appendFileSync(dtsPath, "/**/")
       const modified = modifiedTime()
-      await run(defaultLaunchers, {from})
+      await run(defaultLaunchers, {from, outputPath: output})
       expect(modifiedTime())[osBasedAssertion](modified)
     })
 
-    it.skip('no overwrite on template without last newline', async () => {
-      const modified = modifiedTime()
-      //TODO #9 , {"template": `${suitFolder}/template_without_last_newline.d.ts`}
-      await run(defaultLaunchers, {from})
-      expect(modifiedTime()).toBe(modified)
-    })
   })
 })
 
@@ -74,7 +69,8 @@ describe('options', () => {
       {
         from,
         input: fromContent,
-        errorsCount: 1
+        errorsCount: 1,
+        outputPath: output
       }
     ))
   })
@@ -110,14 +106,14 @@ describe('options', () => {
 
     it("modified", async () => {
       const created = modifiedTime()
-      expect(await run(launchers, {from, input: ".input {}"}).catch(err => err)).toBeInstanceOf(Error)
+      expect(await run(launchers, {from, input: ".input {}", outputPath: false}).catch(err => err)).toBeInstanceOf(Error)
       expect(modifiedTime()).toBe(created)
     })
 
     it("exists, but shouldn't", async () => {
       const created = modifiedTime()
       expect(
-        await run(launchers, {from, input: "input {}", output: false})
+        await run(launchers, {from, input: "input {}", outputPath: false})
         .catch(err => err)
       ).toBeInstanceOf(Error)
       expect(modifiedTime()).toBe(created)
@@ -126,7 +122,7 @@ describe('options', () => {
     it("not exists, but should", async () => {
       await $unlink(dtsPath)
       expect(
-        await run(launchers, {from, input: fromContent, output: false})
+        await run(launchers, {from, input: fromContent, outputPath: false})
         .catch(err => err)
       ).toBeInstanceOf(Error)
       expect(await $exists(dtsPath)).toBe(false)

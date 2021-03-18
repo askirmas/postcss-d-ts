@@ -17,7 +17,7 @@ it('bootstrap3', async () => {
   await run(launchers, {
     from: localFrom,
     input,
-    output: false
+    outputPath: false
   })
 })
 
@@ -29,7 +29,7 @@ it('bootstrap4', async () => {
   await run(launchers, {
     from: localFrom,
     input,
-    output: false
+    outputPath: false
   })
 })
 
@@ -41,6 +41,6 @@ it('material10', async () => {
   await run(launchers, {
     from: localFrom,
     input,
-    output: false
+    outputPath: false
   })
 })

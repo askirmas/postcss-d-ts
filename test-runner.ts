@@ -8,7 +8,7 @@ import creator8 = require("./src")
 export type RunOpts = Partial<{
   from: string
   input: string
-  output: string[] | false
+  outputPath: string | false
   errorsCount: number
 }>
 
@@ -31,14 +31,11 @@ async function run(launchers: ReturnType<typeof launch>, runOpts: RunOpts) {
 
   for (let i = 0; i < launchers.length; i++) {
     const result = await launchers[i].process(input, { from })
-    , {
-      //TODO propagate modality with opts
-      output = from && rfsl(`${from.replace(/\.css$/, '')}.SHOULD.d.ts`)
-    } = runOpts
+    , { outputPath: output } = runOpts
 
     expect(result.warnings()).toHaveLength(errorsCount)
 
-    output && expect(rfsl(`${from}.d.ts`)).toStrictEqual(output)
+    output && expect(rfsl(`${from}.d.ts`)).toStrictEqual(rfsl(output))
   }
 }
 
