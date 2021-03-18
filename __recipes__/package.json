@@ -2,9 +2,10 @@
   "name": "recipes",
   "version": "1.0.0",
   "scripts": {
-    "build": "npm run build/9 && npm run build/10",
+    "build": "npm run build/9 && npm run build/10 && npm run build/cra",
     "build/9": "cd next_9 && npm run build",
     "build/10": "cd next_10 && npm run build",
+    "build/cra": "cd create-react-app && npm run build",
     "dev:n3": "cd next_9 && npm run dev",
     "dev:n5": "cd next_10 && npm run dev",
     "ci": "npm run ci/9 && npm run ci/10",
