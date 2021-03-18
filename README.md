@@ -56,6 +56,7 @@ In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-d-ts/blob/master/__ty
 CSS content:
 
 ```css
+/* some.css or some.module.css */
 .class1 { ... }
 .class2 { ... }
 ```
@@ -193,4 +194,23 @@ module.exports = {
   ]
 }
 ```
+
+## Additional notes
+
+### CLI
+
+Simply install [`postcss-cli`](https://www.npmjs.com/package/postcss-cli) and write to scripts with desired options. [// example](https://github.com/askirmas/postcss-d-ts/blob/f9f07f009a02db69d9332bdd029a95420ce1a6d9/__recipes__/create-react-app/package.json#L23)
+
+```json
+// package.json
+{
+  "scripts": {
+    "postcss-d-ts": "postcss --use postcss-d-ts styles/index.css --watch > /dev/null"
+  }
+}
+```
+
+### With `create-react-app`
+
+You need to launch posts as a separate process.  See commit https://github.com/askirmas/postcss-d-ts/commit/f9f07f009a02db69d9332bdd029a95420ce1a6d9 as an additional option how to establish
 

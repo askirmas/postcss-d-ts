@@ -4,7 +4,9 @@ import classNaming from "react-classnaming"
 const {
   button,
   button__icon,
-  button__label
+  button__label,
+  //@ts-expect-error
+  NoSuchClass
 } = {} as CssIdentifiersMap
 
 const classes = classNaming()
@@ -17,3 +19,5 @@ const Button = () => <>
 </>
 
 export default Button
+
+console.log(NoSuchClass)

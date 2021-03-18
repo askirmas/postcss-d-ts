@@ -3,6 +3,11 @@ import module_scss from "../styles/is.module.scss"
 import module_less from "../styles/is.module.less"
 import module_stylus from "../styles/is.module.styl"
 
+console.log(
+  //@ts-expect-error Property 'NoSuchClass' does not exist
+  module_stylus.NoSuchClass
+)
+
 export default function Page() {
   return <main>
     <div className={module_css.css_module}>css</div>

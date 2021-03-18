@@ -3,6 +3,11 @@ import stylus from "../styles/some.styl"
 import less from "../styles/some.less"
 import scss from "../styles/some.scss"
 
+console.log(
+  //@ts-expect-error Property 'dialog' does not exist
+  less.NoSuchClass
+)
+
 export default function Some() {
   return <main>
     <div className={css.dialog__title}>css</div>

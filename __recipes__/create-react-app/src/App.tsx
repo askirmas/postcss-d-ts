@@ -2,6 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import styles from './App.module.css';
 
+console.log(
+  //@ts-expect-error Property 'NoSuchClass' does not exist
+  styles.NoSuchClass
+)
+
 function App() {
   return (
     <div className={styles.App}>
