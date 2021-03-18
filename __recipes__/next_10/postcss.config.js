@@ -9,6 +9,6 @@
 */
 module.exports = {
   plugins: [
-    ["postcss-d-ts", {}]
+    "postcss-d-ts"
   ]
 }

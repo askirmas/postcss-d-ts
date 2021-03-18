@@ -16,23 +16,42 @@
 
 <p align="center"><a href="https://github.com/askirmas/postcss-d-ts/blob/master/images/postcss-d-ts.gif"><img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.gif"/></a></p>
 
-## Installation
+## Goal
+
+Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS.
+
+## Installation and setup
 
 ```bash
 npm install postcss-d-ts
 ```
 
-## Goal
+```diff
+// postcss.config.js
+module.exports = {
+	plugins: [
+	  "postcss-preset-env",
+  	...
++	  "postcss-d-ts"  // or "postcss-d-ts/dist/7" for postcss v7
+	]
+}
+```
 
-Provide [contract](https://en.wikipedia.org/wiki/Design_by_contract) between JS and CSS.
+Check [postcss#usage](https://github.com/postcss/postcss#Usage) for details. 
 
-## Compatibility
+## Features
 
-For PostCss v8 use  [`"postcss-d-ts"`](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_10/postcss.config.js#L12), for v7 [`"postcss-d-ts/dist/7"`](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_9/postcss.config.json)
+### Languages <img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.frameworks.gif" width="50%" align="right"/>
 
-## Demonstration
+Language agnostic because of PostCss philosophy
 
-**If you’re not familiar with PostCss – start with [#PostCss Usage](#postcss-usage)**
+<br clear="all"/>
+
+### CSS libraries/frameworks
+
+In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-d-ts/commit/9514c9e62539127ffd9eaf85fb014efe2daec793#diff-f4d033574661830df6b3d15cfd8d47b76c2ed02cc525b1934242dcff8fc816c0).
+
+## Explanation <img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.full.gif" width="50%" align="right"/>
 
 CSS content:
 
@@ -94,10 +113,6 @@ function classNames(classes: Record<string, string|undefined>) {
   return Object.keys(classes).join(" ")
 }
 ```
-
-## With CSS libraries
-
-In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-d-ts/commit/9514c9e62539127ffd9eaf85fb014efe2daec793#diff-f4d033574661830df6b3d15cfd8d47b76c2ed02cc525b1934242dcff8fc816c0).
 
 ## Basic options
 
@@ -185,33 +200,3 @@ module.exports = {
 }
 ```
 
-## Additional examples
-
-*TBD Clone from specs*
-
-- *https://github.com/askirmas/postcss-d-ts/blob/master/__spec__/next_10/pages/index.tsx*
-- *https://github.com/askirmas/postcss-d-ts/blob/master/__func__/basic.SHOULD.d.ts*
-
-## PostCss Usage
-
-[PostCSS]: https://github.com/postcss/postcss
-
-Check you project for existed PostCSS config: `postcss.config.js`
-in the project root, `"postcss"` section in `package.json`
-or `postcss` in bundle config.
-
-If you already use PostCSS, add the plugin to plugins list:
-
-```diff
-module.exports = {
-  plugins: [
-    require('autoprefixer'),
-+   require('postcss-d-ts'),
-  ]
-}
-```
-
-If you do not use PostCSS, add it according to [official docs]
-and set this plugin in settings.
-
-[official docs]: https://github.com/postcss/postcss#usage
