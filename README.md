@@ -153,7 +153,7 @@ export type CssIdentifiersMap = {
 
 ### `checkMode: boolean `
 
-Throw an error instead of file rewrite. By default, this mode is on for `NODE_ENV === 'production'`
+Throw an error instead of declaration file rewrite. By default, this mode is on for `NODE_ENV === 'production'`
 
 ### Other options
 

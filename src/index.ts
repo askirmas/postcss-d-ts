@@ -141,7 +141,6 @@ function writer(
 
     if (destination === false) {
       if (keys.length !== 0)
-        // TODO checkMode is more prioritized
         return await rewrite(target, lines, eol, checkMode)
 
       if (checkMode && await $exists(target))
