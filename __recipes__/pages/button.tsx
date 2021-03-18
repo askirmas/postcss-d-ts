@@ -1,15 +1,18 @@
-import css from "../styles/button.css"
+import type {CssIdentifiersMap} from "../styles/button.css"
+import classNaming from "react-classnaming"
+
+const {
+  button,
+  button__icon,
+  button__label
+} = {} as CssIdentifiersMap
+
+const classes = classNaming()
 
 const Button = () => <>
-  <button className={
-    css.button
-  }>
-    <i className={
-      css.button__icon
-    }/>
-    <span className={
-      css.button__label
-    }>Submit</span>
+  <button {...classes({button})}>
+    <i {...classes({button__icon})}/>
+    <span {...classes({button__label})}>Submit</span>
   </button>
 </>
 

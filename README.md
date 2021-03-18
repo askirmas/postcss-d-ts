@@ -51,7 +51,7 @@ Language agnostic because of PostCss philosophy
 
 In [./\_\_typing\_\_/](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/) results of applying to some popular libraries: [bootstrap v3](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap3.SHOULD.d.ts), [bootstrap v4](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/bootstrap4.SHOULD.d.ts), [material v10](https://github.com/askirmas/postcss-d-ts/blob/master/__typing__/material10.SHOULD.d.ts), [tailwind v2](https://github.com/askirmas/postcss-d-ts/commit/9514c9e62539127ffd9eaf85fb014efe2daec793#diff-f4d033574661830df6b3d15cfd8d47b76c2ed02cc525b1934242dcff8fc816c0).
 
-## Explanation <img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.full.gif" width="50%" align="right"/>
+## Applyment <img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.full.gif" width="50%" align="right"/>
 
 CSS content:
 
@@ -73,7 +73,7 @@ export type CssIdentifiersMap = {
 }
 ```
 
-Thus, in Component (i.e. React):
+Thus, in Component (i.e. React): *[./\_\_recipes\_\_/pages/module.tsx](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/pages/module.tsx)*
 
 ```tsx
 import moduleClasses from "./some.module.css"
@@ -85,16 +85,16 @@ const {
   class3
 } = moduleClasses
 
-export default function Component() {
-    return <div className={`${class1} ${class2}`}/>
-}
+const Component = () => <div className={`${class1} ${class2}`}/>
 ```
 
-or
+or  *[./\_\_recipes\_\_/pages/button.tsx](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/pages/button.tsx)*
 
 ```tsx
-// No CSS-modules at all
+// Ordinary CSS
 import type { CssIdentifiersMap } from "./some.css"
+// I.e. with help of https://www.npmjs.com/package/react-classnaming
+import classNaming from "react-classnaming"
 
 const {
   class1,
@@ -103,15 +103,9 @@ const {
   class3
 } = {} as CssIdentifiersMap
 
-export default function Component() {
-    return <div className={classNames({class1, class2})}/>
-}
+const classNames = classNaming()
 
-// Better to use `react-classnaming` https://www.npmjs.com/package/react-classnaming
-// not this function
-function classNames(classes: Record<string, string|undefined>) {
-  return Object.keys(classes).join(" ")
-}
+const Component() => <div {...classNames({class1, class2})} />
 ```
 
 ## Options
