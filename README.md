@@ -63,14 +63,14 @@ CSS content:
 Generated declaration from template (i.e. default [./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)):
 
 ```typescript
+declare const identifiersMap: CssIdentifiersMap
+
+export default identifiersMap
+
 export type CssIdentifiersMap = {
   "class1": string|undefined
   "class2": string|undefined
 }
-
-declare const identifiersMap: CssIdentifiersMap
-
-export default identifiersMap
 ```
 
 Thus, in Component (i.e. React):
@@ -114,7 +114,7 @@ function classNames(classes: Record<string, string|undefined>) {
 }
 ```
 
-## Basic options
+## Options
 
 ### `template: string`
 
@@ -123,13 +123,13 @@ Local path to a custom template for declarations generating.
 - Default: *[./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)*
 
 ```typescript
-export type CssIdentifiersMap = {
-  "__identifier__": string|undefined
-}
-
 declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
+
+export type CssIdentifiersMap = {
+  "__identifier__": string|undefined
+}
 ```
 
 - Example: *[./\_\_func\_\_/template--custom\_path/template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/__func__/template--custom_path/)*
@@ -151,7 +151,7 @@ The word in `d.ts` template to be replaced with CSS classes, ids, etc.
 // postcss.config.js
 module.exports = {
   plugins: {
-    "postcss-d-ts", {
+    "postcss-d-ts": {
 +     identifierKeyword: "data"
     }
   }
