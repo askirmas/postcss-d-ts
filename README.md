@@ -1,6 +1,6 @@
 # [postcss-d-ts](https://github.com/askirmas/postcss-d-ts) [<img src="https://raw.githubusercontent.com/askirmas/postcss-d-ts/master/images/postcss-d-ts.svg" alt="logo" height="51px" align="right" />](https://github.com/askirmas/postcss-d-ts)
 
-[PostCSS] plugin to generate [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)  of all used CSS classes and ids in imported stylesheets
+[PostCSS] plugin to generate [`.d.ts`] of all used CSS classes and ids in imported stylesheets
 
 [![build@ci](https://github.com/askirmas/postcss-d-ts/workflows/build/badge.svg)](https://github.com/askirmas/postcss-d-ts/actions)
 [![codecov](https://codecov.io/gh/askirmas/postcss-d-ts/branch/master/graph/badge.svg?token=TFJ9TMJ3YJ)](https://codecov.io/gh/askirmas/postcss-d-ts)
@@ -37,7 +37,7 @@ module.exports = {
 }
 ```
 
-Check [postcss#usage](https://github.com/postcss/postcss#Usage) for details. 
+Check [postcss#usage](https://github.com/postcss/postcss#Usage) for details.
 
 ## Features
 
@@ -61,7 +61,7 @@ CSS content:
 .class2 { ... }
 ```
 
-Generated declaration from template (i.e. default [./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)):
+Generated declaration from template (i.e. default *[./src/\_css-template.d.ts](https://github.com/askirmas/postcss-d-ts/blob/master/src/_css-template.d.ts)*):
 
 ```typescript
 declare const identifiersMap: CssIdentifiersMap
@@ -108,6 +108,8 @@ const classNames = classNaming()
 
 const Component() => <div {...classNames({class1, class2})} />
 ```
+
+> [`npm install react-classnaming`](https://github.com/askirmas/react-classnaming)
 
 ## Options
 
@@ -169,9 +171,10 @@ Throw an error instead of declaration file rewrite. By default, this mode is on 
 
 Full list in different formats
 
-- JSON schema [./\_\_recipes\_\_/next\_9/postcss.config.json](https://github.com/askirmas/postcss-d-ts/blob/299955b1335037b759dd2a0960db9df2816bd326/__recipes__/next_9/postcss.config.json):
+- [JSON schema](https://code.visualstudio.com/docs/languages/json#_json-schemas-and-settings): [./\_\_recipes\_\_/next\_9/postcss.config.json](https://github.com/askirmas/postcss-d-ts/blob/299955b1335037b759dd2a0960db9df2816bd326/__recipes__/next_9/postcss.config.json):
   - https://askirmas.github.io/postcss-d-ts/schema.json
   - *<u>./node_modules/postcss-d-ts/dist/schema.json</u>*
+  - For all config file replace `schema.json` with `postconfig.schema.json`
 
 - TypeScript
 
@@ -179,7 +182,7 @@ Full list in different formats
 import { Options } from "postcss-d-ts/dist/options.types"
 ```
 
-- JSDoc [./\_\_recipes\_\_/next\_10/postcss.config.js](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_10/postcss.config.js)
+- JSDoc: [./\_\_recipes\_\_/next\_10/postcss.config.js](https://github.com/askirmas/postcss-d-ts/blob/master/__recipes__/next_10/postcss.config.js)
 
 ```javascript
 /** @type {{
@@ -199,7 +202,7 @@ module.exports = {
 
 ### CLI
 
-Simply install [`postcss-cli`](https://www.npmjs.com/package/postcss-cli) and write to scripts with desired options. [// example](https://github.com/askirmas/postcss-d-ts/blob/f9f07f009a02db69d9332bdd029a95420ce1a6d9/__recipes__/create-react-app/package.json#L23)
+Simply install [`postcss-cli`] and add it to `npm scripts` with desired options: [example@cra](https://github.com/askirmas/postcss-d-ts/blob/f9f07f009a02db69d9332bdd029a95420ce1a6d9/__recipes__/create-react-app/package.json#L23) and another:
 
 ```json
 // package.json
@@ -212,5 +215,11 @@ Simply install [`postcss-cli`](https://www.npmjs.com/package/postcss-cli) and wr
 
 ### With `create-react-app`
 
-You need to launch posts as a separate process.  See commit https://github.com/askirmas/postcss-d-ts/commit/f9f07f009a02db69d9332bdd029a95420ce1a6d9 as an additional option how to establish
+You need to launch [postcss] as a separate process.  See commit https://github.com/askirmas/postcss-d-ts/commit/f9f07f009a02db69d9332bdd029a95420ce1a6d9 as an additional option how to establish
 
+[postcss]: https://github.com/postcss/postcss
+
+[postcss]: https://github.com/postcss/postcss
+[`postcss`]: https://github.com/postcss/postcss-cli
+[`postcss-cli`]: https://www.npmjs.com/package/postcss-cli
+[`.d.ts`]: https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html
