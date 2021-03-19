@@ -1,0 +1,18 @@
+{
+  "author": "",
+  "dependencies": {
+    "postcss": "^8.2.8",
+    "postcss-d-ts": "file:../../package"
+  },
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "js-api",
+  "scripts": {
+    "build": "node index.js",
+    "ci": "npm uninstall --prefer-offline --no-audit --silent --quiet --no-progress postcss-d-ts",
+    "prebuild": "npm run ci && npm install ../../package/"
+  },
+  "version": "1.0.0"
+}

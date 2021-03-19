@@ -13,7 +13,7 @@
     "sonarlint.connectedMode.project": {
       "projectKey": "askirmas_postcssd-ts"
     },
-    "eslint.format.enable": true,
+    "eslint.format.enable": false,
     "eslint.alwaysShowStatus": true,
     "eslint.codeAction.showDocumentation": {
       "enable": true

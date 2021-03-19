@@ -1,17 +1,22 @@
 {
-  "name": "recipes",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "npm run build/9 && npm run build/10 && npm run build/cra",
-    "build/9": "cd next_9 && npm run build",
-    "build/10": "cd next_10 && npm run build",
-    "build/cra": "cd create-react-app && npm run build",
-    "dev:n3": "cd next_9 && npm run dev",
-    "dev:n5": "cd next_10 && npm run dev",
-    "ci": "npm run ci/9 && npm run ci/10",
-    "ci/9": "cd next_9 && npm run ci",
-    "ci/10": "cd next_10 && npm run ci"
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
   },
   "license": "MIT",
-  "dependencies": {}
+  "name": "recipes",
+  "scripts": {
+    "build": "npm-run-all build/9 build/10 build/cra build/js-api",
+    "build/10": "cd next_10 && npm run build",
+    "build/9": "cd next_9 && npm run build",
+    "build/cra": "cd create-react-app && npm run build",
+    "build/js-api": "cd js-api && npm run build",
+    "ci": "npm-run-all ci/9 ci/10 ci/cra ci/js-api",
+    "ci/10": "cd next_10 && npm run ci",
+    "ci/9": "cd next_9 && npm run ci",
+    "ci/cra": "cd create-react-app && npm run ci",
+    "ci/js-api": "cd js-api && npm run ci",
+    "dev:n3": "cd next_9 && npm run dev",
+    "dev:n5": "cd next_10 && npm run dev"
+  },
+  "version": "1.0.0"
 }
