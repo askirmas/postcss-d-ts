@@ -75,6 +75,7 @@
     "jest": "^26.6.3",
     "material10": "npm:material-components-web@^10.0.0",
     "np": "^6.3.2",
+    "npm-run-all": "^4.1.5",
     "postcss": "^7.0.35",
     "postcss8": "npm:postcss@^8.2.8",
     "ts-jest": "^26.5.0",
