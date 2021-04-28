@@ -5,8 +5,10 @@ import {
   $exists,
   $open,
   $rename,
+  $copy,
   $write,
-  tempFileName
+  $unlink,
+  tempFileName,
 } from "./fs"
 
 export = rewrite
@@ -57,5 +59,10 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
     }`)
 
   await $close(fd)
-  await $rename(tempFile, filename)
+  try {
+    await $rename(tempFile, filename)
+  } catch (error) {
+    await $copy(tempFile, filename)
+    await $unlink(tempFile)
+  }
 }
