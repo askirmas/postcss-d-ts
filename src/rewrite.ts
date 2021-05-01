@@ -15,6 +15,9 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
   const {length} = lines
   , fileExists = await $exists(filename)
 
+  let line: string = "undefined"
+  , row = 0
+
   if (fileExists) {
     const lineReader = createInterface({
       input: createReadStream(filename),
@@ -23,9 +26,8 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
     })
 
     let isSame = true
-    , row = 0
 
-    for await (const line of lineReader) {
+    for await (line of lineReader) {
       if (line !== lines[row]) {
         isSame = false
         break
@@ -44,7 +46,13 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
   }
 
   if (checkMode)
-    throw new Error(`Content of "${filename}" should be another`)
+    throw new Error([
+      `Content of "${filename}:${row + 1}" should be another`,
+      "- Expected:",
+      lines[row],
+      "+ Received:",
+      line
+    ].join("\n"))
 
   const tempFile = await tempFileName()
   , fd = await $open(tempFile, "w")
