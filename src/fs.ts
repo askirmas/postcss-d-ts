@@ -6,6 +6,7 @@ import {
   open,
   readFileSync,
   rename,
+  copyFile,
   unlink,
   writeFile
 } from "fs"
@@ -21,6 +22,7 @@ const $exists = promisify(exists)
 , $close = promisify(close)
 , $mkdir = promisify(mkdir)
 , $rename = promisify(rename)
+, $copy = promisify(copyFile)
 , tempDir = join(tmpdir(), schema.title)
 
 export {
@@ -31,6 +33,7 @@ export {
   $write,
   $close,
   $rename,
+  $copy,
   tempFileName,
   tempDir
 }
