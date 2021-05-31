@@ -67,10 +67,13 @@ async function rewrite(filename: string, lines: string[], eol: string, checkMode
     }`)
 
   await $close(fd)
+
   try {
     await $rename(tempFile, filename)
   } catch (error) {
+    /* istanbul ignore next https://github.com/askirmas/postcss-d-ts/pull/30 */
     await $copy(tempFile, filename)
+    /* istanbul ignore next https://github.com/askirmas/postcss-d-ts/pull/30 */
     await $unlink(tempFile)
   }
 }
